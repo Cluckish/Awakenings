@@ -60,7 +60,6 @@
         color: var(--text-light);
     }
 
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Inter', sans-serif; 
@@ -307,10 +306,9 @@
     .provider-info p:last-child {
         margin-bottom: 0;
     }
-    .psychology-today-embed-wrapper { /* Wrapper for the new script-based embed */
+    .psychology-today-embed-wrapper { /* Wrapper for the script-based embed */
         margin-top: 1.5rem;
     }
-
 
     @media (max-width: 768px) { 
         .provider-profile {
@@ -383,7 +381,7 @@
 
     <section class="provider-profile" data-aos="fade-up" data-aos-delay="200">
       <div class="provider-photo-container">
-        <img src="TALIA_SIERRA_PHOTO_URL" alt="Talia Sierra, PA-C, DMSc" class="provider-photo">
+        <img src="talia-sierra.jpg" alt="Talia Sierra, PA-C, DMSc" class="provider-photo">
       </div>
       <div class="provider-info">
         <h3>Talia Sierra</h3>
@@ -480,7 +478,7 @@
         } else {
             currentBg = getComputedStyle(document.documentElement).getPropertyValue('--bg-light').trim();
         }
-        const separators = document.querySelectorAll('.separator path');
+        const separators = document.querySelectorAll('.separator path'); // Check if .separator exists on this page
         if (separators.length > 0) {
             separators.forEach(p => p.style.fill = currentBg);
         }
@@ -492,6 +490,7 @@
         applySystemTheme(e.matches);
     });
 
+    // Accordion functionality - only needed if accordions exist on this page
     const accordionHeaders = document.querySelectorAll('.accordion .acc-header');
     if (accordionHeaders.length > 0) {
         accordionHeaders.forEach(btn => {
@@ -503,6 +502,7 @@
         });
     }
 
+    // Iframe lazy load - only needed if iframes with these classes exist
     const lazyIframes = document.querySelectorAll('iframe.lazy-embed');
     if (lazyIframes.length > 0) {
         lazyIframes.forEach(iframe => { 
