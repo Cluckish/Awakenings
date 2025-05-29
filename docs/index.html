@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en"> <head>
+<html lang="en">
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Awakenings Mental Health</title>
@@ -17,23 +18,22 @@
       --text-light: #F0F3F4;
       --text-dark: #1D2021;
     }
-    html.dark { /* Use html.dark selector for dark mode styles */
+    html.dark {
       --bg-light: var(--bg-dark);
       --text-dark: var(--text-light);
     }
     html.dark .testimonial-card {
-        background: #2c3032; /* Example dark mode card background */
+        background: #2c3032;
     }
     html.dark .card {
-        background: #272b2c; /* Darker than page, lighter than primary for contrast */
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* Dark mode shadow */
+        background: #272b2c;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
     html.dark .accordion .acc-body {
         background: #2c3032;
     }
     html.dark .skeleton { background: #444; }
-    html.dark .separator path { fill: var(--bg-dark); } /* Ensure separators match bg */
-
+    html.dark .separator path { fill: var(--bg-dark); }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -42,24 +42,26 @@
       color: var(--text-dark);
       line-height: 1.6;
       transition: background .3s, color .3s;
-      padding-top: 4px; 
+      /* padding-top: 4px; REMOVED - was for progress bar */
     }
+    /* Progress bar CSS REMOVED
     #progress-bar {
       position: fixed; top: 0; left: 0;
       height: 4px; background: var(--accent);
       width: 0%; transition: width .1s ease-out;
       z-index: 9999;
     }
+    */
     header#site-header {
       position: fixed; top: 0; left: 0; width: 100%;
       background: var(--primary) url('https://www.awakeningsmentalhealth.com/images/hero.jpg') center/cover no-repeat;
-      height: 60vh; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: all .3s ease;
       z-index: 1000;
-      padding: 0 1rem; 
+      padding: 0 1rem;
     }
     header#site-header::after {
       content: ''; position: absolute; inset: 0;
@@ -68,87 +70,96 @@
     }
     body.scrolled header#site-header {
       height: 60px;
-      justify-content: space-between; 
-      align-items: center; 
-      background-image: none; 
-      background-color: var(--primary); 
+      justify-content: space-between;
+      align-items: center;
+      background-image: none;
+      background-color: var(--primary);
       box-shadow: 0 2px 8px rgba(0,0,0,.2);
     }
     header#site-header h1 {
-      position: relative; 
-      color: white; 
-      font-size: 3rem; 
-      z-index: 1; 
+      position: relative;
+      color: white;
+      font-size: 3rem;
+      z-index: 1;
       transition: font-size .3s ease;
-      margin: 0; 
+      margin: 0;
+      text-align: center; 
     }
     body.scrolled header#site-header h1 {
-      font-size: 1.3rem; 
-      line-height: 1.2; 
-      margin: 0; 
+      font-size: 1.3rem;
+      line-height: 1.2;
+      margin: 0;
     }
-    header#site-header nav { 
+    header#site-header nav {
       position: absolute;
       top: 1rem;
       right: 1rem;
-      z-index: 2; 
+      z-index: 2;
       display: flex;
       align-items: center;
     }
-    body.scrolled header#site-header nav { 
-      position: static; 
-      display: flex; 
-      align-items: center; 
+    body.scrolled header#site-header nav {
+      position: static;
+      display: flex;
+      align-items: center;
     }
     nav a {
-      color: white; 
-      margin-left: 0.75rem; 
-      text-decoration: none; 
+      color: white;
+      margin-left: 0.75rem;
+      text-decoration: none;
       font-weight: 600;
-      font-size: 0.85rem; 
+      font-size: 0.85rem;
       transition: color .3s;
       white-space: nowrap;
-      line-height: 1.2; 
-      padding: 0.1em 0; 
+      line-height: 1.2;
+      padding: 0.1em 0;
     }
     nav a:first-child { margin-left: 0; }
     nav a:hover { color: var(--accent); }
     nav #theme-toggle {
       background: var(--accent); border: none; color: white;
       padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer;
-      font-size: 0.85rem; font-weight: 600; margin-left: 0.75rem; 
+      font-size: 0.85rem; font-weight: 600; margin-left: 0.75rem;
       line-height: 1; white-space: nowrap;
     }
     nav #theme-toggle:hover { opacity: .9; }
     #heart-animation { z-index: 1; }
 
-    @media (max-width: 480px) {
+    @media (max-width: 600px) { 
       header#site-header { padding: 0 0.5rem; }
+      header#site-header h1 {
+        font-size: 2rem; 
+      }
       body.scrolled header#site-header h1 {
-        font-size: 1.1rem; 
-        line-height: 1.2; 
+        font-size: 1.1rem;
+        line-height: 1.2;
       }
       nav a {
-        font-size: 0.7rem; 
-        margin-left: 0.4rem; 
-        line-height: 1.2; 
+        font-size: 0.7rem;
+        margin-left: 0.3rem; 
+        padding: 0.1em 0.2em; 
+        line-height: 1.2;
       }
       nav #theme-toggle {
         font-size: 0.7rem;
-        padding: 0.25rem 0.4rem; 
-        margin-left: 0.4rem;
-        line-height: 1; 
+        padding: 0.2rem 0.4rem; 
+        margin-left: 0.3rem; 
+        line-height: 1;
       }
       header#site-header nav { right: 0.5rem; }
       nav a:first-child { margin-left: 0; }
+
+      #services .card header {
+        text-align: center;
+      }
     }
 
-    .container { 
+    .container {
       max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;
-      padding-top: 60vh; /* Initial padding for large header */
+      padding-top: 60vh;
     }
     body.scrolled .container {
-      padding-top: 70px; /* Padding for scrolled header (60px header + 10px buffer) */
+      padding-top: 70px;
     }
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 2rem; align-items: start; margin-bottom: 3rem; }
     .card { background: var(--bg-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
@@ -158,7 +169,7 @@
     .btn.secondary { background: var(--secondary); }
     .btn:hover { opacity: .9; }
     .separator { display: block; width: 100%; height: 80px; }
-    .separator path { transition: fill .3s; } /* Smooth transition for separator fill on theme change */
+    .separator path { transition: fill .3s; }
     .accordion .acc-header { background: var(--secondary); color: white; cursor: pointer; padding: 1rem; border: none; width: 100%; text-align: left; outline: none; font-size: 1rem; transition: background .3s; }
     .accordion .acc-header.active { background: var(--accent); }
     .accordion .acc-body { max-height: 0; overflow: hidden; transition: max-height .3s ease; background: white; padding: 0 1rem; }
@@ -174,16 +185,14 @@
 </head>
 <body>
 
-  <div id="progress-bar"></div>
-
   <header id="site-header">
-    <h1 data-aos="fade-down">Awakenings Mental Health</h1> 
+    <h1 data-aos="fade-down">Awakenings Mental Health</h1>
     <nav>
       <a href="#services">Services</a>
       <a href="#insurance">Insurance</a>
       <a href="#booking">Book</a>
       <a href="#contact">Contact</a>
-      <button id="theme-toggle">Toggle Dark</button> 
+      <button id="theme-toggle">Toggle Dark</button>
     </nav>
     <div id="heart-animation" style="position:absolute; bottom:1rem; right:1rem; width:60px; height:60px;"></div>
   </header>
@@ -214,7 +223,7 @@
 
     <section id="insurance" data-aos="fade-left">
       <div class="accordion card">
-        <button class="acc-header">What insurances do you accept?</button> <div class="acc-body"> <p>Blue Cross, Select Health, Aetna, …</p> </div>
+        <button class="acc-header">What insurances do you accept?</button> <div class="acc-body"> <p>Blue Cross, Select Health, Pacific Source, Saint Luke's Health Plan, Anthem Blue Cross. Blue Shield, Regence, Aetna, Cash Pay</p> </div>
         <button class="acc-header">How do I verify coverage?</button> <div class="acc-body"> <p>Contact our office <a href="tel:2082950297" style="color: var(--accent);">(208)295-0297</a></p> </div>
       </div>
     </section>
@@ -247,7 +256,7 @@
     try {
         lottie.loadAnimation({
           container: document.getElementById('heart-animation'),
-          path: 'https://assets7.lottiefiles.com/packages/lf20_heart.json', 
+          path: 'https://assets7.lottiefiles.com/packages/lf20_heart.json',
           renderer: 'svg', loop: true, autoplay: true
         });
     } catch (e) {
@@ -256,23 +265,19 @@
         if(heartAnimContainer) heartAnimContainer.style.display = 'none';
     }
 
-    // const siteHeader = document.getElementById('site-header'); // Not strictly needed anymore by JS below
-    const progressBar = document.getElementById('progress-bar');
+    // const progressBar = document.getElementById('progress-bar'); // REMOVED
     const toTop = document.getElementById('to-top');
-    // const mainContainer = document.querySelector('main.container'); // No longer needed by JS
-
-    // Removed adjustMainContentPadding function and its calls from load and resize
 
     window.addEventListener('scroll', () => {
       const scrolled = window.scrollY > 50;
       document.body.classList.toggle('scrolled', scrolled);
-      // adjustMainContentPadding(); // REMOVED
-      if (document.body.scrollHeight > window.innerHeight) { 
-        const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-        progressBar.style.width = pct + '%';
-      } else {
-        progressBar.style.width = '0%';
-      }
+      // Progress bar update logic REMOVED
+      // if (document.body.scrollHeight > window.innerHeight) {
+      //   const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      //   progressBar.style.width = pct + '%';
+      // } else {
+      //   progressBar.style.width = '0%';
+      // }
     });
     toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
@@ -281,28 +286,25 @@
         toggle.addEventListener('click', () => {
           document.documentElement.classList.toggle('dark');
           localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+          // Update separator colors on toggle
+          if (document.documentElement.classList.contains('dark')) {
+            document.querySelectorAll('.separator path').forEach(p => p.style.fill = 'var(--bg-dark)');
+          } else {
+            document.querySelectorAll('.separator path').forEach(p => p.style.fill = 'var(--bg-light)');
+          }
         });
         const savedTheme = localStorage.getItem('theme');
-        // Apply theme on load
         if (savedTheme === 'dark') {
           document.documentElement.classList.add('dark');
         } else if (savedTheme === 'light') {
-          document.documentElement.classList.remove('dark'); 
+          document.documentElement.classList.remove('dark');
         }
-        // To reflect theme change on SVG separators instantly
+        // Apply initial separator colors
         if (document.documentElement.classList.contains('dark')) {
             document.querySelectorAll('.separator path').forEach(p => p.style.fill = 'var(--bg-dark)');
         } else {
             document.querySelectorAll('.separator path').forEach(p => p.style.fill = 'var(--bg-light)');
         }
-        // Add listener for future toggles
-        toggle.addEventListener('click', () => {
-             if (document.documentElement.classList.contains('dark')) {
-                document.querySelectorAll('.separator path').forEach(p => p.style.fill = 'var(--bg-dark)');
-            } else {
-                document.querySelectorAll('.separator path').forEach(p => p.style.fill = 'var(--bg-light)');
-            }
-        });
     }
 
     document.querySelectorAll('.accordion .acc-header').forEach(btn => {
@@ -313,8 +315,8 @@
       });
     });
 
-    document.querySelectorAll('iframe.lazy-embed').forEach(iframe => { 
-      if (iframe.classList.contains('skeleton')) { 
+    document.querySelectorAll('iframe.lazy-embed').forEach(iframe => {
+      if (iframe.classList.contains('skeleton')) {
           iframe.addEventListener('load', () => iframe.classList.remove('skeleton'));
       }
     });
