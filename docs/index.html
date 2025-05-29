@@ -34,17 +34,16 @@
     }
     html.dark .skeleton { background: #444; }
     html.dark .separator path { fill: var(--bg-dark); } 
-    html.dark .dropdown-content { /* Dark mode for dropdown */
-      background-color: var(--primary); /* Darker background */
+    html.dark .dropdown-content { 
+      background-color: var(--primary); 
       box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
     }
     html.dark .dropdown-content a {
       color: var(--text-light);
     }
     html.dark .dropdown-content a:hover {
-        background-color: var(--accent); /* Accent hover for dark mode */
+        background-color: var(--accent); 
     }
-
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -94,31 +93,24 @@
       margin: 0; 
     }
 
-    /* Title span visibility rules */
-    header#site-header h1 .title-short {
-      display: none; 
-    }
-    header#site-header h1 .title-full {
-      display: inline; 
-    }
+    header#site-header h1 .title-short { display: none; }
+    header#site-header h1 .title-full { display: inline; }
 
-    /* Navigation Styles */
     header#site-header nav { 
       position: absolute;
       top: 1rem;
       right: 1rem;
-      z-index: 1002; /* Ensure nav is above overlay and other elements */
+      z-index: 1002; 
       display: flex;
       align-items: center;
-      gap: 0.75rem; /* Spacing between nav items */
+      gap: 0.75rem; 
     }
     body.scrolled header#site-header nav { 
       position: static; 
-      gap: 0.75rem; /* Maintain gap for scrolled state */
+      gap: 0.75rem; 
     }
 
-    /* Styling for individual nav links and the "Articles" link part of dropdown */
-    nav .nav-link { /* Used for direct <a> and the <a> inside .dropdown */
+    nav .nav-link { 
       color: white; 
       text-decoration: none; 
       font-weight: 600;
@@ -126,33 +118,32 @@
       transition: color .3s;
       white-space: nowrap;
       line-height: 1.2; 
-      padding: 0.2em 0.1em; /* Minimal padding, adjust if needed for alignment */
-      display: inline-block; /* For proper padding and alignment */
+      padding: 0.2em 0.1em; 
+      display: inline-block; 
     }
     nav .nav-link:hover { color: var(--accent); }
 
-    /* Dropdown specific styles */
     .nav-item.dropdown {
       position: relative; 
       display: inline-block; 
     }
-
     .dropdown-content {
       display: none;
       position: absolute;
       background-color: var(--bg-light); 
-      min-width: 220px; 
+      min-width: 200px; 
+      max-width: 280px; /* Max width for dropdown */
       box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      z-index: 1001; /* Below nav's z-index if nav is higher, but above page content */
+      z-index: 1001; 
       border-radius: 4px;
       padding: 0.5rem 0;
       top: 100%; 
-      left: 0; 
-      margin-top: 0.25rem; /* Small gap between button and dropdown */
+      left: 0; /* Default alignment */
+      margin-top: 0.25rem; 
     }
     .nav-item.dropdown:hover .dropdown-content,
-    .nav-item.dropdown .nav-link:focus + .dropdown-content, /* For accessibility: show on focus */
-    .nav-item.dropdown .dropdown-content:hover { /* Keep open if hovering dropdown itself */
+    .nav-item.dropdown .nav-link:focus + .dropdown-content, 
+    .nav-item.dropdown .dropdown-content:hover { 
       display: block;
     }
     .dropdown-content a {
@@ -160,10 +151,12 @@
       padding: 0.75rem 1rem;
       text-decoration: none;
       display: block;
-      white-space: normal; /* Allow article titles to wrap if long */
+      white-space: normal;   /* Allow text to wrap */
+      overflow-wrap: break-word; /* Break long words */
+      word-wrap: break-word;     /* Fallback for older browsers */
       font-size: 0.8rem; 
       line-height: 1.4;
-      font-weight: 400; /* Normal weight for dropdown items */
+      font-weight: 400; 
     }
     .dropdown-content a:hover {
       background-color: var(--secondary); 
@@ -182,26 +175,24 @@
         margin-right: 8px;      
         min-width: 0;           
       }
-      body.scrolled header#site-header h1 .title-full {
-        display: none;
+      body.scrolled header#site-header h1 .title-full { display: none; }
+      body.scrolled header#site-header h1 .title-short { display: inline; }
+      
+      #services .card header { text-align: center; }
+      
+      header#site-header nav { 
+        gap: 0.5rem; /* Reduced gap for fewer items */
+        right: 0.5rem; 
       }
-      body.scrolled header#site-header h1 .title-short {
-        display: inline;
+      nav .nav-link { 
+        font-size: 0.8rem; /* Can be slightly larger if fewer items */
       }
-      #services .card header { 
-        text-align: center;
-      }
-      header#site-header nav { /* Adjust nav gap for mobile */
-        gap: 0.4rem; 
-        right: 0.5rem; /* Adjust initial position for large header on mobile */
-      }
-      nav .nav-link { /* Adjust link font size for mobile */
-        font-size: 0.8rem; 
-      }
-      .dropdown-content { /* Adjust dropdown for mobile */
-        min-width: 180px;
-        left: 50%; /* Attempt to center dropdown under "Articles" */
-        transform: translateX(-50%);
+      .dropdown-content { 
+        min-width: 160px;
+        max-width: calc(100vw - 30px); /* Ensure it fits viewport */
+        left: auto;   /* Align to the right of the parent "Articles" item */
+        right: 0;     /* This makes it expand leftwards */
+        transform: none;
       }
       .dropdown-content a {
         font-size: 0.75rem;
@@ -219,17 +210,13 @@
     .card { background: var(--bg-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
     .card.no-dark-override {}
     .card header { padding: 1rem; background: var(--secondary); color: white; font-weight: 600; font-size: 1.2rem; }
-    #services .card header { 
-      text-align: center;
-    }
+    #services .card header { text-align: center; }
     .card .content { padding: 1rem; }
     .btn { display: inline-block; background: var(--accent); color: white; padding: 0.75rem 1.5rem; border-radius: 4px; text-decoration: none; font-weight: 600; margin: 0.5rem; transition: background .3s, opacity .3s; }
     .btn.secondary { background: var(--secondary); }
     .btn:hover { opacity: .9; }
     
-    .booking-button-container {
-      padding: 1rem; 
-    }
+    .booking-button-container { padding: 1rem; }
 
     .separator { display: block; width: 100%; height: 80px; }
     .separator path { transition: fill .3s; } 
@@ -263,8 +250,7 @@
           <a href="https://www.awakeningsmentalhealth.com/articles/exercise-and-nutrition" target="_top">Exercise & Nutrition</a>
         </div>
       </div>
-      <a href="#booking" class="nav-link" target="_top">Book</a>
-    </nav>
+      </nav>
     <div id="heart-animation" style="position:absolute; bottom:1rem; right:1rem; width:60px; height:60px;"></div>
   </header>
 
@@ -344,14 +330,12 @@
     });
     toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-    // Automatic Theme Management based on system preference
     const applySystemTheme = (isDark) => {
         if (isDark) {
             document.documentElement.classList.add('dark');
         } else {
             document.documentElement.classList.remove('dark');
         }
-        // Update separator colors
         if (typeof AOS !== 'undefined') { 
             AOS.refreshHard(); 
         }
@@ -363,13 +347,10 @@
     };
 
     const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-    
     applySystemTheme(prefersDarkScheme.matches); 
-
     prefersDarkScheme.addEventListener('change', (e) => { 
         applySystemTheme(e.matches);
     });
-    // End of Automatic Theme Management
 
     document.querySelectorAll('.accordion .acc-header').forEach(btn => {
       btn.addEventListener('click', () => {
