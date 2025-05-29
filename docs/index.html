@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"> {/* The .dark class will be added here by JavaScript */}
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -25,7 +25,7 @@
     html.dark .testimonial-card {
         background: #2c3032; 
     }
-    html.dark .card:not(.no-dark-override) { /* Added :not(.no-dark-override) for flexibility */
+    html.dark .card:not(.no-dark-override) { 
         background: #272b2c; 
         box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
     }
@@ -34,6 +34,16 @@
     }
     html.dark .skeleton { background: #444; }
     html.dark .separator path { fill: var(--bg-dark); } 
+    html.dark .dropdown-content { /* Dark mode for dropdown */
+      background-color: var(--primary); /* Darker background */
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
+    }
+    html.dark .dropdown-content a {
+      color: var(--text-light);
+    }
+    html.dark .dropdown-content a:hover {
+        background-color: var(--accent); /* Accent hover for dark mode */
+    }
 
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -45,7 +55,6 @@
       transition: background .3s, color .3s;
       overflow-x: hidden; 
     }
-    /* Progress bar removed */
     header#site-header {
       position: fixed; top: 0; left: 0; width: 100%;
       background: var(--primary) url('https://www.awakeningsmentalhealth.com/images/hero.jpg') center/cover no-repeat;
@@ -84,33 +93,82 @@
       line-height: 1.2; 
       margin: 0; 
     }
+
+    /* Title span visibility rules */
+    header#site-header h1 .title-short {
+      display: none; 
+    }
+    header#site-header h1 .title-full {
+      display: inline; 
+    }
+
+    /* Navigation Styles */
     header#site-header nav { 
       position: absolute;
       top: 1rem;
       right: 1rem;
-      z-index: 2; 
+      z-index: 1002; /* Ensure nav is above overlay and other elements */
       display: flex;
       align-items: center;
+      gap: 0.75rem; /* Spacing between nav items */
     }
     body.scrolled header#site-header nav { 
       position: static; 
-      display: flex; 
-      align-items: center; 
+      gap: 0.75rem; /* Maintain gap for scrolled state */
     }
-    nav a {
+
+    /* Styling for individual nav links and the "Articles" link part of dropdown */
+    nav .nav-link { /* Used for direct <a> and the <a> inside .dropdown */
       color: white; 
-      margin-left: 0.75rem; 
       text-decoration: none; 
       font-weight: 600;
       font-size: 0.85rem; 
       transition: color .3s;
       white-space: nowrap;
       line-height: 1.2; 
-      padding: 0.1em 0; 
+      padding: 0.2em 0.1em; /* Minimal padding, adjust if needed for alignment */
+      display: inline-block; /* For proper padding and alignment */
     }
-    nav a:first-child { margin-left: 0; }
-    nav a:hover { color: var(--accent); }
-    /* Theme toggle button CSS removed */
+    nav .nav-link:hover { color: var(--accent); }
+
+    /* Dropdown specific styles */
+    .nav-item.dropdown {
+      position: relative; 
+      display: inline-block; 
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: var(--bg-light); 
+      min-width: 220px; 
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1001; /* Below nav's z-index if nav is higher, but above page content */
+      border-radius: 4px;
+      padding: 0.5rem 0;
+      top: 100%; 
+      left: 0; 
+      margin-top: 0.25rem; /* Small gap between button and dropdown */
+    }
+    .nav-item.dropdown:hover .dropdown-content,
+    .nav-item.dropdown .nav-link:focus + .dropdown-content, /* For accessibility: show on focus */
+    .nav-item.dropdown .dropdown-content:hover { /* Keep open if hovering dropdown itself */
+      display: block;
+    }
+    .dropdown-content a {
+      color: var(--text-dark); 
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      display: block;
+      white-space: normal; /* Allow article titles to wrap if long */
+      font-size: 0.8rem; 
+      line-height: 1.4;
+      font-weight: 400; /* Normal weight for dropdown items */
+    }
+    .dropdown-content a:hover {
+      background-color: var(--secondary); 
+      color: white; 
+    }
     #heart-animation { z-index: 1; }
 
     @media (max-width: 480px) {
@@ -124,14 +182,30 @@
         margin-right: 8px;      
         min-width: 0;           
       }
-      nav a { /* Adjusted for fewer items */
-        font-size: 0.8rem; /* Can be slightly larger now */
-        margin-left: 0.5rem; 
-        line-height: 1.2; 
+      body.scrolled header#site-header h1 .title-full {
+        display: none;
       }
-      /* Theme toggle CSS in media query removed */
-      header#site-header nav { right: 0.5rem; }
-      nav a:first-child { margin-left: 0; }
+      body.scrolled header#site-header h1 .title-short {
+        display: inline;
+      }
+      #services .card header { 
+        text-align: center;
+      }
+      header#site-header nav { /* Adjust nav gap for mobile */
+        gap: 0.4rem; 
+        right: 0.5rem; /* Adjust initial position for large header on mobile */
+      }
+      nav .nav-link { /* Adjust link font size for mobile */
+        font-size: 0.8rem; 
+      }
+      .dropdown-content { /* Adjust dropdown for mobile */
+        min-width: 180px;
+        left: 50%; /* Attempt to center dropdown under "Articles" */
+        transform: translateX(-50%);
+      }
+      .dropdown-content a {
+        font-size: 0.75rem;
+      }
     }
 
     .container { 
@@ -143,11 +217,9 @@
     }
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 2rem; align-items: start; margin-bottom: 3rem; }
     .card { background: var(--bg-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
-    .card.no-dark-override { /* Class to prevent dark mode override for specific cards if needed */
-        /* This card will retain its original --bg-light even in dark mode if html.dark .card attempts to override it*/
-    }
+    .card.no-dark-override {}
     .card header { padding: 1rem; background: var(--secondary); color: white; font-weight: 600; font-size: 1.2rem; }
-    #services .card header { /* Center align service card titles globally */
+    #services .card header { 
       text-align: center;
     }
     .card .content { padding: 1rem; }
@@ -155,10 +227,8 @@
     .btn.secondary { background: var(--secondary); }
     .btn:hover { opacity: .9; }
     
-    /* Styles for the booking button container (replaces .card for this section) */
     .booking-button-container {
-      padding: 1rem; /* Maintain some padding around buttons */
-      /* No background, border, or shadow to make it appear transparent */
+      padding: 1rem; 
     }
 
     .separator { display: block; width: 100%; height: 80px; }
@@ -179,11 +249,22 @@
 <body>
 
   <header id="site-header">
-    <h1 data-aos="fade-down">Awakenings Mental Health</h1> 
+    <h1 data-aos="fade-down">
+      <span class="title-full">Awakenings Mental Health</span>
+      <span class="title-short">Awakenings</span>
+    </h1> 
     <nav>
-      <a href="#booking">Book</a>
-      <a href="#contact">Contact</a>
-      </nav>
+      <a href="https://www.awakeningsmentalhealth.com/our-practice" class="nav-link" target="_top">Home</a>
+      <a href="https://www.awakeningsmentalhealth.com/our-providers" class="nav-link" target="_top">Our Providers</a>
+      <div class="nav-item dropdown">
+        <a href="https://www.awakeningsmentalhealth.com/articles" class="nav-link articles-link" target="_top" aria-haspopup="true" aria-expanded="false">Articles</a>
+        <div class="dropdown-content">
+          <a href="https://www.awakeningsmentalhealth.com/articles/reducing-meds" target="_top">Reducing Meds</a>
+          <a href="https://www.awakeningsmentalhealth.com/articles/exercise-and-nutrition" target="_top">Exercise & Nutrition</a>
+        </div>
+      </div>
+      <a href="#booking" class="nav-link" target="_top">Book</a>
+    </nav>
     <div id="heart-animation" style="position:absolute; bottom:1rem; right:1rem; width:60px; height:60px;"></div>
   </header>
 
@@ -223,8 +304,8 @@
     <section id="booking" data-aos="zoom-in-up" style="text-align:center; margin-bottom:3rem;">
       <h2>Book an Appointment</h2>
       <div class="booking-button-container"> 
-          <a href="https://www.therapyportal.com/p/awakenings83703/" class="btn" target="_blank" rel="noopener noreferrer"> Patient Portal </a>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeYABYxDoscWL3jH-SNU51X0hgomcb0bEqshRIUnCRg7aSgA/viewform" class="btn secondary" target="_blank" rel="noopener noreferrer"> Appointment Interest Form </a>
+          <a href="https://www.therapyportal.com/p/awakenings83703/" class="btn" target="_top" rel="noopener noreferrer"> Patient Portal </a>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeYABYxDoscWL3jH-SNU51X0hgomcb0bEqshRIUnCRg7aSgA/viewform" class="btn secondary" target="_top" rel="noopener noreferrer"> Appointment Interest Form </a>
       </div>
     </section>
   </main>
@@ -263,7 +344,7 @@
     });
     toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-    // Theme management based on system preference
+    // Automatic Theme Management based on system preference
     const applySystemTheme = (isDark) => {
         if (isDark) {
             document.documentElement.classList.add('dark');
@@ -271,6 +352,9 @@
             document.documentElement.classList.remove('dark');
         }
         // Update separator colors
+        if (typeof AOS !== 'undefined') { 
+            AOS.refreshHard(); 
+        }
         if (document.documentElement.classList.contains('dark')) {
             document.querySelectorAll('.separator path').forEach(p => p.style.fill = 'var(--bg-dark)');
         } else {
@@ -280,14 +364,12 @@
 
     const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
     
-    // Apply initial theme based on system preference when script runs
-    applySystemTheme(prefersDarkScheme.matches);
+    applySystemTheme(prefersDarkScheme.matches); 
 
-    // Listen for changes in system preference
-    prefersDarkScheme.addEventListener('change', (e) => {
+    prefersDarkScheme.addEventListener('change', (e) => { 
         applySystemTheme(e.matches);
     });
-    // End of new theme management logic
+    // End of Automatic Theme Management
 
     document.querySelectorAll('.accordion .acc-header').forEach(btn => {
       btn.addEventListener('click', () => {
