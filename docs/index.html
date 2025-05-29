@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en"> {/* The .dark class will be added here by JavaScript */}
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -25,7 +25,7 @@
     html.dark .testimonial-card {
         background: #2c3032; 
     }
-    html.dark .card {
+    html.dark .card:not(.no-dark-override) { /* Added :not(.no-dark-override) for flexibility */
         background: #272b2c; 
         box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
     }
@@ -43,7 +43,7 @@
       color: var(--text-dark);
       line-height: 1.6;
       transition: background .3s, color .3s;
-      overflow-x: hidden; /* Prevent horizontal scroll from AOS animations */
+      overflow-x: hidden; 
     }
     /* Progress bar removed */
     header#site-header {
@@ -110,13 +110,7 @@
     }
     nav a:first-child { margin-left: 0; }
     nav a:hover { color: var(--accent); }
-    nav #theme-toggle {
-      background: var(--accent); border: none; color: white;
-      padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer;
-      font-size: 0.85rem; font-weight: 600; margin-left: 0.75rem; 
-      line-height: 1; white-space: nowrap;
-    }
-    nav #theme-toggle:hover { opacity: .9; }
+    /* Theme toggle button CSS removed */
     #heart-animation { z-index: 1; }
 
     @media (max-width: 480px) {
@@ -130,20 +124,12 @@
         margin-right: 8px;      
         min-width: 0;           
       }
-      #services .card header { 
-        text-align: center;
-      }
-      nav a {
-        font-size: 0.7rem; 
-        margin-left: 0.4rem; 
+      nav a { /* Adjusted for fewer items */
+        font-size: 0.8rem; /* Can be slightly larger now */
+        margin-left: 0.5rem; 
         line-height: 1.2; 
       }
-      nav #theme-toggle {
-        font-size: 0.7rem;
-        padding: 0.3rem 0.5rem; 
-        margin-left: 0.4rem;
-        line-height: 1; 
-      }
+      /* Theme toggle CSS in media query removed */
       header#site-header nav { right: 0.5rem; }
       nav a:first-child { margin-left: 0; }
     }
@@ -157,11 +143,24 @@
     }
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 2rem; align-items: start; margin-bottom: 3rem; }
     .card { background: var(--bg-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
+    .card.no-dark-override { /* Class to prevent dark mode override for specific cards if needed */
+        /* This card will retain its original --bg-light even in dark mode if html.dark .card attempts to override it*/
+    }
     .card header { padding: 1rem; background: var(--secondary); color: white; font-weight: 600; font-size: 1.2rem; }
+    #services .card header { /* Center align service card titles globally */
+      text-align: center;
+    }
     .card .content { padding: 1rem; }
     .btn { display: inline-block; background: var(--accent); color: white; padding: 0.75rem 1.5rem; border-radius: 4px; text-decoration: none; font-weight: 600; margin: 0.5rem; transition: background .3s, opacity .3s; }
     .btn.secondary { background: var(--secondary); }
     .btn:hover { opacity: .9; }
+    
+    /* Styles for the booking button container (replaces .card for this section) */
+    .booking-button-container {
+      padding: 1rem; /* Maintain some padding around buttons */
+      /* No background, border, or shadow to make it appear transparent */
+    }
+
     .separator { display: block; width: 100%; height: 80px; }
     .separator path { transition: fill .3s; } 
     .accordion .acc-header { background: var(--secondary); color: white; cursor: pointer; padding: 1rem; border: none; width: 100%; text-align: left; outline: none; font-size: 1rem; transition: background .3s; }
@@ -182,12 +181,9 @@
   <header id="site-header">
     <h1 data-aos="fade-down">Awakenings Mental Health</h1> 
     <nav>
-      <a href="#services">Services</a>
-      <a href="#insurance">Insurance</a>
       <a href="#booking">Book</a>
       <a href="#contact">Contact</a>
-      <button id="theme-toggle">Toggle Dark</button> 
-    </nav>
+      </nav>
     <div id="heart-animation" style="position:absolute; bottom:1rem; right:1rem; width:60px; height:60px;"></div>
   </header>
 
@@ -226,10 +222,10 @@
 
     <section id="booking" data-aos="zoom-in-up" style="text-align:center; margin-bottom:3rem;">
       <h2>Book an Appointment</h2>
-      <div class="card"> <div class="content">
+      <div class="booking-button-container"> 
           <a href="https://www.therapyportal.com/p/awakenings83703/" class="btn" target="_blank" rel="noopener noreferrer"> Patient Portal </a>
           <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeYABYxDoscWL3jH-SNU51X0hgomcb0bEqshRIUnCRg7aSgA/viewform" class="btn secondary" target="_blank" rel="noopener noreferrer"> Appointment Interest Form </a>
-      </div> </div>
+      </div>
     </section>
   </main>
 
@@ -267,29 +263,31 @@
     });
     toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-    const toggle = document.getElementById('theme-toggle');
-    if (toggle) {
-        toggle.addEventListener('click', () => {
-          document.documentElement.classList.toggle('dark');
-          localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-          if (document.documentElement.classList.contains('dark')) {
-            document.querySelectorAll('.separator path').forEach(p => p.style.fill = 'var(--bg-dark)');
-          } else {
-            document.querySelectorAll('.separator path').forEach(p => p.style.fill = 'var(--bg-light)');
-          }
-        });
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-          document.documentElement.classList.add('dark');
-        } else if (savedTheme === 'light') {
-          document.documentElement.classList.remove('dark'); 
+    // Theme management based on system preference
+    const applySystemTheme = (isDark) => {
+        if (isDark) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
         }
+        // Update separator colors
         if (document.documentElement.classList.contains('dark')) {
             document.querySelectorAll('.separator path').forEach(p => p.style.fill = 'var(--bg-dark)');
         } else {
             document.querySelectorAll('.separator path').forEach(p => p.style.fill = 'var(--bg-light)');
         }
-    }
+    };
+
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    // Apply initial theme based on system preference when script runs
+    applySystemTheme(prefersDarkScheme.matches);
+
+    // Listen for changes in system preference
+    prefersDarkScheme.addEventListener('change', (e) => {
+        applySystemTheme(e.matches);
+    });
+    // End of new theme management logic
 
     document.querySelectorAll('.accordion .acc-header').forEach(btn => {
       btn.addEventListener('click', () => {
