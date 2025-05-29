@@ -60,6 +60,7 @@
         color: var(--text-light);
     }
 
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Inter', sans-serif; 
@@ -306,9 +307,10 @@
     .provider-info p:last-child {
         margin-bottom: 0;
     }
-    .psychology-today-embed-wrapper { /* Wrapper for the script-based embed */
+    .psychology-today-embed-wrapper { 
         margin-top: 1.5rem;
     }
+
 
     @media (max-width: 768px) { 
         .provider-profile {
@@ -381,7 +383,7 @@
 
     <section class="provider-profile" data-aos="fade-up" data-aos-delay="200">
       <div class="provider-photo-container">
-        <img src="talia-sierra.jpg" alt="Talia Sierra, PA-C, DMSc" class="provider-photo">
+        <img src="Talia Mugshot.png" alt="Talia Sierra, PA-C, DMSc" class="provider-photo">
       </div>
       <div class="provider-info">
         <h3>Talia Sierra</h3>
@@ -403,19 +405,21 @@
 
     <section class="provider-profile" data-aos="fade-up" data-aos-delay="100">
       <div class="provider-photo-container">
-        <img src="PROVIDER_STEPHANIE_IMAGE_URL" alt="Stephanie Loya" class="provider-photo">
+        <img src="Heidi Mugshot.png" alt="Heidi Posey, PA-C" class="provider-photo">
       </div>
       <div class="provider-info">
-        <h3>Stephanie Loya</h3>
-        <p class="credentials">APRN, PMHNP-BC</p>
-        <p>Stephanie is a dedicated and board-certified Psychiatric Mental Health Nurse Practitioner. She earned her Master of Science in Nursing with a specialization in Psychiatric Mental Health from a leading institution, driven by her passion for mental health advocacy and patient well-being. Stephanie brings a wealth of experience from diverse clinical environments, including outpatient clinics, community health centers, and telepsychiatry services, where she has worked with individuals across all age groups.</p>
-        <p>Stephanie’s philosophy of care emphasizes a holistic, evidence-based, and collaborative partnership with her patients. She is adept at creating a safe and non-judgmental space where individuals can openly discuss their concerns. Stephanie specializes in diagnosing and managing a spectrum of mental health conditions, including but not limited to, depression, anxiety, bipolar disorder, ADHD, trauma-related disorders, and OCD. She provides comprehensive psychiatric evaluations, medication management, and incorporates therapeutic modalities tailored to individual needs.</p>
-        <p>She is committed to ongoing professional development and staying abreast of the latest advancements in psychiatric care to offer the most effective treatments. Stephanie firmly believes in the resilience of the human spirit and is dedicated to supporting her patients in achieving their mental health goals and improving their overall quality of life.</p>
-        <div class="psychology-today-embed-wrapper"> 
-          <a href="http://www.psychologytoday.com/profile/1179007" class="sx-verified-seal" target="_blank" rel="noopener noreferrer">
-             <img src="https://www.awakeningsmentalhealth.com/images/logo/psychology-today.png" alt="Psychology Today Verified - Stephanie Loya" loading="lazy" style="max-width: 150px; height: auto; border: 1px solid #ddd;">
-          </a>
-          </div>
+        <h3>Heidi Posey</h3>
+        <p class="credentials">PA-C</p>
+        <div class="provider-contact">
+            <p><strong>Call or Text:</strong> <a href="tel:2082950297">(208) 295-0297</a></p>
+            <p><strong>Email:</strong> <a href="mailto:heidi@awakeningsmentalhealth.com">heidi@awakeningsmentalhealth.com</a></p>
+        </div>
+        <p>Need to be heard? That is what I am here for. To listen and to explore what hasn't worked, and what has. Regardless of diagnosis, I want to help you with whatever symptoms are affecting you the most, and are your priority to address.</p>
+        <p>I am well versed in psychopharmacology and want my patients to understand and feel comfortable with all our options, from prescription medications, supplements to brief psychotherapy; your situation is unique and your needs are too. Whether it's your first time reaching out, or if you want someone new to explore diagnosis and medications, it can be intimidating. Lets take those next steps together today.</p>
+        <div class="psychology-today-embed-wrapper">
+            <a href="https://www.psychologytoday.com/profile/1233174" class="sx-verified-seal"></a>
+            <script type="text/javascript" src="https://member.psychologytoday.com/verified-seal.js" data-badge="13" data-id="1233174" data-code="aHR0cHM6Ly93d3cucHN5Y2hvbG9neXRvZGF5LmNvbS9hcGkvdmVyaWZpZWQtc2VhbC9zZWFscy8xMy9wcm9maWxlLzEyMzMxNzQ/Y2FsbGJhY2s9c3hjYWxsYmFjaw==" async defer></script>
+            </div>
       </div>
     </section>
 
@@ -478,7 +482,7 @@
         } else {
             currentBg = getComputedStyle(document.documentElement).getPropertyValue('--bg-light').trim();
         }
-        const separators = document.querySelectorAll('.separator path'); // Check if .separator exists on this page
+        const separators = document.querySelectorAll('.separator path');
         if (separators.length > 0) {
             separators.forEach(p => p.style.fill = currentBg);
         }
@@ -490,7 +494,6 @@
         applySystemTheme(e.matches);
     });
 
-    // Accordion functionality - only needed if accordions exist on this page
     const accordionHeaders = document.querySelectorAll('.accordion .acc-header');
     if (accordionHeaders.length > 0) {
         accordionHeaders.forEach(btn => {
@@ -502,7 +505,6 @@
         });
     }
 
-    // Iframe lazy load - only needed if iframes with these classes exist
     const lazyIframes = document.querySelectorAll('iframe.lazy-embed');
     if (lazyIframes.length > 0) {
         lazyIframes.forEach(iframe => { 
