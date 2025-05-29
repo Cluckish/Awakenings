@@ -131,7 +131,7 @@
         color: white; 
     }
     nav .nav-link:hover { color: var(--accent); }
-    #heart-animation { z-index: 1; display: none; } /* Hidden on this page by default */
+    #heart-animation { z-index: 1; display: none; } 
 
     h2 { 
       font-family: 'Dancing Script', cursive; font-weight: 600;
@@ -140,9 +140,9 @@
       margin-bottom: 2rem; 
       font-size: 2.2rem; 
     }
-    .provider-section-title { /* Class for the main "Meet Our Providers" title */
-        font-size: 2.5rem; /* Larger for main page title */
-        margin-top: 2rem; /* Space above */
+    .provider-section-title { 
+        font-size: 2.5rem; 
+        margin-top: 2rem; 
     }
      #location h2, #booking h2 { /* If these sections were on this page */
         font-size: 2.2rem; 
@@ -194,7 +194,6 @@
       color: white; 
       font-family: 'Dancing Script', cursive; font-weight: 600; font-size: 1.4rem; 
     }
-    /* Services card header text-align was here, removed as it's specific to index */
     .card .content { padding: 1rem; }
     .btn { 
       display: inline-block; 
@@ -270,7 +269,7 @@
         font-size: 1.9rem; 
         margin-top: 0;
         margin-bottom: 0.25rem;
-        text-align: left; /* Override general h2 centering if needed */
+        text-align: left; 
     }
     .provider-info .credentials {
         font-family: 'Inter', sans-serif;
@@ -279,7 +278,7 @@
         margin-bottom: 1rem;
         font-style: italic;
     }
-    .provider-contact { /* New class for contact info */
+    .provider-contact { 
         font-size: 0.9rem;
         margin-bottom: 1.5rem; 
         font-family: 'Inter', sans-serif;
@@ -308,15 +307,10 @@
     .provider-info p:last-child {
         margin-bottom: 0;
     }
-    .psychology-today-seal {
+    .psychology-today-embed-wrapper { /* Wrapper for the new script-based embed */
         margin-top: 1.5rem;
-        display: block; 
     }
-    .psychology-today-seal img {
-        max-width: 150px; 
-        height: auto;
-        border: 1px solid #ddd; 
-    }
+
 
     @media (max-width: 768px) { 
         .provider-profile {
@@ -326,17 +320,17 @@
         .provider-photo-container {
             margin-bottom: 1rem;
         }
-        .provider-info h3, .provider-info .credentials, .provider-contact { /* Center these on mobile stack */
+        .provider-info h3, .provider-info .credentials, .provider-contact { 
             text-align: center; 
         }
-        .provider-info p:not(.credentials) { /* Keep bio text left-aligned */
-            text-align: left;
+        .provider-info p:not(.credentials) { 
+            text-align: left; 
         }
-        .psychology-today-seal {
-            text-align: center; 
+        .psychology-today-embed-wrapper { 
+            text-align: center;
         }
     }
-    /* End of New Styles for Our Providers Page */
+    /* End of Styles for Our Providers Page */
 
     footer#contact {
         text-align:center; 
@@ -397,14 +391,15 @@
         <div class="provider-contact">
             <p><strong>Call or Text:</strong> <a href="tel:2082950297">(208) 295-0297</a></p>
             <p><strong>Email:</strong> <a href="mailto:talia@awakeningsmentalhealth.com">talia@awakeningsmentalhealth.com</a></p>
-            </div>
+            <p><strong>More About Me:</strong> <a href="https://www.psychologytoday.com/us/psychiatrists/talia-sierra-boise-id/1226261" target="_blank" rel="noopener noreferrer">Psychology Today</a></p>
+        </div>
         <p>Welcome! Are you ready to embark on your journey to well-being? I provide compassionate, personalized care tailored to meet your unique needs. Mental health can profoundly impact your well-being and I want to help you develop your individual path to healing.</p>
         <p>As a doctorally trained PA I specialize in understanding the unique nuances of each individual's mental health journey and address concerns such as depression, anxiety, ADHD, bipolar disorder, PTSD, and more. I fully understand the impact mental health disorders can have on all aspects of your life, so reach out and let’s start a conversation!</p>
-        <div class="psychology-today-seal">
-          <a href="https://www.psychologytoday.com/profile/1233174" class="sx-verified-seal" target="_blank" rel="noopener noreferrer">
-            <img src="https://www.awakeningsmentalhealth.com/images/logo/psychology-today.png" alt="Psychology Today Verified - Talia Sierra" loading="lazy">
-          </a>
-        </div>
+        
+        <div class="psychology-today-embed-wrapper">
+            <a href="https://www.psychologytoday.com/profile/1233174" class="sx-verified-seal"></a>
+            <script type="text/javascript" src="https://member.psychologytoday.com/verified-seal.js" data-badge="13" data-id="1233174" data-code="aHR0cHM6Ly93d3cucHN5Y2hvbG9neXRvZGF5LmNvbS9hcGkvdmVyaWZpZWQtc2VhbC9zZWFscy8xMy9wcm9maWxlLzEyMzMxNzQ/Y2FsbGJhY2s9c3hjYWxsYmFjaw==" async defer></script>
+            </div>
       </div>
     </section>
 
@@ -418,11 +413,11 @@
         <p>Stephanie is a dedicated and board-certified Psychiatric Mental Health Nurse Practitioner. She earned her Master of Science in Nursing with a specialization in Psychiatric Mental Health from a leading institution, driven by her passion for mental health advocacy and patient well-being. Stephanie brings a wealth of experience from diverse clinical environments, including outpatient clinics, community health centers, and telepsychiatry services, where she has worked with individuals across all age groups.</p>
         <p>Stephanie’s philosophy of care emphasizes a holistic, evidence-based, and collaborative partnership with her patients. She is adept at creating a safe and non-judgmental space where individuals can openly discuss their concerns. Stephanie specializes in diagnosing and managing a spectrum of mental health conditions, including but not limited to, depression, anxiety, bipolar disorder, ADHD, trauma-related disorders, and OCD. She provides comprehensive psychiatric evaluations, medication management, and incorporates therapeutic modalities tailored to individual needs.</p>
         <p>She is committed to ongoing professional development and staying abreast of the latest advancements in psychiatric care to offer the most effective treatments. Stephanie firmly believes in the resilience of the human spirit and is dedicated to supporting her patients in achieving their mental health goals and improving their overall quality of life.</p>
-        <div class="psychology-today-seal">
+        <div class="psychology-today-embed-wrapper"> 
           <a href="http://www.psychologytoday.com/profile/1179007" class="sx-verified-seal" target="_blank" rel="noopener noreferrer">
-             <img src="https://www.awakeningsmentalhealth.com/images/logo/psychology-today.png" alt="Psychology Today Verified - Stephanie Loya" loading="lazy">
+             <img src="https://www.awakeningsmentalhealth.com/images/logo/psychology-today.png" alt="Psychology Today Verified - Stephanie Loya" loading="lazy" style="max-width: 150px; height: auto; border: 1px solid #ddd;">
           </a>
-        </div>
+          </div>
       </div>
     </section>
 
@@ -485,7 +480,10 @@
         } else {
             currentBg = getComputedStyle(document.documentElement).getPropertyValue('--bg-light').trim();
         }
-        document.querySelectorAll('.separator path').forEach(p => p.style.fill = currentBg);
+        const separators = document.querySelectorAll('.separator path');
+        if (separators.length > 0) {
+            separators.forEach(p => p.style.fill = currentBg);
+        }
     };
 
     const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
@@ -494,24 +492,30 @@
         applySystemTheme(e.matches);
     });
 
-    document.querySelectorAll('.accordion .acc-header').forEach(btn => {
-      btn.addEventListener('click', () => {
-        btn.classList.toggle('active');
-        const body = btn.nextElementSibling;
-        body.style.maxHeight = btn.classList.contains('active') ? body.scrollHeight + 'px' : '0';
-      });
-    });
-
-    document.querySelectorAll('iframe.lazy-embed').forEach(iframe => { 
-      if (iframe.classList.contains('skeleton')) { 
-          iframe.addEventListener('load', () => {
-              iframe.classList.remove('skeleton');
-              if (typeof AOS !== 'undefined') { 
-                AOS.refresh(); 
-              }
+    const accordionHeaders = document.querySelectorAll('.accordion .acc-header');
+    if (accordionHeaders.length > 0) {
+        accordionHeaders.forEach(btn => {
+          btn.addEventListener('click', () => {
+            btn.classList.toggle('active');
+            const body = btn.nextElementSibling;
+            body.style.maxHeight = btn.classList.contains('active') ? body.scrollHeight + 'px' : '0';
           });
-      }
-    });
+        });
+    }
+
+    const lazyIframes = document.querySelectorAll('iframe.lazy-embed');
+    if (lazyIframes.length > 0) {
+        lazyIframes.forEach(iframe => { 
+          if (iframe.classList.contains('skeleton')) { 
+              iframe.addEventListener('load', () => {
+                  iframe.classList.remove('skeleton');
+                  if (typeof AOS !== 'undefined') { 
+                    AOS.refresh(); 
+                  }
+              });
+          }
+        });
+    }
   </script>
 </body>
 </html>
