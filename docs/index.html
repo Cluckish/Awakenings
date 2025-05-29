@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"> <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Awakenings Mental Health</title>
@@ -18,22 +17,23 @@
       --text-light: #F0F3F4;
       --text-dark: #1D2021;
     }
-    /* Dark mode */
-    .dark { /* Applied to html element */
+    html.dark { /* Use html.dark selector for dark mode styles */
       --bg-light: var(--bg-dark);
       --text-dark: var(--text-light);
     }
     html.dark .testimonial-card {
-        background: #2c3032; 
+        background: #2c3032; /* Example dark mode card background */
     }
     html.dark .card {
-        background: var(--bg-dark); 
-        box-shadow: 0 4px 12px rgba(255,255,255,0.03);
+        background: #272b2c; /* Darker than page, lighter than primary for contrast */
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* Dark mode shadow */
     }
     html.dark .accordion .acc-body {
         background: #2c3032;
     }
     html.dark .skeleton { background: #444; }
+    html.dark .separator path { fill: var(--bg-dark); } /* Ensure separators match bg */
+
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -42,68 +42,64 @@
       color: var(--text-dark);
       line-height: 1.6;
       transition: background .3s, color .3s;
-      padding-top: 4px; /* for progress bar */
+      padding-top: 4px; 
     }
-    /* Progress bar */
     #progress-bar {
       position: fixed; top: 0; left: 0;
       height: 4px; background: var(--accent);
       width: 0%; transition: width .1s ease-out;
       z-index: 9999;
     }
-    /* Sticky header */
     header#site-header {
       position: fixed; top: 0; left: 0; width: 100%;
       background: var(--primary) url('https://www.awakeningsmentalhealth.com/images/hero.jpg') center/cover no-repeat;
       height: 60vh; 
       display: flex; 
       align-items: center; 
-      justify-content: center; /* Centers H1 in large view */
+      justify-content: center; 
       transition: all .3s ease;
       z-index: 1000;
-      padding: 0 1rem; /* Base horizontal padding */
+      padding: 0 1rem; 
     }
-    header#site-header::after { /* Overlay for large header image */
+    header#site-header::after {
       content: ''; position: absolute; inset: 0;
       background: rgba(47,62,70,0.6);
-      z-index: 0; /* Behind h1 and nav */
+      z-index: 0;
     }
-
-    /* Scrolled Header specific styles */
     body.scrolled header#site-header {
       height: 60px;
-      justify-content: space-between; /* Key change for layout: H1 left, Nav right */
-      background-image: none; /* Remove hero image */
-      background-color: var(--primary); /* Solid background */
+      justify-content: space-between; 
+      align-items: center; 
+      background-image: none; 
+      background-color: var(--primary); 
       box-shadow: 0 2px 8px rgba(0,0,0,.2);
     }
-
-    /* Site Title (H1) */
     header#site-header h1 {
-      position: relative; /* For z-index and AOS */
+      position: relative; 
       color: white; 
       font-size: 3rem; 
-      z-index: 1; /* Above overlay */
+      z-index: 1; 
       transition: font-size .3s ease;
-      margin: 0; /* Remove default H1 margin */
+      margin: 0; 
     }
     body.scrolled header#site-header h1 {
-      font-size: 1.3rem; /* Adjusted for scrolled state */
+      font-size: 1.3rem; 
+      line-height: 1.2; 
+      margin: 0; 
     }
-
-    /* Navigation */
-    header#site-header nav { /* For large header: absolute positioning */
+    header#site-header nav { 
       position: absolute;
       top: 1rem;
       right: 1rem;
-      z-index: 2; /* Above overlay and H1 if needed, though H1 also has z-index */
+      z-index: 2; 
       display: flex;
       align-items: center;
     }
-    body.scrolled header#site-header nav { /* For scrolled header: part of flex layout */
-      position: static; /* Becomes a flex item */
+    body.scrolled header#site-header nav { 
+      position: static; 
+      display: flex; 
+      align-items: center; 
     }
-
     nav a {
       color: white; 
       margin-left: 0.75rem; 
@@ -112,129 +108,67 @@
       font-size: 0.85rem; 
       transition: color .3s;
       white-space: nowrap;
+      line-height: 1.2; 
+      padding: 0.1em 0; 
     }
-    nav a:first-child {
-        margin-left: 0; /* No left margin for the very first item in nav block */
-    }
+    nav a:first-child { margin-left: 0; }
     nav a:hover { color: var(--accent); }
-    
     nav #theme-toggle {
-      background: var(--accent);
-      border: none;
-      color: white;
-      padding: 0.3rem 0.6rem; 
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.85rem; 
-      font-weight: 600; 
-      margin-left: 0.75rem; 
-      line-height: 1; 
-      white-space: nowrap;
+      background: var(--accent); border: none; color: white;
+      padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer;
+      font-size: 0.85rem; font-weight: 600; margin-left: 0.75rem; 
+      line-height: 1; white-space: nowrap;
     }
-    nav #theme-toggle:hover {
-        opacity: .9;
-    }
+    nav #theme-toggle:hover { opacity: .9; }
+    #heart-animation { z-index: 1; }
 
-    /* Lottie Animation (relative to header) */
-    #heart-animation { /* Stays absolutely positioned to header */
-        z-index: 1; /* Ensure it's above background/overlay */
-    }
-
-    /* Media Query for smaller mobile screens */
     @media (max-width: 480px) {
-      header#site-header {
-        padding: 0 0.5rem; /* Reduce padding on very small screens */
-      }
+      header#site-header { padding: 0 0.5rem; }
       body.scrolled header#site-header h1 {
-        font-size: 1.1rem; /* Further reduce title size */
+        font-size: 1.1rem; 
+        line-height: 1.2; 
       }
-      nav a, nav #theme-toggle {
-        font-size: 0.7rem; /* Further reduce nav item font size */
-        margin-left: 0.4rem; /* Further reduce margin */
+      nav a {
+        font-size: 0.7rem; 
+        margin-left: 0.4rem; 
+        line-height: 1.2; 
       }
       nav #theme-toggle {
-        padding: 0.25rem 0.5rem; /* Adjust padding for toggle */
+        font-size: 0.7rem;
+        padding: 0.25rem 0.4rem; 
+        margin-left: 0.4rem;
+        line-height: 1; 
       }
-      header#site-header nav { /* For large header on small screens */
-        right: 0.5rem; 
-      }
-      nav a:first-child { /* Ensure no margin on very small screens as well */
-        margin-left: 0;
-      }
+      header#site-header nav { right: 0.5rem; }
+      nav a:first-child { margin-left: 0; }
     }
 
-    .container { /* Main content container */
+    .container { 
       max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;
+      padding-top: 60vh; /* Initial padding for large header */
     }
-    .grid-2 {
-      display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-      gap: 2rem; align-items: start; margin-bottom: 3rem;
+    body.scrolled .container {
+      padding-top: 70px; /* Padding for scrolled header (60px header + 10px buffer) */
     }
-    .card {
-      background: var(--bg-light); border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden;
-    }
-    .card header {
-      padding: 1rem; background: var(--secondary); color: white;
-      font-weight: 600; font-size: 1.2rem;
-    }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 2rem; align-items: start; margin-bottom: 3rem; }
+    .card { background: var(--bg-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
+    .card header { padding: 1rem; background: var(--secondary); color: white; font-weight: 600; font-size: 1.2rem; }
     .card .content { padding: 1rem; }
-    .btn {
-      display: inline-block; background: var(--accent);
-      color: white; padding: 0.75rem 1.5rem;
-      border-radius: 4px; text-decoration: none;
-      font-weight: 600; margin: 0.5rem;
-      transition: background .3s, opacity .3s;
-    }
+    .btn { display: inline-block; background: var(--accent); color: white; padding: 0.75rem 1.5rem; border-radius: 4px; text-decoration: none; font-weight: 600; margin: 0.5rem; transition: background .3s, opacity .3s; }
     .btn.secondary { background: var(--secondary); }
     .btn:hover { opacity: .9; }
     .separator { display: block; width: 100%; height: 80px; }
-    .accordion .acc-header {
-      background: var(--secondary); color: white;
-      cursor: pointer; padding: 1rem; border: none; width: 100%;
-      text-align: left; outline: none; font-size: 1rem; transition: background .3s;
-    }
+    .separator path { transition: fill .3s; } /* Smooth transition for separator fill on theme change */
+    .accordion .acc-header { background: var(--secondary); color: white; cursor: pointer; padding: 1rem; border: none; width: 100%; text-align: left; outline: none; font-size: 1rem; transition: background .3s; }
     .accordion .acc-header.active { background: var(--accent); }
-    .accordion .acc-body {
-      max-height: 0; overflow: hidden;
-      transition: max-height .3s ease;
-      background: white; padding: 0 1rem;
-    }
+    .accordion .acc-body { max-height: 0; overflow: hidden; transition: max-height .3s ease; background: white; padding: 0 1rem; }
     .accordion .acc-body p { padding: 1rem 0; }
     .skeleton { background: #ddd; position: relative; }
-
-    #testimonials { 
-        padding: 2rem 0; 
-    }
-    #testimonials h2 { 
-        text-align: center;
-        margin-bottom: 2rem;
-        font-size: 1.8rem; 
-        color: var(--text-dark);
-    }
-    .testimonial-card {
-      background: white; 
-      border-radius: 8px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      font-style: italic;
-      text-align: center;
-      margin-bottom: 1.5rem; 
-      max-width: 650px; 
-      margin-left: auto; 
-      margin-right: auto; 
-    }
-    .testimonial-card:last-child {
-      margin-bottom: 0; 
-    }
-
-    #to-top {
-      position: fixed; bottom: 2rem; right: 2rem;
-      background: var(--accent); border: none; color: white;
-      padding: 0.75rem; border-radius: 50%; font-size: 1.2rem;
-      cursor: pointer; opacity: 0; transition: opacity .3s;
-      z-index: 1000;
-    }
+    #testimonials { padding: 2rem 0; }
+    #testimonials h2 { text-align: center; margin-bottom: 2rem; font-size: 1.8rem; color: var(--text-dark); }
+    .testimonial-card { background: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); font-style: italic; text-align: center; margin-bottom: 1.5rem; max-width: 650px; margin-left: auto; margin-right: auto; }
+    .testimonial-card:last-child { margin-bottom: 0; }
+    #to-top { position: fixed; bottom: 2rem; right: 2rem; background: var(--accent); border: none; color: white; padding: 0.75rem; border-radius: 50%; font-size: 1.2rem; cursor: pointer; opacity: 0; transition: opacity .3s; z-index: 1000; }
     body.scrolled #to-top { opacity: 1; }
   </style>
 </head>
@@ -255,25 +189,12 @@
   </header>
 
   <main class="container">
-
     <section id="services" class="grid-2" data-aos="fade-up">
-      <div class="card" data-aos="zoom-in">
-        <header>Individual Therapy</header>
-        <div class="content">
-          <p>Personalized support for anxiety, depression, and life transitions.</p>
-        </div>
-      </div>
-      <div class="card" data-aos="zoom-in" data-aos-delay="100">
-        <header>Medication Management</header>
-        <div class="content">
-          <p>Expert psychiatric care to optimize your treatment plan.</p>
-        </div>
-      </div>
+      <div class="card" data-aos="zoom-in"> <header>Individual Therapy</header> <div class="content"> <p>Personalized support for anxiety, depression, and life transitions.</p> </div> </div>
+      <div class="card" data-aos="zoom-in" data-aos-delay="100"> <header>Medication Management</header> <div class="content"> <p>Expert psychiatric care to optimize your treatment plan.</p> </div> </div>
     </section>
 
-    <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none">
-      <path d="M0,0 C300,100 900,0 1200,100 L1200,0 L0,0 Z" fill="var(--bg-light)"/>
-    </svg>
+    <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none"> <path d="M0,0 C300,100 900,0 1200,100 L1200,0 L0,0 Z" fill="var(--bg-light)"/> </svg>
 
     <section id="testimonials" data-aos="fade-up">
       <h2>What Our Clients Say</h2>
@@ -282,66 +203,31 @@
       <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">“I finally feel heard and supported.” — K. Lee</div>
     </section>
 
-    <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none">
-      <path d="M0,100 C300,0 900,100 1200,0 L1200,100 L0,100 Z" fill="var(--bg-light)"/>
-    </svg>
+    <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none"> <path d="M0,100 C300,0 900,100 1200,0 L1200,100 L0,100 Z" fill="var(--bg-light)"/> </svg>
 
     <section id="location" class="grid-2" data-aos="fade-right">
-      <div>
-        <h2>Our Location</h2>
-        <address>
-          6126 W State St #104<br>
-          Boise, ID 83703
-        </address>
-      </div>
-      <iframe
-        class="skeleton lazy-embed"
-        loading="lazy"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3080.1234567890123!2d-116.253456!3d43.6034567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54aef5e4b2c7f789%3A0x123456789abcdef!2s6126%20W%20State%20St%20%23104%2C%20Boise%2C%20ID%2083703!5e0!3m2!1sen!2sus!4v1650000000000" width="100%" height="250" style="border:0;" allowfullscreen>
-      </iframe>
+      <div> <h2>Our Location</h2> <address> 6126 W State St #104<br> Boise, ID 83703 </address> </div>
+      <iframe class="skeleton lazy-embed" loading="lazy" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3080.1234567890123!2d-116.253456!3d43.6034567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54aef5e4b2c7f789%3A0x123456789abcdef!2s6126%20W%20State%20St%20%23104%2C%20Boise%2C%20ID%2083703!5e0!3m2!1sen!2sus!4v1650000000000" width="100%" height="250" style="border:0;" allowfullscreen> </iframe>
     </section>
 
-    <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none">
-      <path d="M0,0 C300,100 900,0 1200,100 L1200,0 L0,0 Z" fill="var(--bg-light)"/>
-    </svg>
+    <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none"> <path d="M0,0 C300,100 900,0 1200,100 L1200,0 L0,0 Z" fill="var(--bg-light)"/> </svg>
 
     <section id="insurance" data-aos="fade-left">
       <div class="accordion card">
-        <button class="acc-header">What insurances do you accept?</button>
-        <div class="acc-body">
-          <p>Blue Cross, Select Health, Aetna, …</p>
-        </div>
-        <button class="acc-header">How do I verify coverage?</button>
-        <div class="acc-body">
-          <p>Contact our office <a href="tel:2082950297" style="color: var(--accent);">(208)295-0297</a></p>
-        </div>
+        <button class="acc-header">What insurances do you accept?</button> <div class="acc-body"> <p>Blue Cross, Select Health, Aetna, …</p> </div>
+        <button class="acc-header">How do I verify coverage?</button> <div class="acc-body"> <p>Contact our office <a href="tel:2082950297" style="color: var(--accent);">(208)295-0297</a></p> </div>
       </div>
     </section>
 
-    <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none">
-      <path d="M0,100 C300,0 900,100 1200,0 L1200,100 L0,100 Z" fill="var(--bg-light)"/>
-    </svg>
+    <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none"> <path d="M0,100 C300,0 900,100 1200,0 L1200,100 L0,100 Z" fill="var(--bg-light)"/> </svg>
 
     <section id="booking" data-aos="zoom-in-up" style="text-align:center; margin-bottom:3rem;">
       <h2>Book an Appointment</h2>
-      <div class="card">
-        <div class="content">
-          <a href="https://www.therapyportal.com/p/awakenings83703/"
-             class="btn" 
-             target="_blank"
-             rel="noopener noreferrer">
-            Patient Portal
-          </a>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeYABYxDoscWL3jH-SNU51X0hgomcb0bEqshRIUnCRg7aSgA/viewform"
-             class="btn secondary" 
-             target="_blank"
-             rel="noopener noreferrer">
-            Appointment Interest Form
-          </a>
-        </div>
-      </div>
+      <div class="card"> <div class="content">
+          <a href="https://www.therapyportal.com/p/awakenings83703/" class="btn" target="_blank" rel="noopener noreferrer"> Patient Portal </a>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeYABYxDoscWL3jH-SNU51X0hgomcb0bEqshRIUnCRg7aSgA/viewform" class="btn secondary" target="_blank" rel="noopener noreferrer"> Appointment Interest Form </a>
+      </div> </div>
     </section>
-
   </main>
 
   <button id="to-top">▲</button>
@@ -370,24 +256,17 @@
         if(heartAnimContainer) heartAnimContainer.style.display = 'none';
     }
 
-    const siteHeader = document.getElementById('site-header');
+    // const siteHeader = document.getElementById('site-header'); // Not strictly needed anymore by JS below
     const progressBar = document.getElementById('progress-bar');
     const toTop = document.getElementById('to-top');
-    const mainContainer = document.querySelector('main.container');
+    // const mainContainer = document.querySelector('main.container'); // No longer needed by JS
 
-    function adjustMainContentPadding() {
-      if (siteHeader && mainContainer) {
-        mainContainer.style.paddingTop = siteHeader.offsetHeight + 'px';
-      }
-    }
-
-    window.addEventListener('load', adjustMainContentPadding);
-    window.addEventListener('resize', adjustMainContentPadding);
+    // Removed adjustMainContentPadding function and its calls from load and resize
 
     window.addEventListener('scroll', () => {
       const scrolled = window.scrollY > 50;
       document.body.classList.toggle('scrolled', scrolled);
-      adjustMainContentPadding(); 
+      // adjustMainContentPadding(); // REMOVED
       if (document.body.scrollHeight > window.innerHeight) { 
         const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
         progressBar.style.width = pct + '%';
@@ -404,11 +283,26 @@
           localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
         });
         const savedTheme = localStorage.getItem('theme');
+        // Apply theme on load
         if (savedTheme === 'dark') {
           document.documentElement.classList.add('dark');
         } else if (savedTheme === 'light') {
           document.documentElement.classList.remove('dark'); 
         }
+        // To reflect theme change on SVG separators instantly
+        if (document.documentElement.classList.contains('dark')) {
+            document.querySelectorAll('.separator path').forEach(p => p.style.fill = 'var(--bg-dark)');
+        } else {
+            document.querySelectorAll('.separator path').forEach(p => p.style.fill = 'var(--bg-light)');
+        }
+        // Add listener for future toggles
+        toggle.addEventListener('click', () => {
+             if (document.documentElement.classList.contains('dark')) {
+                document.querySelectorAll('.separator path').forEach(p => p.style.fill = 'var(--bg-dark)');
+            } else {
+                document.querySelectorAll('.separator path').forEach(p => p.style.fill = 'var(--bg-light)');
+            }
+        });
     }
 
     document.querySelectorAll('.accordion .acc-header').forEach(btn => {
