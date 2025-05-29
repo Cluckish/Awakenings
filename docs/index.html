@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Awakenings Mental Health</title>
+  <title>Awakenings Mental Health</title> {/* Changed Title */}
 
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
@@ -15,10 +15,10 @@
       --bg-light: #f1f1f2;    
       --text-dark: #1c1c1c;   
       --heading-color: #27296d; 
-      --theme-blue-static: #27296d; /* Static blue, doesn't change in dark mode */
+      --theme-blue-static: #27296d; 
       --bg-dark: #1D2021;
       --text-light: #F0F3F4;
-      /* --secondary-original: #84A98C; /* No longer primarily used for backgrounds */
+      --secondary-color-for-buttons: #84A98C; /* Can be used if .btn.secondary needs distinct style */
     }
     html.dark { 
       --bg-light: var(--bg-dark);
@@ -26,18 +26,18 @@
       --heading-color: var(--text-light); 
     }
     html.dark .testimonial-card { background: #2c3032; }
-    html.dark .card:not(.no-dark-override) { 
+    html.dark .card:not(.no-dark-override){ 
         background: #272b2c; 
         box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
     }
     html.dark .card header,
     html.dark .accordion .acc-header,
-    html.dark .btn, html.dark .btn.secondary, /* Ensure buttons use static blue */
+    html.dark .btn, html.dark .btn.secondary, 
     html.dark #to-top {
-        background: var(--theme-blue-static); /* Keep these elements blue in dark mode */
-        color: white; /* Ensure text on them is white */
+        background: var(--theme-blue-static); 
+        color: white; 
     }
-    html.dark .accordion .acc-header.active { /* Active accordion still uses accent */
+    html.dark .accordion .acc-header.active {
         background: var(--accent);
     }
     html.dark .accordion .acc-body { background: #2c3032; }
@@ -48,14 +48,13 @@
         background-color: var(--bg-dark); 
         color: var(--text-light);    
     }
-    html.dark footer#contact { /* Footer text in dark mode */
+    html.dark footer#contact { 
         color: var(--text-light);
         background-color: var(--primary); /* Darker footer bg for dark mode */
     }
-    html.dark footer#contact a {
+    html.dark footer#contact .footer-text-content a { /* Ensure footer links are styled for dark mode */
         color: var(--accent); 
     }
-
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -78,12 +77,11 @@
     body.scrolled header#site-header {
       height: 60px; justify-content: space-between; align-items: center; 
       background-image: none; 
-      background-color: var(--theme-blue-static); /* Use static blue for scrolled header */ 
+      background-color: var(--theme-blue-static); 
       box-shadow: 0 2px 8px rgba(0,0,0,.2);
     }
-    header#site-header h1 { /* Unscrolled, large header title */
-      position: relative; 
-      color: var(--theme-blue-static); /* MODIFIED: Static blue for sketch background */
+    header#site-header h1 {
+      position: relative; color: var(--theme-blue-static); 
       font-family: 'Dancing Script', cursive; font-weight: 600;
       font-size: 3rem; z-index: 1; 
       transition: font-size .3s ease, color .3s ease; 
@@ -91,7 +89,7 @@
       display: flex; 
       align-items: center; 
     }
-    body.scrolled header#site-header h1 { /* Scrolled header title */
+    body.scrolled header#site-header h1 {
       font-size: 1.5rem; line-height: 1.2; margin: 0; 
       color: white; 
     }
@@ -109,33 +107,39 @@
     header#site-header h1 .title-short { display: none; }
     header#site-header h1 .title-full { display: inline; }
 
-    header#site-header nav { /* Unscrolled, large header nav */
+    header#site-header nav { 
       position: absolute; top: 1rem; right: 1rem;
       z-index: 1002; display: flex; align-items: center;
       gap: 0.75rem; 
     }
-    body.scrolled header#site-header nav { /* Scrolled header nav */
-      position: static; gap: 0.6rem; /* Slightly reduced default gap for scrolled */
+    body.scrolled header#site-header nav { 
+      position: static; gap: 0.6rem; 
     }
     nav .nav-link { 
-      color: var(--theme-blue-static); /* MODIFIED: Static blue for sketch background */
+      color: var(--theme-blue-static); 
       text-decoration: none; font-family: 'Inter', sans-serif; 
       font-weight: 600; font-size: 0.85rem; 
       transition: color .3s; white-space: nowrap;
       line-height: 1.2; padding: 0.2em 0.1em; display: inline-block; 
     }
-    body.scrolled header#site-header nav .nav-link { /* Scrolled nav links */
+    body.scrolled header#site-header nav .nav-link {
         color: white; 
     }
     nav .nav-link:hover { color: var(--accent); }
-    #heart-animation { z-index: 1; }
+    #heart-animation { z-index: 1; } /* Lottie heart visible on homepage */
 
     h2 { 
       font-family: 'Dancing Script', cursive; font-weight: 600;
-      color: var(--heading-color); /* Will be light in dark mode */
+      color: var(--heading-color);
+      text-align: center; 
+      margin-bottom: 2rem; 
+      font-size: 2.2rem; 
     }
+    /* Specific h2s if needed */
     #testimonials h2, #location h2, #booking h2 { 
-        font-size: 2rem; margin-bottom: 2rem; text-align: center; 
+        font-size: 2.2rem; 
+        margin-bottom: 2rem; 
+        text-align: center; 
     }
      #location h2 { text-align: center; }
 
@@ -143,34 +147,32 @@
       header#site-header { padding: 0 0.5rem; }
       header#site-header h1 { font-size: 2.2rem; } 
       body.scrolled header#site-header h1 { 
-        font-size: 1rem; /* Further reduced for "Awakenings" text */
+        font-size: 1rem; 
         line-height: 1.2; 
         white-space: nowrap;    
         overflow: hidden;       
         text-overflow: ellipsis;
-        margin-right: 3px; /* Further reduced */      
+        margin-right: 3px;      
         min-width: 0; 
         flex-shrink: 1; 
         display: flex; align-items: center;
       }
       body.scrolled header#site-header h1 .header-favicon {
-          width: 28px; /* Slightly smaller favicon on mobile */
-          height: 28px;
-          margin-right: 5px; /* Reduced margin */
+          width: 28px; height: 28px;
+          margin-right: 5px; 
       }
       body.scrolled header#site-header h1 .title-full { display: none; }
       body.scrolled header#site-header h1 .title-short { display: inline; }
-      
-      #services .card header { text-align: center; }
+            
+      #services .card header { text-align: center; } 
       
       header#site-header nav { 
-        gap: 0.2rem; /* Further Reduced gap */
+        gap: 0.25rem; 
         right: 0.5rem; 
         flex-shrink: 0; 
       }
       nav .nav-link { 
-        font-size: 0.7rem; /* Further reduced */
-        padding: 0.2em 0; /* Minimized vertical padding */
+        font-size: 0.75rem; 
       }
     }
 
@@ -203,8 +205,8 @@
     }
     .btn:hover { opacity: .9; }
     .btn:active, .btn.secondary:active { 
-        background-color: var(--bg-light); /* Page's light bg */
-        color: var(--theme-blue-static);    /* Blue text */
+        background-color: var(--bg-light); 
+        color: var(--theme-blue-static);    
         opacity: 1;
     }
     .booking-button-container { padding: 1rem; }
@@ -235,61 +237,38 @@
       transition: background-color .2s, opacity .3s; 
     }
     #to-top:active { 
-        background-color: var(--bg-light); /* Page's light bg */
-        color: var(--theme-blue-static);    /* Blue text */
+        background-color: var(--bg-light); 
+        color: var(--theme-blue-static);    
         opacity: 1;
     }
     body.scrolled #to-top { opacity: 1; }
     section#location address { text-align: center; margin-top: 0.5rem; }
     
-    /* Footer Styling for Background Image and Text */
     footer#contact {
         text-align:center; 
-        padding: 2rem 1rem; /* Base padding for content */
-        background-image: url('Rectangle Logo.jpg');
-        background-size: contain; 
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-color: var(--bg-light); /* Fallback, or page background */
+        padding: 2rem 1rem;
+        background-color: var(--bg-light); 
         position: relative;
-        color: var(--text-dark); /* Default text color for footer */
-        min-height: 280px; /* Adjust to ensure logo is visible and space for text */
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end; /* Push text content towards bottom */
-        align-items: center;
+        color: var(--text-dark); 
     }
-    /* Wrapper for footer text to apply a backdrop if needed over complex image */
-    .footer-text-content {
-        background-color: rgba(255, 255, 255, 0.7); /* Light semi-transparent backdrop for light mode */
-        padding: 1rem;
-        border-radius: 8px;
-        margin-top: 1rem; /* Space from where logo might end */
-        display: inline-block; /* Shrink to content */
+    .footer-logo-container { 
+        padding-bottom: 1.5rem;
     }
-    html.dark .footer-text-content {
-        background-color: rgba(0, 0, 0, 0.6); /* Dark semi-transparent backdrop for dark mode */
+    .footer-logo-container img {
+        max-width: 250px; 
+        height: auto;
+        display: block; 
+        margin: 0 auto; 
     }
-    footer#contact p {
+    .footer-text-content p {
         margin-bottom: 0.5rem;
     }
-    footer#contact p:last-child {
+    .footer-text-content p:last-child {
         margin-bottom: 0;
     }
     footer#contact a {
         color: var(--accent); 
     }
-    html.dark footer#contact {
-        background-color: var(--bg-dark); /* Fallback for dark mode */
-    }
-    html.dark footer#contact .footer-text-content p, 
-    html.dark footer#contact .footer-text-content a {
-        color: var(--text-light); /* Ensure text is light */
-    }
-    html.dark footer#contact .footer-text-content a {
-        color: var(--accent); /* Keep accent for links if desired, or use text-light */
-    }
-
   </style>
 </head>
 <body>
@@ -301,17 +280,27 @@
       <span class="title-short">Awakenings</span>
     </h1> 
     <nav>
-      <a href="https://www.awakeningsmentalhealth.com/our-practice" class="nav-link" target="_top">Home</a>
-      <a href="https://www.awakeningsmentalhealth.com/our-providers" class="nav-link" target="_top">Our Providers</a>
-      <a href="https://www.awakeningsmentalhealth.com/articles" class="nav-link" target="_top">Articles</a>
+      <a href="index.html" class="nav-link" target="_top">Home</a>
+      <a href="our-providers.html" class="nav-link" target="_top">Our Providers</a>
+      <a href="articles.html" class="nav-link" target="_top">Articles</a>
     </nav>
     <div id="heart-animation" style="position:absolute; bottom:1rem; right:1rem; width:60px; height:60px;"></div>
   </header>
 
   <main class="container">
     <section id="services" class="grid-2" data-aos="fade-up">
-      <div class="card" data-aos="zoom-in"> <header>Individual Therapy</header> <div class="content"> <p>Personalized support for anxiety, depression, and life transitions.</p> </div> </div>
-      <div class="card" data-aos="zoom-in" data-aos-delay="100"> <header>Medication Management</header> <div class="content"> <p>Expert psychiatric care to optimize your treatment plan.</p> </div> </div>
+      <div class="card" data-aos="zoom-in">
+        <header>Individual Therapy</header>
+        <div class="content">
+          <p>Personalized support for anxiety, depression, and life transitions.</p>
+        </div>
+      </div>
+      <div class="card" data-aos="zoom-in" data-aos-delay="100">
+        <header>Medication Management</header>
+        <div class="content">
+          <p>Expert psychiatric care to optimize your treatment plan.</p>
+        </div>
+      </div>
     </section>
 
     <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none"> <path d="M0,0 C300,100 900,0 1200,100 L1200,0 L0,0 Z" fill="var(--bg-light)"/> </svg>
@@ -354,11 +343,14 @@
           <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeYABYxDoscWL3jH-SNU51X0hgomcb0bEqshRIUnCRg7aSgA/viewform" class="btn secondary" target="_top" rel="noopener noreferrer"> Appointment Interest Form </a>
       </div>
     </section>
-    </main>
+  </main>
 
   <button id="to-top">▲</button>
 
   <footer id="contact" data-aos="fade-up">
+    <div class="footer-logo-container">
+        <img src="Rectangle Logo.jpg" alt="Awakenings Mental Health Logo">
+    </div>
     <div class="footer-text-content">
       <p>© <span id="current-year">2025</span> Awakenings Mental Health</p>
       <p>Questions? <a href="mailto:admin@awakeningsmentalhealth.com">admin@awakeningsmentalhealth.com</a> <a href="tel:2082950297">(208)295-0297</a></p>
@@ -373,11 +365,15 @@
     AOS.init({ duration: 600, once: true });
 
     try {
-        lottie.loadAnimation({
-          container: document.getElementById('heart-animation'),
-          path: 'https://assets7.lottiefiles.com/packages/lf20_heart.json', 
-          renderer: 'svg', loop: true, autoplay: true
-        });
+        const heartAnimContainer = document.getElementById('heart-animation');
+        // Only load Lottie if the container is intended to be visible
+        if(heartAnimContainer && (typeof heartAnimContainer.style.display === 'undefined' || heartAnimContainer.style.display !== 'none')) { 
+            lottie.loadAnimation({
+              container: heartAnimContainer,
+              path: 'https://assets7.lottiefiles.com/packages/lf20_heart.json', 
+              renderer: 'svg', loop: true, autoplay: true
+            });
+        }
     } catch (e) {
         console.error("Lottie animation could not be loaded.", e);
         const heartAnimContainer = document.getElementById('heart-animation');
@@ -401,9 +397,16 @@
         if (typeof AOS !== 'undefined') { 
             AOS.refreshHard(); 
         }
-        // Update separator colors based on the current theme
-        const currentBg = getComputedStyle(document.documentElement).getPropertyValue('--bg-light').trim();
-        document.querySelectorAll('.separator path').forEach(p => p.style.fill = currentBg);
+        let currentBg;
+        if (document.documentElement.classList.contains('dark')) {
+            currentBg = getComputedStyle(document.documentElement).getPropertyValue('--bg-dark').trim();
+        } else {
+            currentBg = getComputedStyle(document.documentElement).getPropertyValue('--bg-light').trim();
+        }
+        const separators = document.querySelectorAll('.separator path');
+        if (separators.length > 0) {
+            separators.forEach(p => p.style.fill = currentBg);
+        }
     };
 
     const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
@@ -412,24 +415,30 @@
         applySystemTheme(e.matches);
     });
 
-    document.querySelectorAll('.accordion .acc-header').forEach(btn => {
-      btn.addEventListener('click', () => {
-        btn.classList.toggle('active');
-        const body = btn.nextElementSibling;
-        body.style.maxHeight = btn.classList.contains('active') ? body.scrollHeight + 'px' : '0';
-      });
-    });
-
-    document.querySelectorAll('iframe.lazy-embed').forEach(iframe => { 
-      if (iframe.classList.contains('skeleton')) { 
-          iframe.addEventListener('load', () => {
-              iframe.classList.remove('skeleton');
-              if (typeof AOS !== 'undefined') { 
-                AOS.refresh(); 
-              }
+    const accordionHeaders = document.querySelectorAll('.accordion .acc-header');
+    if (accordionHeaders.length > 0) {
+        accordionHeaders.forEach(btn => {
+          btn.addEventListener('click', () => {
+            btn.classList.toggle('active');
+            const body = btn.nextElementSibling;
+            body.style.maxHeight = btn.classList.contains('active') ? body.scrollHeight + 'px' : '0';
           });
-      }
-    });
+        });
+    }
+
+    const lazyIframes = document.querySelectorAll('iframe.lazy-embed');
+    if (lazyIframes.length > 0) {
+        lazyIframes.forEach(iframe => { 
+          if (iframe.classList.contains('skeleton')) { 
+              iframe.addEventListener('load', () => {
+                  iframe.classList.remove('skeleton');
+                  if (typeof AOS !== 'undefined') { 
+                    AOS.refresh(); 
+                  }
+              });
+          }
+        });
+    }
   </script>
 </body>
 </html>
