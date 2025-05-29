@@ -7,6 +7,10 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- AOS (Animate On Scroll) -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+  <!-- Swiper.js -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
 
   <style>
     :root {
@@ -14,54 +18,78 @@
       --secondary: #84A98C;
       --accent: #E07A5F;
       --bg-light: #F0F3F4;
+      --bg-dark: #1D2021;
+      --text-light: #F0F3F4;
       --text-dark: #1D2021;
+    }
+    /* Dark mode */
+    .dark {
+      --bg-light: var(--bg-dark);
+      --text-dark: var(--text-light);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Inter', sans-serif;
-      color: var(--text-dark);
       background: var(--bg-light);
+      color: var(--text-dark);
       line-height: 1.6;
+      transition: background .3s, color .3s;
+      padding-top: 4px; /* for progress bar */
     }
+    /* Progress bar */
+    #progress-bar {
+      position: fixed; top: 0; left: 0;
+      height: 4px; background: var(--accent);
+      width: 0%; transition: width .1s ease-out;
+      z-index: 9999;
+    }
+    /* Sticky header */
     header {
+      position: fixed; top: 0; left: 0; width: 100%;
       background: var(--primary) url('https://www.awakeningsmentalhealth.com/images/hero.jpg') center/cover no-repeat;
-      height: 60vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
+      height: 60vh; display: flex; align-items: center; justify-content: center;
+      transition: all .3s ease;
+      z-index: 1000;
+    }
+    body.scrolled header {
+      background: var(--primary) center/cover no-repeat;
+      height: 60px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.2);
     }
     header::after {
-      content: '';
-      position: absolute; inset: 0;
+      content: ''; position: absolute; inset: 0;
       background: rgba(47,62,70,0.6);
     }
     header h1 {
-      position: relative;
-      font-size: 3rem;
-      color: white;
-      z-index: 1;
+      position: relative; color: white; font-size: 3rem; z-index: 1;
+      transition: font-size .3s ease;
     }
+    body.scrolled header h1 { font-size: 1.5rem; }
     nav {
-      position: absolute;
-      top: 1rem; right: 2rem;
-      z-index: 2;
+      position: absolute; top: 1rem; right: 2rem; z-index: 2;
     }
     nav a {
-      color: white; margin-left: 1.5rem;
-      text-decoration: none; font-weight: 600;
+      color: white; margin-left: 1.5rem; text-decoration: none; font-weight: 600;
+      font-size: 0.9rem; transition: color .3s;
+    }
+    nav a:hover { color: var(--accent); }
+    /* Dark mode toggle */
+    #theme-toggle {
+      position: absolute; top: 1rem; left: 2rem;
+      background: var(--accent); border: none;
+      color: white; padding: 0.5rem; border-radius: 4px;
+      cursor: pointer; font-size: 0.8rem; z-index: 2;
     }
     .container {
-      max-width: 1000px; margin: 2rem auto; padding: 0 1rem;
+      max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;
     }
     .grid-2 {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
-      align-items: start; margin-bottom: 3rem;
+      display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 2rem; align-items: start; margin-bottom: 3rem;
     }
     .card {
-      background: white; border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      overflow: hidden;
+      background: var(--bg-light); border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden;
     }
     .card header {
       padding: 1rem; background: var(--secondary); color: white;
@@ -72,39 +100,74 @@
       display: inline-block; background: var(--accent);
       color: white; padding: 0.75rem 1.5rem;
       border-radius: 4px; text-decoration: none;
-      font-weight: 600; margin-top: 1rem;
+      font-weight: 600; margin: 0.5rem;
+      transition: background .3s;
     }
-    footer {
-      background: var(--primary); color: white;
-      text-align: center; padding: 1rem 0;
-      font-size: 0.9rem;
+    .btn.secondary { background: var(--secondary); }
+    .btn:hover { opacity: .9; }
+    /* SVG separators */
+    .separator { display: block; width: 100%; height: 80px; }
+    /* Accordion (FAQ) */
+    .accordion .acc-header {
+      background: var(--secondary); color: white;
+      cursor: pointer; padding: 1rem; border: none; width: 100%;
+      text-align: left; outline: none; font-size: 1rem; transition: background .3s;
     }
+    .accordion .acc-header.active { background: var(--accent); }
+    .accordion .acc-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height .3s ease;
+      background: white; padding: 0 1rem;
+    }
+    .accordion .acc-body p { padding: 1rem 0; }
+    /* Skeleton for lazy embeds */
+    .skeleton { background: #ddd; position: relative; }
+    /* Testimonials (Swiper) */
+    .swiper-container { width: 100%; padding: 2rem 0; }
+    .swiper-slide {
+      background: white; border-radius: 8px; padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      font-style: italic; text-align: center;
+    }
+    /* Back to Top */
+    #to-top {
+      position: fixed; bottom: 2rem; right: 2rem;
+      background: var(--accent); border: none; color: white;
+      padding: 0.75rem; border-radius: 50%; font-size: 1.2rem;
+      cursor: pointer; opacity: 0; transition: opacity .3s;
+      z-index: 1000;
+    }
+    body.scrolled #to-top { opacity: 1; }
   </style>
 </head>
 <body>
 
-  <!-- Hero & Navigation -->
-  <header>
+  <div id="progress-bar"></div>
+
+  <header id="site-header">
+    <button id="theme-toggle">Toggle Dark</button>
     <nav>
       <a href="#services">Services</a>
       <a href="#insurance">Insurance</a>
       <a href="#booking">Book</a>
       <a href="#contact">Contact</a>
     </nav>
-    <h1>Awakenings Mental Health</h1>
+    <h1 data-aos="fade-down">Awakenings Mental Health</h1>
+    <!-- Lottie micro-animation next to title -->
+    <div id="heart-animation" style="position:absolute; bottom:1rem; right:1rem; width:60px; height:60px;"></div>
   </header>
 
   <main class="container">
 
-    <!-- Services Overview -->
-    <section id="services" class="grid-2">
-      <div class="card">
+    <!-- Services -->
+    <section id="services" class="grid-2" data-aos="fade-up">
+      <div class="card" data-aos="zoom-in">
         <header>Individual Therapy</header>
         <div class="content">
           <p>Personalized support for anxiety, depression, and life transitions.</p>
         </div>
       </div>
-      <div class="card">
+      <div class="card" data-aos="zoom-in" data-aos-delay="100">
         <header>Medication Management</header>
         <div class="content">
           <p>Expert psychiatric care to optimize your treatment plan.</p>
@@ -112,8 +175,26 @@
       </div>
     </section>
 
-    <!-- Address + Map Embed -->
-    <section class="grid-2">
+    <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none">
+      <path d="M0,0 C300,100 900,0 1200,100 L1200,0 L0,0 Z" fill="var(--bg-light)"/>
+    </svg>
+
+    <!-- Testimonials Carousel -->
+    <section id="testimonials" class="swiper-container" data-aos="fade-up">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">“Awakenings changed my life…” — A. Smith</div>
+        <div class="swiper-slide">“Professional, caring, and effective.” — J. Doe</div>
+        <div class="swiper-slide">“I finally feel heard and supported.” — K. Lee</div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </section>
+
+    <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none">
+      <path d="M0,100 C300,0 900,100 1200,0 L1200,100 L0,100 Z" fill="var(--bg-light)"/>
+    </svg>
+
+    <!-- Location + Map -->
+    <section id="location" class="grid-2" data-aos="fade-right">
       <div>
         <h2>Our Location</h2>
         <address>
@@ -122,33 +203,45 @@
         </address>
       </div>
       <iframe
+        class="skeleton lazy-embed"
+        loading="lazy"
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3080.1234567890123!2d-116.253456!3d43.6034567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54aef5e4b2c7f789%3A0x123456789abcdef!2s6126%20W%20State%20St%20%23104%2C%20Boise%2C%20ID%2083703!5e0!3m2!1sen!2sus!4v1650000000000"
-        width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy">
+        width="100%" height="250" style="border:0;" allowfullscreen>
       </iframe>
     </section>
 
-    <!-- Insurance & Form Embed -->
-    <section id="insurance" class="grid-2">
-      <div class="card">
-        <header>Insurance We Accept</header>
-        <div class="content">
-          <ul>
-            <li>Blue Cross</li>
-            <li>Select Health</li>
-            <li>Aetna</li>
-            <!-- …other carriers… -->
-          </ul>
+    <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none">
+      <path d="M0,0 C300,100 900,0 1200,100 L1200,0 L0,0 Z" fill="var(--bg-light)"/>
+    </svg>
+
+    <!-- Insurance & FAQ Accordion + Form -->
+    <section id="insurance" data-aos="fade-left">
+      <div class="accordion card">
+        <button class="acc-header">What insurances do you accept?</button>
+        <div class="acc-body">
+          <p>Blue Cross, Select Health, Aetna, …</p>
         </div>
+        <button class="acc-header">How do I verify coverage?</button>
+        <div class="acc-body">
+          <p>Contact our office or use your insurer’s portal.</p>
+        </div>
+        <!-- …more FAQ items… -->
       </div>
       <iframe
+        class="skeleton lazy-embed"
+        loading="lazy"
         src="https://docs.google.com/forms/d/e/FORM_ID/viewform?embedded=true"
         width="100%" height="500" frameborder="0" marginheight="0" marginwidth="0">
         Loading…
       </iframe>
     </section>
 
+    <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none">
+      <path d="M0,100 C300,0 900,100 1200,0 L1200,100 L0,100 Z" fill="var(--bg-light)"/>
+    </svg>
+
     <!-- Booking Widget -->
-    <section id="booking" style="text-align:center; margin-bottom:3rem;">
+    <section id="booking" data-aos="zoom-in-up" style="text-align:center; margin-bottom:3rem;">
       <h2>Book an Appointment</h2>
       <div class="card">
         <div class="content">
@@ -160,30 +253,81 @@
       </div>
     </section>
 
-    <!-- Call-to-Action -->
-    <section style="text-align:center; margin-bottom:3rem;">
+    <section style="text-align:center; margin-bottom:3rem;" data-aos="fade-up">
       <a href="#contact" class="btn">Contact Us</a>
-      <a href="#booking" class="btn" style="background: var(--secondary);">Schedule Now</a>
+      <a href="#booking" class="btn secondary">Schedule Now</a>
     </section>
 
   </main>
 
-  <!-- Footer + Chat -->
-  <footer id="contact">
+  <button id="to-top">&#9650;</button>
+
+  <footer id="contact" style="text-align:center; padding:2rem 0;" data-aos="fade-up">
     <p>&copy; 2025 Awakenings Mental Health</p>
     <p>Questions? <a href="mailto:info@awakeningsmentalhealth.com" style="color: var(--accent);">info@awakeningsmentalhealth.com</a></p>
   </footer>
 
-  <!-- Live-Chat Widget -->
-  <script type="text/javascript">
-    var Tawk_API=Tawk_API||{},Tawk_LoadStart=new Date();
-    (function(){
-      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-      s1.async=true; s1.src='https://embed.tawk.to/YOUR_PROPERTY_ID/default';
-      s1.charset='UTF-8'; s1.setAttribute('crossorigin','*');
-      s0.parentNode.insertBefore(s1,s0);
-    })();
-  </script>
+  <!-- Lottie -->
+  <script src="https://unpkg.com/lottie-web@latest/build/player/lottie.min.js"></script>
+  <!-- AOS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- Swiper -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
+  <script>
+    // AOS init
+    AOS.init({ duration: 600, once: true });
+
+    // Swiper init
+    new Swiper('.swiper-container', {
+      autoplay: { delay: 5000 },
+      loop: true,
+      pagination: { el: '.swiper-pagination', clickable: true }
+    });
+
+    // Lottie animation
+    lottie.loadAnimation({
+      container: document.getElementById('heart-animation'),
+      path: 'https://assets7.lottiefiles.com/packages/lf20_heart.json',
+      renderer: 'svg', loop: true, autoplay: true
+    });
+
+    // Scroll events: sticky header & progress bar & back-to-top
+    const header = document.querySelector('header');
+    const progressBar = document.getElementById('progress-bar');
+    const toTop = document.getElementById('to-top');
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY > 50;
+      document.body.classList.toggle('scrolled', scrolled);
+      // progress
+      const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+      progressBar.style.width = pct + '%';
+    });
+    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Dark mode toggle
+    const toggle = document.getElementById('theme-toggle');
+    toggle.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('dark', document.documentElement.classList.contains('dark'));
+    });
+    if (localStorage.getItem('dark') === 'true') {
+      document.documentElement.classList.add('dark');
+    }
+
+    // Accordion
+    document.querySelectorAll('.acc-header').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.classList.toggle('active');
+        const body = btn.nextElementSibling;
+        body.style.maxHeight = btn.classList.contains('active') ? body.scrollHeight + 'px' : '0';
+      });
+    });
+
+    // Remove skeleton on embed load
+    document.querySelectorAll('iframe.skeleton').forEach(iframe => {
+      iframe.addEventListener('load', () => iframe.classList.remove('skeleton'));
+    });
+  </script>
 </body>
 </html>
