@@ -7,7 +7,6 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
-  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
 
   <style>
     :root {
@@ -20,10 +19,22 @@
       --text-dark: #1D2021;
     }
     /* Dark mode */
-    .dark {
+    .dark { /* Applied to html element */
       --bg-light: var(--bg-dark);
       --text-dark: var(--text-light);
     }
+    html.dark .testimonial-card {
+        background: #2c3032; 
+    }
+    html.dark .card {
+        background: var(--bg-dark); 
+        box-shadow: 0 4px 12px rgba(255,255,255,0.03);
+    }
+    html.dark .accordion .acc-body {
+        background: #2c3032;
+    }
+    html.dark .skeleton { background: #444; }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Inter', sans-serif;
@@ -44,62 +55,115 @@
     header#site-header {
       position: fixed; top: 0; left: 0; width: 100%;
       background: var(--primary) url('https://www.awakeningsmentalhealth.com/images/hero.jpg') center/cover no-repeat;
-      height: 60vh; display: flex; align-items: center; justify-content: center;
+      height: 60vh; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; /* Centers H1 in large view */
       transition: all .3s ease;
       z-index: 1000;
+      padding: 0 1rem; /* Base horizontal padding */
     }
-    body.scrolled header#site-header {
-      background: var(--primary) center/cover no-repeat;
-      height: 60px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.2);
-    }
-    header#site-header::after {
+    header#site-header::after { /* Overlay for large header image */
       content: ''; position: absolute; inset: 0;
       background: rgba(47,62,70,0.6);
+      z-index: 0; /* Behind h1 and nav */
     }
+
+    /* Scrolled Header specific styles */
+    body.scrolled header#site-header {
+      height: 60px;
+      justify-content: space-between; /* Key change for layout: H1 left, Nav right */
+      background-image: none; /* Remove hero image */
+      background-color: var(--primary); /* Solid background */
+      box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    }
+
+    /* Site Title (H1) */
     header#site-header h1 {
-      position: relative; color: white; font-size: 3rem; z-index: 1;
+      position: relative; /* For z-index and AOS */
+      color: white; 
+      font-size: 3rem; 
+      z-index: 1; /* Above overlay */
       transition: font-size .3s ease;
+      margin: 0; /* Remove default H1 margin */
     }
-    body.scrolled header#site-header h1 { font-size: 1.5rem; }
-    nav {
-      position: absolute; top: 1rem; right: 2rem; z-index: 2;
-      display: flex; /* Added for aligning items including button */
-      align-items: center; /* Added for aligning items including button */
+    body.scrolled header#site-header h1 {
+      font-size: 1.3rem; /* Adjusted for scrolled state */
     }
+
+    /* Navigation */
+    header#site-header nav { /* For large header: absolute positioning */
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 2; /* Above overlay and H1 if needed, though H1 also has z-index */
+      display: flex;
+      align-items: center;
+    }
+    body.scrolled header#site-header nav { /* For scrolled header: part of flex layout */
+      position: static; /* Becomes a flex item */
+    }
+
     nav a {
-      color: white; margin-left: 1.5rem; text-decoration: none; font-weight: 600;
-      font-size: 0.9rem; transition: color .3s;
+      color: white; 
+      margin-left: 0.75rem; 
+      text-decoration: none; 
+      font-weight: 600;
+      font-size: 0.85rem; 
+      transition: color .3s;
+      white-space: nowrap;
+    }
+    nav a:first-child {
+        margin-left: 0; /* No left margin for the very first item in nav block */
     }
     nav a:hover { color: var(--accent); }
     
-    /* OLD Dark mode toggle CSS - REMOVED
-    #theme-toggle {
-      position: absolute; top: 1rem; left: 2rem;
-      background: var(--accent); border: none;
-      color: white; padding: 0.5rem; border-radius: 4px;
-      cursor: pointer; font-size: 0.8rem; z-index: 2;
-    } */
-
-    /* NEW Dark mode toggle CSS - for button inside nav */
     nav #theme-toggle {
       background: var(--accent);
       border: none;
       color: white;
-      padding: 0.4rem 0.8rem; /* Adjusted padding */
+      padding: 0.3rem 0.6rem; 
       border-radius: 4px;
       cursor: pointer;
-      font-size: 0.9rem; /* Matched nav links */
-      font-weight: 600; /* Matched nav links */
-      margin-left: 1.5rem; /* Spacing from other nav items */
-      line-height: 1; /* Adjust for better vertical alignment if needed */
-      /* vertical-align: middle; /* Alternative alignment */
+      font-size: 0.85rem; 
+      font-weight: 600; 
+      margin-left: 0.75rem; 
+      line-height: 1; 
+      white-space: nowrap;
     }
     nav #theme-toggle:hover {
         opacity: .9;
     }
 
-    .container {
+    /* Lottie Animation (relative to header) */
+    #heart-animation { /* Stays absolutely positioned to header */
+        z-index: 1; /* Ensure it's above background/overlay */
+    }
+
+    /* Media Query for smaller mobile screens */
+    @media (max-width: 480px) {
+      header#site-header {
+        padding: 0 0.5rem; /* Reduce padding on very small screens */
+      }
+      body.scrolled header#site-header h1 {
+        font-size: 1.1rem; /* Further reduce title size */
+      }
+      nav a, nav #theme-toggle {
+        font-size: 0.7rem; /* Further reduce nav item font size */
+        margin-left: 0.4rem; /* Further reduce margin */
+      }
+      nav #theme-toggle {
+        padding: 0.25rem 0.5rem; /* Adjust padding for toggle */
+      }
+      header#site-header nav { /* For large header on small screens */
+        right: 0.5rem; 
+      }
+      nav a:first-child { /* Ensure no margin on very small screens as well */
+        margin-left: 0;
+      }
+    }
+
+    .container { /* Main content container */
       max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;
     }
     .grid-2 {
@@ -120,13 +184,11 @@
       color: white; padding: 0.75rem 1.5rem;
       border-radius: 4px; text-decoration: none;
       font-weight: 600; margin: 0.5rem;
-      transition: background .3s, opacity .3s; /* Added opacity transition */
+      transition: background .3s, opacity .3s;
     }
     .btn.secondary { background: var(--secondary); }
     .btn:hover { opacity: .9; }
-    /* SVG separators */
     .separator { display: block; width: 100%; height: 80px; }
-    /* Accordion (FAQ) */
     .accordion .acc-header {
       background: var(--secondary); color: white;
       cursor: pointer; padding: 1rem; border: none; width: 100%;
@@ -139,16 +201,33 @@
       background: white; padding: 0 1rem;
     }
     .accordion .acc-body p { padding: 1rem 0; }
-    /* Skeleton for lazy embeds */
     .skeleton { background: #ddd; position: relative; }
-    /* Testimonials (Swiper) */
-    .swiper-container { width: 100%; padding: 2rem 0; }
-    .swiper-slide {
-      background: white; border-radius: 8px; padding: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      font-style: italic; text-align: center;
+
+    #testimonials { 
+        padding: 2rem 0; 
     }
-    /* Back to Top */
+    #testimonials h2 { 
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 1.8rem; 
+        color: var(--text-dark);
+    }
+    .testimonial-card {
+      background: white; 
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 1.5rem; 
+      max-width: 650px; 
+      margin-left: auto; 
+      margin-right: auto; 
+    }
+    .testimonial-card:last-child {
+      margin-bottom: 0; 
+    }
+
     #to-top {
       position: fixed; bottom: 2rem; right: 2rem;
       background: var(--accent); border: none; color: white;
@@ -164,6 +243,7 @@
   <div id="progress-bar"></div>
 
   <header id="site-header">
+    <h1 data-aos="fade-down">Awakenings Mental Health</h1> 
     <nav>
       <a href="#services">Services</a>
       <a href="#insurance">Insurance</a>
@@ -171,7 +251,6 @@
       <a href="#contact">Contact</a>
       <button id="theme-toggle">Toggle Dark</button> 
     </nav>
-    <h1 data-aos="fade-down">Awakenings Mental Health</h1>
     <div id="heart-animation" style="position:absolute; bottom:1rem; right:1rem; width:60px; height:60px;"></div>
   </header>
 
@@ -196,13 +275,11 @@
       <path d="M0,0 C300,100 900,0 1200,100 L1200,0 L0,0 Z" fill="var(--bg-light)"/>
     </svg>
 
-    <section id="testimonials" class="swiper-container" data-aos="fade-up">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">“Awakenings changed my life…” — A. Smith</div>
-        <div class="swiper-slide">“Professional, caring, and effective.” — J. Doe</div>
-        <div class="swiper-slide">“I finally feel heard and supported.” — K. Lee</div>
-      </div>
-      <div class="swiper-pagination"></div>
+    <section id="testimonials" data-aos="fade-up">
+      <h2>What Our Clients Say</h2>
+      <div class="testimonial-card" data-aos="fade-up">“Awakenings changed my life…” — A. Smith</div>
+      <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">“Professional, caring, and effective.” — J. Doe</div>
+      <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">“I finally feel heard and supported.” — K. Lee</div>
     </section>
 
     <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none">
@@ -256,7 +333,8 @@
             Patient Portal
           </a>
           <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeYABYxDoscWL3jH-SNU51X0hgomcb0bEqshRIUnCRg7aSgA/viewform"
-             class="btn secondary" target="_blank"
+             class="btn secondary" 
+             target="_blank"
              rel="noopener noreferrer">
             Appointment Interest Form
           </a>
@@ -264,7 +342,7 @@
       </div>
     </section>
 
-    </main>
+  </main>
 
   <button id="to-top">▲</button>
 
@@ -275,61 +353,41 @@
 
   <script src="https://unpkg.com/lottie-web@latest/build/player/lottie.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
   <script>
-    // Set current year in footer
     document.getElementById('current-year').textContent = new Date().getFullYear();
-
-    // AOS init
     AOS.init({ duration: 600, once: true });
 
-    // Swiper init
-    new Swiper('.swiper-container', {
-      autoplay: { delay: 5000 },
-      loop: true,
-      pagination: { el: '.swiper-pagination', clickable: true }
-    });
-
-    // Lottie animation
     try {
         lottie.loadAnimation({
           container: document.getElementById('heart-animation'),
-          path: 'https://assets7.lottiefiles.com/packages/lf20_heart.json', // Ensure this Lottie JSON path is valid
+          path: 'https://assets7.lottiefiles.com/packages/lf20_heart.json', 
           renderer: 'svg', loop: true, autoplay: true
         });
     } catch (e) {
         console.error("Lottie animation could not be loaded.", e);
         const heartAnimContainer = document.getElementById('heart-animation');
-        if(heartAnimContainer) heartAnimContainer.style.display = 'none'; // Hide container if Lottie fails
+        if(heartAnimContainer) heartAnimContainer.style.display = 'none';
     }
 
-
-    // DOM elements
     const siteHeader = document.getElementById('site-header');
     const progressBar = document.getElementById('progress-bar');
     const toTop = document.getElementById('to-top');
     const mainContainer = document.querySelector('main.container');
 
-    // Function to adjust main container padding top based on header height
     function adjustMainContentPadding() {
       if (siteHeader && mainContainer) {
         mainContainer.style.paddingTop = siteHeader.offsetHeight + 'px';
       }
     }
 
-    // Initial adjustment after elements are loaded
     window.addEventListener('load', adjustMainContentPadding);
     window.addEventListener('resize', adjustMainContentPadding);
 
-
-    // Scroll events: sticky header & progress bar & back-to-top
     window.addEventListener('scroll', () => {
       const scrolled = window.scrollY > 50;
       document.body.classList.toggle('scrolled', scrolled);
-      
       adjustMainContentPadding(); 
-
       if (document.body.scrollHeight > window.innerHeight) { 
         const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
         progressBar.style.width = pct + '%';
@@ -339,27 +397,20 @@
     });
     toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-    // Dark mode toggle
     const toggle = document.getElementById('theme-toggle');
     if (toggle) {
         toggle.addEventListener('click', () => {
           document.documentElement.classList.toggle('dark');
           localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
         });
-        // Apply saved theme on load
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'dark') {
           document.documentElement.classList.add('dark');
         } else if (savedTheme === 'light') {
-          document.documentElement.classList.remove('dark'); // Explicitly set light if needed
-        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            // Optional: Default to system preference if no theme saved
-            // document.documentElement.classList.add('dark'); 
+          document.documentElement.classList.remove('dark'); 
         }
     }
 
-
-    // Accordion
     document.querySelectorAll('.accordion .acc-header').forEach(btn => {
       btn.addEventListener('click', () => {
         btn.classList.toggle('active');
@@ -368,7 +419,6 @@
       });
     });
 
-    // Remove skeleton on embed load
     document.querySelectorAll('iframe.lazy-embed').forEach(iframe => { 
       if (iframe.classList.contains('skeleton')) { 
           iframe.addEventListener('load', () => iframe.classList.remove('skeleton'));
