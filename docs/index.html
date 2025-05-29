@@ -131,14 +131,14 @@
       display: none;
       position: absolute;
       background-color: var(--bg-light); 
-      min-width: 200px; 
-      max-width: 280px; /* Max width for dropdown */
+      min-width: 220px; /* Adjusted base min-width */
+      max-width: 350px; /* Increased max-width for desktop */
       box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
       z-index: 1001; 
       border-radius: 4px;
       padding: 0.5rem 0;
       top: 100%; 
-      left: 0; /* Default alignment */
+      left: 0; 
       margin-top: 0.25rem; 
     }
     .nav-item.dropdown:hover .dropdown-content,
@@ -151,9 +151,9 @@
       padding: 0.75rem 1rem;
       text-decoration: none;
       display: block;
-      white-space: normal;   /* Allow text to wrap */
-      overflow-wrap: break-word; /* Break long words */
-      word-wrap: break-word;     /* Fallback for older browsers */
+      white-space: normal;   
+      overflow-wrap: break-word; 
+      word-wrap: break-word;     
       font-size: 0.8rem; 
       line-height: 1.4;
       font-weight: 400; 
@@ -172,7 +172,7 @@
         white-space: nowrap;    
         overflow: hidden;       
         text-overflow: ellipsis;
-        margin-right: 8px;      
+        margin-right: 6px; /* Reduced space between title and nav slightly */    
         min-width: 0;           
       }
       body.scrolled header#site-header h1 .title-full { display: none; }
@@ -181,17 +181,17 @@
       #services .card header { text-align: center; }
       
       header#site-header nav { 
-        gap: 0.5rem; /* Reduced gap for fewer items */
+        gap: 0.3rem; /* Reduced gap between nav items */
         right: 0.5rem; 
       }
       nav .nav-link { 
-        font-size: 0.8rem; /* Can be slightly larger if fewer items */
+        font-size: 0.8rem; 
       }
       .dropdown-content { 
         min-width: 160px;
-        max-width: calc(100vw - 30px); /* Ensure it fits viewport */
-        left: auto;   /* Align to the right of the parent "Articles" item */
-        right: 0;     /* This makes it expand leftwards */
+        max-width: calc(100vw - 30px); 
+        left: auto;   
+        right: 0;     
         transform: none;
       }
       .dropdown-content a {
@@ -250,7 +250,7 @@
           <a href="https://www.awakeningsmentalhealth.com/articles/exercise-and-nutrition" target="_top">Exercise & Nutrition</a>
         </div>
       </div>
-      </nav>
+    </nav>
     <div id="heart-animation" style="position:absolute; bottom:1rem; right:1rem; width:60px; height:60px;"></div>
   </header>
 
