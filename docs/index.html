@@ -5,22 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Awakenings Mental Health</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
 
   <style>
     :root {
-      --primary: #2F3E46;
-      --secondary: #84A98C;
-      --accent: #E07A5F;
-      --bg-light: #F0F3F4;
+      --primary: #2F3E46; /* Header background - Dark grayish blue */
+      --secondary: #84A98C; /* Card/Accordion header background - Muted green */
+      --accent: #E07A5F; /* Buttons, links - Terracotta/Orange */
+      
+      /* Updated Colors */
+      --bg-light: #f1f1f2;    /* NEW Page background */
+      --text-dark: #1c1c1c;   /* NEW Body text color */
+      --heading-color: #27296d; /* NEW Titles and headings color */
+
+      /* Dark mode colors (bg-dark will be used for bg-light in dark mode) */
       --bg-dark: #1D2021;
       --text-light: #F0F3F4;
-      --text-dark: #1D2021;
     }
+
     html.dark { 
       --bg-light: var(--bg-dark);
       --text-dark: var(--text-light);
+      --heading-color: var(--text-light); /* Headings become light in dark mode */
     }
     html.dark .testimonial-card {
         background: #2c3032; 
@@ -47,7 +54,7 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', sans-serif; /* Default body font */
       background: var(--bg-light);
       color: var(--text-dark);
       line-height: 1.6;
@@ -78,9 +85,13 @@
       background-color: var(--primary); 
       box-shadow: 0 2px 8px rgba(0,0,0,.2);
     }
+
+    /* Site Title (H1) - Font Change */
     header#site-header h1 {
       position: relative; 
-      color: white; 
+      color: white; /* Stays white on dark background */
+      font-family: 'Dancing Script', cursive;
+      font-weight: 600;
       font-size: 3rem; 
       z-index: 1; 
       transition: font-size .3s ease;
@@ -88,7 +99,7 @@
       text-align: center;
     }
     body.scrolled header#site-header h1 {
-      font-size: 1.3rem; 
+      font-size: 1.5rem; /* Adjusted for Dancing Script to be more readable when small */
       line-height: 1.2; 
       margin: 0; 
     }
@@ -113,6 +124,7 @@
     nav .nav-link { 
       color: white; 
       text-decoration: none; 
+      font-family: 'Inter', sans-serif; /* Nav links remain Inter for readability */
       font-weight: 600;
       font-size: 0.85rem; 
       transition: color .3s;
@@ -127,12 +139,16 @@
       position: relative; 
       display: inline-block; 
     }
+    .nav-item.dropdown > .nav-link.articles-link { /* Ensure Articles link uses Inter */
+        font-family: 'Inter', sans-serif;
+    }
+
     .dropdown-content {
       display: none;
       position: absolute;
       background-color: var(--bg-light); 
-      min-width: 220px; /* Adjusted base min-width */
-      max-width: 350px; /* Increased max-width for desktop */
+      min-width: 220px; 
+      max-width: 350px; 
       box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
       z-index: 1001; 
       border-radius: 4px;
@@ -154,6 +170,7 @@
       white-space: normal;   
       overflow-wrap: break-word; 
       word-wrap: break-word;     
+      font-family: 'Inter', sans-serif; /* Dropdown items Inter for readability */
       font-size: 0.8rem; 
       line-height: 1.4;
       font-weight: 400; 
@@ -164,24 +181,41 @@
     }
     #heart-animation { z-index: 1; }
 
+    /* Section Headings (h2) - Font and Color Change */
+    h2 { /* General h2 style, refine selectors if needed */
+      font-family: 'Dancing Script', cursive;
+      font-weight: 600;
+      color: var(--heading-color);
+      /* margin-bottom: 1rem; /* Example: Add some default margin if desired */
+    }
+    /* Specific h2 adjustments if the general one is too broad */
+    #testimonials h2, #location h2, #booking h2 { 
+        /* font-size: 1.8rem; /* Already set in #testimonials h2, this can be common */
+        margin-bottom: 2rem; /* From #testimonials h2 */
+        text-align: center; /* From #testimonials h2 */
+    }
+     #location h2, #booking h2 { /* Apply similar styling to other h2s if desired */
+        font-size: 1.8rem; /* Example, match testimonial h2 */
+        /* text-align: left; /* Or center, depending on design */
+    }
+
+
     @media (max-width: 480px) {
       header#site-header { padding: 0 0.5rem; }
-      body.scrolled header#site-header h1 {
-        font-size: 1.1rem; 
+      body.scrolled header#site-header h1 { /* Main title in scrolled mobile header */
+        font-size: 1.3rem; /* Slightly larger for "Awakenings" in Dancing Script */
         line-height: 1.2; 
         white-space: nowrap;    
         overflow: hidden;       
         text-overflow: ellipsis;
-        margin-right: 6px; /* Reduced space between title and nav slightly */    
+        margin-right: 6px;      
         min-width: 0;           
       }
       body.scrolled header#site-header h1 .title-full { display: none; }
       body.scrolled header#site-header h1 .title-short { display: inline; }
       
-      #services .card header { text-align: center; }
-      
       header#site-header nav { 
-        gap: 0.3rem; /* Reduced gap between nav items */
+        gap: 0.3rem; 
         right: 0.5rem; 
       }
       nav .nav-link { 
@@ -209,7 +243,12 @@
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 2rem; align-items: start; margin-bottom: 3rem; }
     .card { background: var(--bg-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
     .card.no-dark-override {}
-    .card header { padding: 1rem; background: var(--secondary); color: white; font-weight: 600; font-size: 1.2rem; }
+    .card header { 
+      padding: 1rem; background: var(--secondary); color: white; 
+      font-family: 'Dancing Script', cursive; /* Apply Dancing Script to card headers */
+      font-weight: 600; 
+      font-size: 1.4rem; /* Slightly increase if using script font for readability */
+    }
     #services .card header { text-align: center; }
     .card .content { padding: 1rem; }
     .btn { display: inline-block; background: var(--accent); color: white; padding: 0.75rem 1.5rem; border-radius: 4px; text-decoration: none; font-weight: 600; margin: 0.5rem; transition: background .3s, opacity .3s; }
@@ -220,13 +259,24 @@
 
     .separator { display: block; width: 100%; height: 80px; }
     .separator path { transition: fill .3s; } 
-    .accordion .acc-header { background: var(--secondary); color: white; cursor: pointer; padding: 1rem; border: none; width: 100%; text-align: left; outline: none; font-size: 1rem; transition: background .3s; }
+    .accordion .acc-header { 
+      background: var(--secondary); color: white; cursor: pointer; 
+      padding: 1rem; border: none; width: 100%; text-align: left; 
+      outline: none; 
+      font-family: 'Dancing Script', cursive; /* Apply Dancing Script to accordion headers */
+      font-weight: 600;
+      font-size: 1.2rem; /* Adjust size for script font */
+      transition: background .3s; 
+    }
     .accordion .acc-header.active { background: var(--accent); }
+    .accordion .acc-header + .acc-body + .acc-header {
+      margin-top: 0.5rem; 
+    }
     .accordion .acc-body { max-height: 0; overflow: hidden; transition: max-height .3s ease; background: white; padding: 0 1rem; }
     .accordion .acc-body p { padding: 1rem 0; }
     .skeleton { background: #ddd; position: relative; }
     #testimonials { padding: 2rem 0; }
-    #testimonials h2 { text-align: center; margin-bottom: 2rem; font-size: 1.8rem; color: var(--text-dark); }
+    /* #testimonials h2 is covered by general h2 style */
     .testimonial-card { background: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); font-style: italic; text-align: center; margin-bottom: 1.5rem; max-width: 650px; margin-left: auto; margin-right: auto; }
     .testimonial-card:last-child { margin-bottom: 0; }
     #to-top { position: fixed; bottom: 2rem; right: 2rem; background: var(--accent); border: none; color: white; padding: 0.75rem; border-radius: 50%; font-size: 1.2rem; cursor: pointer; opacity: 0; transition: opacity .3s; z-index: 1000; }
