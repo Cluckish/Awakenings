@@ -5,11 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Awakenings Mental Health</title>
 
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <!-- AOS (Animate On Scroll) -->
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
-  <!-- Swiper.js -->
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
 
   <style>
@@ -44,27 +41,27 @@
       z-index: 9999;
     }
     /* Sticky header */
-    header {
+    header#site-header { /* Made selector more specific */
       position: fixed; top: 0; left: 0; width: 100%;
       background: var(--primary) url('https://www.awakeningsmentalhealth.com/images/hero.jpg') center/cover no-repeat;
       height: 60vh; display: flex; align-items: center; justify-content: center;
       transition: all .3s ease;
       z-index: 1000;
     }
-    body.scrolled header {
+    body.scrolled header#site-header { /* Made selector more specific */
       background: var(--primary) center/cover no-repeat;
       height: 60px;
       box-shadow: 0 2px 8px rgba(0,0,0,.2);
     }
-    header::after {
+    header#site-header::after { /* Made selector more specific */
       content: ''; position: absolute; inset: 0;
       background: rgba(47,62,70,0.6);
     }
-    header h1 {
+    header#site-header h1 { /* Made selector more specific */
       position: relative; color: white; font-size: 3rem; z-index: 1;
       transition: font-size .3s ease;
     }
-    body.scrolled header h1 { font-size: 1.5rem; }
+    body.scrolled header#site-header h1 { font-size: 1.5rem; } /* Made selector more specific */
     nav {
       position: absolute; top: 1rem; right: 2rem; z-index: 2;
     }
@@ -82,6 +79,8 @@
     }
     .container {
       max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;
+      /* Add initial padding-top to prevent overlap with tall fixed header */
+      /* This will be dynamically adjusted by JS */
     }
     .grid-2 {
       display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
@@ -153,13 +152,11 @@
       <a href="#contact">Contact</a>
     </nav>
     <h1 data-aos="fade-down">Awakenings Mental Health</h1>
-    <!-- Lottie micro-animation next to title -->
     <div id="heart-animation" style="position:absolute; bottom:1rem; right:1rem; width:60px; height:60px;"></div>
   </header>
 
   <main class="container">
 
-    <!-- Services -->
     <section id="services" class="grid-2" data-aos="fade-up">
       <div class="card" data-aos="zoom-in">
         <header>Individual Therapy</header>
@@ -179,7 +176,6 @@
       <path d="M0,0 C300,100 900,0 1200,100 L1200,0 L0,0 Z" fill="var(--bg-light)"/>
     </svg>
 
-    <!-- Testimonials Carousel -->
     <section id="testimonials" class="swiper-container" data-aos="fade-up">
       <div class="swiper-wrapper">
         <div class="swiper-slide">“Awakenings changed my life…” — A. Smith</div>
@@ -193,7 +189,6 @@
       <path d="M0,100 C300,0 900,100 1200,0 L1200,100 L0,100 Z" fill="var(--bg-light)"/>
     </svg>
 
-    <!-- Location + Map -->
     <section id="location" class="grid-2" data-aos="fade-right">
       <div>
         <h2>Our Location</h2>
@@ -205,8 +200,7 @@
       <iframe
         class="skeleton lazy-embed"
         loading="lazy"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3080.1234567890123!2d-116.253456!3d43.6034567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54aef5e4b2c7f789%3A0x123456789abcdef!2s6126%20W%20State%20St%20%23104%2C%20Boise%2C%20ID%2083703!5e0!3m2!1sen!2sus!4v1650000000000"
-        width="100%" height="250" style="border:0;" allowfullscreen>
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3080.1234567890123!2d-116.253456!3d43.6034567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54aef5e4b2c7f789%3A0x123456789abcdef!2s6126%20W%20State%20St%20%23104%2C%20Boise%2C%20ID%2083703!5e0!3m2!1sen!2sus!4v1650000000000" width="100%" height="250" style="border:0;" allowfullscreen>
       </iframe>
     </section>
 
@@ -214,41 +208,39 @@
       <path d="M0,0 C300,100 900,0 1200,100 L1200,0 L0,0 Z" fill="var(--bg-light)"/>
     </svg>
 
-    <!-- Insurance & FAQ Accordion + Form -->
     <section id="insurance" data-aos="fade-left">
       <div class="accordion card">
         <button class="acc-header">What insurances do you accept?</button>
         <div class="acc-body">
-          <p>Blue Cross, Select Health, Aetna, …</p>
+          <p>Blue Cross, Select Health, Pacific Source, Saint Luke's Health Plan, Anthem Blue Cross, Blue Shield, Regence, Aetna, Cash Pay</p>
         </div>
         <button class="acc-header">How do I verify coverage?</button>
         <div class="acc-body">
-          <p>Contact our office or use your insurer’s portal.</p>
+          <p>Contact our office <a href="tel:2082950297" style="color: var(--accent);">(208)295-0297</a></p>
         </div>
-        <!-- …more FAQ items… -->
       </div>
-      <iframe
-        class="skeleton lazy-embed"
-        loading="lazy"
-        src="https://docs.google.com/forms/d/e/FORM_ID/viewform?embedded=true"
-        width="100%" height="500" frameborder="0" marginheight="0" marginwidth="0">
-        Loading…
-      </iframe>
     </section>
 
     <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none">
       <path d="M0,100 C300,0 900,100 1200,0 L1200,100 L0,100 Z" fill="var(--bg-light)"/>
     </svg>
 
-    <!-- Booking Widget -->
     <section id="booking" data-aos="zoom-in-up" style="text-align:center; margin-bottom:3rem;">
       <h2>Book an Appointment</h2>
       <div class="card">
         <div class="content">
-          <div class="calendly-inline-widget"
-               data-url="https://calendly.com/awakeningsmh/initial-consult"
-               style="min-width:320px;height:580px;"></div>
-          <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+          <a href="https://www.therapyportal.com/p/awakenings83703/"
+             class="btn"
+             target="_blank"
+             rel="noopener noreferrer">
+            Patient Portal
+          </a>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeYABYxDoscWL3jH-SNU51X0hgomcb0bEqshRIUnCRg7aSgA/viewform"
+             class="btn"
+             target="_blank"
+             rel="noopener noreferrer">
+            Appointment Interest Form
+          </a>
         </div>
       </div>
     </section>
@@ -260,18 +252,15 @@
 
   </main>
 
-  <button id="to-top">&#9650;</button>
+  <button id="to-top">▲</button>
 
   <footer id="contact" style="text-align:center; padding:2rem 0;" data-aos="fade-up">
-    <p>&copy; 2025 Awakenings Mental Health</p>
-    <p>Questions? <a href="mailto:info@awakeningsmentalhealth.com" style="color: var(--accent);">info@awakeningsmentalhealth.com</a></p>
+    <p>© 2025 Awakenings Mental Health</p>
+    <p>Questions? <a href="mailto:admin@awakeningsmentalhealth.com" style="color: var(--accent);">admin@awakeningsmentalhealth.com</a> <a href="tel:2082950297" style="color: var(--accent);">(208)295-0297</a></p>
   </footer>
 
-  <!-- Lottie -->
   <script src="https://unpkg.com/lottie-web@latest/build/player/lottie.min.js"></script>
-  <!-- AOS -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <!-- Swiper -->
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
   <script>
@@ -288,20 +277,44 @@
     // Lottie animation
     lottie.loadAnimation({
       container: document.getElementById('heart-animation'),
-      path: 'https://assets7.lottiefiles.com/packages/lf20_heart.json',
+      path: 'https://assets7.lottiefiles.com/packages/lf20_heart.json', // Ensure this Lottie JSON path is valid
       renderer: 'svg', loop: true, autoplay: true
     });
 
-    // Scroll events: sticky header & progress bar & back-to-top
-    const header = document.querySelector('header');
+    // DOM elements
+    const siteHeader = document.getElementById('site-header');
     const progressBar = document.getElementById('progress-bar');
     const toTop = document.getElementById('to-top');
+    const mainContainer = document.querySelector('main.container');
+
+    // Function to adjust main container padding top based on header height
+    function adjustMainContentPadding() {
+      if (siteHeader && mainContainer) {
+        mainContainer.style.paddingTop = siteHeader.offsetHeight + 'px';
+      }
+    }
+
+    // Initial adjustment after elements are loaded
+    window.addEventListener('load', adjustMainContentPadding);
+    // Adjust if window is resized (e.g., header height changes due to responsive styles not present here, but good practice)
+    window.addEventListener('resize', adjustMainContentPadding);
+
+
+    // Scroll events: sticky header & progress bar & back-to-top
     window.addEventListener('scroll', () => {
       const scrolled = window.scrollY > 50;
       document.body.classList.toggle('scrolled', scrolled);
-      // progress
-      const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-      progressBar.style.width = pct + '%';
+      
+      // If header height changes on scroll (it does: 60vh -> 60px), adjust padding
+      adjustMainContentPadding(); 
+
+      // progress bar
+      if (document.body.scrollHeight > window.innerHeight) { // Avoid division by zero if content is not scrollable
+        const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+        progressBar.style.width = pct + '%';
+      } else {
+        progressBar.style.width = '0%';
+      }
     });
     toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
@@ -325,8 +338,10 @@
     });
 
     // Remove skeleton on embed load
-    document.querySelectorAll('iframe.skeleton').forEach(iframe => {
-      iframe.addEventListener('load', () => iframe.classList.remove('skeleton'));
+    document.querySelectorAll('iframe.lazy-embed').forEach(iframe => { 
+      if (iframe.classList.contains('skeleton')) { 
+          iframe.addEventListener('load', () => iframe.classList.remove('skeleton'));
+      }
     });
   </script>
 </body>
