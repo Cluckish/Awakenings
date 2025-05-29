@@ -11,38 +11,56 @@
   <style>
     :root {
       --primary: #2F3E46; 
-      /* --secondary: #84A98C; /* Green - Will be replaced by --heading-color in usage */
+      --secondary-original: #84A98C; /* Original green, now mostly unused */
       --accent: #E07A5F;    
       --bg-light: #f1f1f2;    
       --text-dark: #1c1c1c;   
-      --heading-color: #27296d; /* Main theme blue */
+      --heading-color: #27296d; /* Main theme blue for light mode text headings */
+      --theme-blue-static: #27296d; /* Static blue for backgrounds, doesn't change in dark mode */
       --bg-dark: #1D2021;
       --text-light: #F0F3F4;
     }
     html.dark { 
       --bg-light: var(--bg-dark);
       --text-dark: var(--text-light);
-      --heading-color: var(--text-light); 
+      --heading-color: var(--text-light); /* Headings text becomes light */
+      /* --theme-blue-static remains #27296d */
     }
     html.dark .testimonial-card { background: #2c3032; }
     html.dark .card:not(.no-dark-override) { 
         background: #272b2c; 
         box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
     }
+    /* Ensure card headers use the static blue in dark mode */
+    html.dark .card header {
+        background: var(--theme-blue-static);
+    }
     html.dark .accordion .acc-body { background: #2c3032; }
+     /* Ensure accordion headers use the static blue in dark mode */
+    html.dark .accordion .acc-header {
+        background: var(--theme-blue-static);
+    }
+    html.dark .accordion .acc-header.active { /* Active accordion header can still use accent */
+        background: var(--accent);
+    }
     html.dark .skeleton { background: #444; }
     html.dark .separator path { fill: var(--bg-dark); } 
-    html.dark .dropdown-content { 
-      background-color: var(--primary); 
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
+    
+    /* Buttons in dark mode use static blue */
+    html.dark .btn, html.dark .btn.secondary, html.dark #to-top {
+        background: var(--theme-blue-static);
+        color: white; /* Ensure text is white on blue */
     }
-    html.dark .dropdown-content a { color: var(--text-light); }
-    html.dark .dropdown-content a:hover { background-color: var(--accent); }
-    html.dark footer#contact { /* Ensure footer text is light in dark mode */
+    /* Pressed state for buttons in dark mode */
+    html.dark .btn:active, html.dark .btn.secondary:active, html.dark #to-top:active {
+        background-color: var(--bg-dark); /* Dark page background for pressed state */
+        color: var(--text-light);    /* Light text for contrast */
+    }
+    html.dark footer#contact { 
         color: var(--text-light);
     }
-    html.dark footer#contact a { /* Ensure footer links are visible in dark mode */
-        color: var(--accent); /* Or var(--text-light) if accent is too dark */
+    html.dark footer#contact a {
+        color: var(--accent); 
     }
 
 
@@ -67,7 +85,7 @@
     body.scrolled header#site-header {
       height: 60px; justify-content: space-between; align-items: center; 
       background-image: none; 
-      background-color: var(--heading-color); 
+      background-color: var(--theme-blue-static); /* Use static blue for scrolled header */ 
       box-shadow: 0 2px 8px rgba(0,0,0,.2);
     }
     header#site-header h1 {
@@ -103,7 +121,7 @@
       gap: 0.75rem; 
     }
     body.scrolled header#site-header nav { 
-      position: static; gap: 0.75rem; /* Default gap for scrolled desktop */
+      position: static; gap: 0.75rem; 
     }
     nav .nav-link { 
       color: var(--heading-color); 
@@ -116,30 +134,7 @@
         color: white; 
     }
     nav .nav-link:hover { color: var(--accent); }
-
-    .nav-item.dropdown { position: relative; display: inline-block; }
-    .nav-item.dropdown > .nav-link.articles-link { font-family: 'Inter', sans-serif; }
-    .dropdown-content {
-      display: none; position: absolute; background-color: var(--bg-light); 
-      min-width: 220px; max-width: 350px; 
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      z-index: 1001; border-radius: 4px; padding: 0.5rem 0;
-      top: 100%; left: 0; margin-top: 0.25rem; 
-    }
-    .nav-item.dropdown:hover .dropdown-content,
-    .nav-item.dropdown .nav-link:focus + .dropdown-content, 
-    .nav-item.dropdown .dropdown-content:hover { display: block; }
-    .dropdown-content a {
-      color: var(--text-dark); padding: 0.75rem 1rem; text-decoration: none;
-      display: block; white-space: normal;   
-      overflow-wrap: break-word; word-wrap: break-word;     
-      font-family: 'Inter', sans-serif; font-size: 0.8rem; 
-      line-height: 1.4; font-weight: 400; 
-    }
-    .dropdown-content a:hover { 
-        background-color: var(--accent); /* CHANGED: Dropdown hover uses accent */
-        color: white; 
-    }
+    /* Dropdown CSS fully removed */
     #heart-animation { z-index: 1; }
 
     h2 { 
@@ -160,9 +155,9 @@
         white-space: nowrap;    
         overflow: hidden;       
         text-overflow: ellipsis;
-        margin-right: 4px; /* Further Reduced space between title and nav */      
+        margin-right: 4px; /* Further reduced */      
         min-width: 0; 
-        flex-shrink: 1; /* Allow h1 to shrink more */
+        flex-shrink: 1; /* Allow h1 to shrink */
       }
       body.scrolled header#site-header h1 .title-full { display: none; }
       body.scrolled header#site-header h1 .title-short { display: inline; }
@@ -170,19 +165,13 @@
       #services .card header { text-align: center; }
       
       header#site-header nav { 
-        gap: 0.25rem; /* Further Reduced gap between nav items */
+        gap: 0.25rem; /* Further reduced */
         right: 0.5rem; 
-        flex-shrink: 0; /* Nav should not shrink as much */
+        flex-shrink: 0; /* Nav tries to keep its size */
       }
       nav .nav-link { 
-        font-size: 0.75rem; /* Slightly reduced nav link font for more space */
+        font-size: 0.75rem; /* Further reduced */
       }
-      .dropdown-content { 
-        min-width: 150px; /* Adjusted */
-        max-width: calc(100vw - 20px); /* Adjusted */
-        left: auto; right: 0; transform: none;
-      }
-      .dropdown-content a { font-size: 0.7rem; }
     }
 
     .container { 
@@ -195,33 +184,34 @@
     .card.no-dark-override {}
     .card header { 
       padding: 1rem; 
-      background: var(--heading-color); /* CHANGED: from --secondary */
+      background: var(--theme-blue-static); /* CHANGED: from --secondary/--heading-color */
       color: white; 
       font-family: 'Dancing Script', cursive; font-weight: 600; font-size: 1.4rem; 
     }
     #services .card header { text-align: center; }
     .card .content { padding: 1rem; }
     .btn { 
-      display: inline-block; background: var(--heading-color); color: white; 
+      display: inline-block; 
+      background: var(--theme-blue-static); /* CHANGED: from --heading-color */
+      color: white; 
       padding: 0.75rem 1.5rem; border-radius: 4px; text-decoration: none; 
       font-weight: 600; margin: 0.5rem; 
       transition: background-color .3s, color .3s, opacity .3s; 
     }
     .btn.secondary { 
-      background: var(--heading-color); /* CHANGED: from --secondary */
-      /* Now identical to .btn, consider outline or different blue shade if distinction needed */
+      background: var(--theme-blue-static); /* CHANGED: from --secondary/--heading-color */
     }
     .btn:hover { opacity: .9; }
-    .btn:active, .btn.secondary:active { /* Pressed state */
+    .btn:active, .btn.secondary:active { 
         background-color: var(--bg-light);
-        color: var(--heading-color);
+        color: var(--heading-color); /* This will be light text in dark mode */
         opacity: 1;
     }
     .booking-button-container { padding: 1rem; }
     .separator { display: block; width: 100%; height: 80px; }
     .separator path { transition: fill .3s; } 
     .accordion .acc-header { 
-      background: var(--heading-color); /* CHANGED: from --secondary */
+      background: var(--theme-blue-static); /* CHANGED: from --secondary/--heading-color */
       color: white; cursor: pointer; 
       padding: 1rem; border: none; width: 100%; text-align: left; 
       outline: none; font-family: 'Inter', sans-serif; 
@@ -238,23 +228,21 @@
     .testimonial-card:last-child { margin-bottom: 0; }
     #to-top { 
       position: fixed; bottom: 2rem; right: 2rem; 
-      background: var(--heading-color); /* Already set, confirmed */
+      background: var(--theme-blue-static); /* CHANGED: from --heading-color */
       border: none; color: white; 
       padding: 0.75rem; border-radius: 50%; font-size: 1.2rem; 
       cursor: pointer; opacity: 0; 
-      transition: background-color .3s, opacity .3s; /* Added background-color transition */
+      transition: background-color .3s, opacity .3s; 
     }
-    #to-top:active { /* Pressed state for to-top button */
+    #to-top:active { 
         background-color: var(--bg-light);
-        color: var(--heading-color);
+        color: var(--heading-color); /* This will be light text in dark mode */
         opacity: 1;
     }
     body.scrolled #to-top { opacity: 1; }
     section#location address { text-align: center; margin-top: 0.5rem; }
     
-    /* Footer Logo Section REMOVED as logo will be footer background */
-    /* .footer-logo-section { ... } */
-    /* .footer-logo-section img { ... } */
+    /* Footer Logo Section HTML removed, styles applied to footer#contact */
   </style>
 </head>
 <body>
@@ -268,13 +256,7 @@
     <nav>
       <a href="https://www.awakeningsmentalhealth.com/our-practice" class="nav-link" target="_top">Home</a>
       <a href="https://www.awakeningsmentalhealth.com/our-providers" class="nav-link" target="_top">Our Providers</a>
-      <div class="nav-item dropdown">
-        <a href="https://www.awakeningsmentalhealth.com/articles" class="nav-link articles-link" target="_top" aria-haspopup="true" aria-expanded="false">Articles</a>
-        <div class="dropdown-content">
-          <a href="https://www.awakeningsmentalhealth.com/articles/reducing-meds" target="_top">Reducing Meds</a>
-          <a href="https://www.awakeningsmentalhealth.com/articles/exercise-and-nutrition" target="_top">Exercise & Nutrition</a>
-        </div>
-      </div>
+      <a href="https://www.awakeningsmentalhealth.com/articles" class="nav-link" target="_top">Articles</a>
     </nav>
     <div id="heart-animation" style="position:absolute; bottom:1rem; right:1rem; width:60px; height:60px;"></div>
   </header>
@@ -325,14 +307,29 @@
           <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeYABYxDoscWL3jH-SNU51X0hgomcb0bEqshRIUnCRg7aSgA/viewform" class="btn secondary" target="_top" rel="noopener noreferrer"> Appointment Interest Form </a>
       </div>
     </section>
-
     </main>
 
   <button id="to-top">▲</button>
 
-  <footer id="contact" style="text-align:center; padding:2rem 0;" data-aos="fade-up">
-    <p>© <span id="current-year">2025</span> Awakenings Mental Health</p>
-    <p>Questions? <a href="mailto:admin@awakeningsmentalhealth.com" style="color: var(--accent);">admin@awakeningsmentalhealth.com</a> <a href="tel:2082950297" style="color: var(--accent);">(208)295-0297</a></p>
+  <footer id="contact" style="
+    text-align:center; 
+    padding:3rem 1rem; /* Adjusted padding */
+    data-aos='fade-up'; /* data-aos should be an attribute in HTML tag, not CSS */
+    background-image: url('Rectangle Logo.jpg');
+    background-size: contain; /* Or cover */
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: var(--primary); /* Fallback color */
+    position: relative;
+    color: var(--text-light); /* Light text for dark logo background */
+    min-height: 250px; /* Ensure space for logo */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;">
+    <div style="position: relative; z-index: 2; background-color: rgba(0,0,0,0.5); padding: 1rem; border-radius: 8px;"> <p>© <span id="current-year">2025</span> Awakenings Mental Health</p>
+      <p>Questions? <a href="mailto:admin@awakeningsmentalhealth.com" style="color: var(--accent);">admin@awakeningsmentalhealth.com</a> <a href="tel:2082950297" style="color: var(--accent);">(208)295-0297</a></p>
+    </div>
   </footer>
 
   <script src="https://unpkg.com/lottie-web@latest/build/player/lottie.min.js"></script>
