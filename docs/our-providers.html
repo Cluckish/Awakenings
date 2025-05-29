@@ -51,7 +51,7 @@
     }
     html.dark footer#contact { 
         color: var(--text-light);
-        background-color: var(--primary); 
+        background-color: var(--bg-dark); /* CHANGED: Footer BG in dark mode matches page BG */
     }
     html.dark footer#contact .footer-text-content a {
         color: var(--accent); 
@@ -59,7 +59,6 @@
     html.dark .provider-contact strong {
         color: var(--text-light);
     }
-
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -144,7 +143,7 @@
         font-size: 2.5rem; 
         margin-top: 2rem; 
     }
-     #location h2, #booking h2 { /* If these sections were on this page */
+     #location h2, #booking h2 { 
         font-size: 2.2rem; 
         margin-bottom: 2rem; 
         text-align: center; 
@@ -262,7 +261,7 @@
     .provider-info {
         flex-grow: 1;
     }
-    .provider-info h3 { /* Provider Name */
+    .provider-info h3 { 
         font-family: 'Dancing Script', cursive; 
         font-weight: 600;
         color: var(--heading-color);
@@ -298,7 +297,7 @@
     .provider-contact a:hover {
         text-decoration: underline;
     }
-    .provider-info p:not(.credentials) { /* Bio paragraphs */
+    .provider-info p:not(.credentials) { 
         margin-bottom: 1rem;
         line-height: 1.7;
         font-size: 0.95rem;
@@ -310,7 +309,6 @@
     .psychology-today-embed-wrapper { 
         margin-top: 1.5rem;
     }
-
 
     @media (max-width: 768px) { 
         .provider-profile {
@@ -334,29 +332,42 @@
 
     footer#contact {
         text-align:center; 
-        padding: 2rem 1rem;
-        background-color: var(--bg-light); 
+        padding: 0; /* Padding will be on .footer-content-wrapper now */
+        background-image: url('Rectangle Logo.jpg');
+        background-size: contain; 
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-color: var(--bg-light); /* Page background shows through */
         position: relative;
-        color: var(--text-dark); 
+        min-height: 280px; /* Adjust as needed */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end; /* Push text content to the bottom */
+        align-items: center;
     }
-    .footer-logo-container { 
-        padding-bottom: 1.5rem;
+    .footer-text-content { /* Wrapper for text to ensure readability over image */
+        background-color: rgba(241, 241, 242, 0.8); /* Light semi-transparent backdrop for light mode */
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem; /* Margin around the text box */
+        display: inline-block; 
+        max-width: 90%; 
+        color: var(--text-dark); /* Explicitly set text color for this box */
     }
-    .footer-logo-container img {
-        max-width: 250px; 
-        height: auto;
-        display: block; 
-        margin: 0 auto; 
+    html.dark .footer-text-content { 
+        background-color: rgba(29, 32, 33, 0.85); /* Darker semi-transparent backdrop */
+        color: var(--text-light); /* Light text in dark mode */
     }
-    .footer-text-content p {
+    footer#contact p {
         margin-bottom: 0.5rem;
     }
-    .footer-text-content p:last-child {
+    footer#contact p:last-child {
         margin-bottom: 0;
     }
     footer#contact a {
         color: var(--accent); 
     }
+    /* html.dark footer#contact a is already handled to use --accent */
   </style>
 </head>
 <body>
@@ -383,7 +394,7 @@
 
     <section class="provider-profile" data-aos="fade-up" data-aos-delay="200">
       <div class="provider-photo-container">
-        <img src="Talia Mugshot.png" alt="Talia Sierra, PA-C, DMSc" class="provider-photo">
+        <img src="talia-sierra.jpg" alt="Talia Sierra, PA-C, DMSc" class="provider-photo">
       </div>
       <div class="provider-info">
         <h3>Talia Sierra</h3>
@@ -399,13 +410,13 @@
         <div class="psychology-today-embed-wrapper">
             <a href="https://www.psychologytoday.com/profile/1233174" class="sx-verified-seal"></a>
             <script type="text/javascript" src="https://member.psychologytoday.com/verified-seal.js" data-badge="13" data-id="1233174" data-code="aHR0cHM6Ly93d3cucHN5Y2hvbG9neXRvZGF5LmNvbS9hcGkvdmVyaWZpZWQtc2VhbC9zZWFscy8xMy9wcm9maWxlLzEyMzMxNzQ/Y2FsbGJhY2s9c3hjYWxsYmFjaw==" async defer></script>
-            </div>
+        </div>
       </div>
     </section>
 
     <section class="provider-profile" data-aos="fade-up" data-aos-delay="100">
       <div class="provider-photo-container">
-        <img src="Heidi Mugshot.png" alt="Heidi Posey, PA-C" class="provider-photo">
+        <img src="heidi-posey.jpg" alt="Heidi Posey, PA-C" class="provider-photo">
       </div>
       <div class="provider-info">
         <h3>Heidi Posey</h3>
@@ -413,13 +424,14 @@
         <div class="provider-contact">
             <p><strong>Call or Text:</strong> <a href="tel:2082950297">(208) 295-0297</a></p>
             <p><strong>Email:</strong> <a href="mailto:heidi@awakeningsmentalhealth.com">heidi@awakeningsmentalhealth.com</a></p>
+            <p><strong>More About Me:</strong> <a href="https://www.psychologytoday.com/us/psychiatrists/heidi-posey-boise-id/1233174" target="_blank" rel="noopener noreferrer">Psychology Today</a></p>
         </div>
         <p>Need to be heard? That is what I am here for. To listen and to explore what hasn't worked, and what has. Regardless of diagnosis, I want to help you with whatever symptoms are affecting you the most, and are your priority to address.</p>
         <p>I am well versed in psychopharmacology and want my patients to understand and feel comfortable with all our options, from prescription medications, supplements to brief psychotherapy; your situation is unique and your needs are too. Whether it's your first time reaching out, or if you want someone new to explore diagnosis and medications, it can be intimidating. Lets take those next steps together today.</p>
         <div class="psychology-today-embed-wrapper">
             <a href="https://www.psychologytoday.com/profile/1233174" class="sx-verified-seal"></a>
             <script type="text/javascript" src="https://member.psychologytoday.com/verified-seal.js" data-badge="13" data-id="1233174" data-code="aHR0cHM6Ly93d3cucHN5Y2hvbG9neXRvZGF5LmNvbS9hcGkvdmVyaWZpZWQtc2VhbC9zZWFscy8xMy9wcm9maWxlLzEyMzMxNzQ/Y2FsbGJhY2s9c3hjYWxsYmFjaw==" async defer></script>
-            </div>
+        </div>
       </div>
     </section>
 
@@ -428,10 +440,7 @@
   <button id="to-top">▲</button>
 
   <footer id="contact" data-aos="fade-up">
-    <div class="footer-logo-container">
-        <img src="Rectangle Logo.jpg" alt="Awakenings Mental Health Logo">
-    </div>
-    <div class="footer-text-content">
+    <div class="footer-text-content"> 
       <p>© <span id="current-year">2025</span> Awakenings Mental Health</p>
       <p>Questions? <a href="mailto:admin@awakeningsmentalhealth.com">admin@awakeningsmentalhealth.com</a> <a href="tel:2082950297">(208)295-0297</a></p>
     </div>
