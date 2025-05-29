@@ -10,16 +10,15 @@
 
   <style>
     :root {
-      --primary: #2F3E46; /* Header background - Dark grayish blue */
-      --secondary: #84A98C; /* Card/Accordion header background - Muted green */
-      --accent: #E07A5F; /* Buttons, links - Terracotta/Orange */
+      --primary: #2F3E46; 
+      --secondary: #84A98C; 
+      --accent: #E07A5F;    
       
       /* Updated Colors */
-      --bg-light: #f1f1f2;    /* NEW Page background */
-      --text-dark: #1c1c1c;   /* NEW Body text color */
-      --heading-color: #27296d; /* NEW Titles and headings color */
+      --bg-light: #f1f1f2;    
+      --text-dark: #1c1c1c;   
+      --heading-color: #27296d; 
 
-      /* Dark mode colors (bg-dark will be used for bg-light in dark mode) */
       --bg-dark: #1D2021;
       --text-light: #F0F3F4;
     }
@@ -27,7 +26,7 @@
     html.dark { 
       --bg-light: var(--bg-dark);
       --text-dark: var(--text-light);
-      --heading-color: var(--text-light); /* Headings become light in dark mode */
+      --heading-color: var(--text-light); 
     }
     html.dark .testimonial-card {
         background: #2c3032; 
@@ -54,7 +53,7 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Inter', sans-serif; /* Default body font */
+      font-family: 'Inter', sans-serif; 
       background: var(--bg-light);
       color: var(--text-dark);
       line-height: 1.6;
@@ -63,7 +62,8 @@
     }
     header#site-header {
       position: fixed; top: 0; left: 0; width: 100%;
-      background: var(--primary) url('https://www.awakeningsmentalhealth.com/images/hero.jpg') center/cover no-repeat;
+      /* MODIFIED: Using your sketch image */
+      background: var(--primary) url('YOUR_SKETCH_IMAGE_URL.jpg') center/cover no-repeat; 
       height: 60vh; 
       display: flex; 
       align-items: center; 
@@ -72,12 +72,12 @@
       z-index: 1000;
       padding: 0 1rem; 
     }
-    header#site-header::after {
+    header#site-header::after { /* Overlay for large header image */
       content: ''; position: absolute; inset: 0;
-      background: rgba(47,62,70,0.6);
-      z-index: 0;
+      background: rgba(47,62,70,0.2); /* Reduced overlay opacity, adjust or remove if needed */
+      z-index: 0; 
     }
-    body.scrolled header#site-header {
+    body.scrolled header#site-header { /* Scrolled header uses solid color */
       height: 60px;
       justify-content: space-between; 
       align-items: center; 
@@ -86,27 +86,29 @@
       box-shadow: 0 2px 8px rgba(0,0,0,.2);
     }
 
-    /* Site Title (H1) - Font Change */
+    /* Site Title (H1) - Font & Color Change */
     header#site-header h1 {
       position: relative; 
-      color: white; /* Stays white on dark background */
+      color: var(--heading-color); /* MODIFIED: Dark text for light sketch */
       font-family: 'Dancing Script', cursive;
       font-weight: 600;
       font-size: 3rem; 
       z-index: 1; 
-      transition: font-size .3s ease;
+      transition: font-size .3s ease, color .3s ease; /* Added color transition */
       margin: 0; 
       text-align: center;
     }
     body.scrolled header#site-header h1 {
-      font-size: 1.5rem; /* Adjusted for Dancing Script to be more readable when small */
+      font-size: 1.5rem; 
       line-height: 1.2; 
       margin: 0; 
+      color: white; /* MODIFIED: White text for dark scrolled header */
     }
 
     header#site-header h1 .title-short { display: none; }
     header#site-header h1 .title-full { display: inline; }
 
+    /* Navigation Styles - Text Color Change */
     header#site-header nav { 
       position: absolute;
       top: 1rem;
@@ -120,11 +122,10 @@
       position: static; 
       gap: 0.75rem; 
     }
-
     nav .nav-link { 
-      color: white; 
+      color: var(--heading-color); /* MODIFIED: Dark text for light sketch */
       text-decoration: none; 
-      font-family: 'Inter', sans-serif; /* Nav links remain Inter for readability */
+      font-family: 'Inter', sans-serif; 
       font-weight: 600;
       font-size: 0.85rem; 
       transition: color .3s;
@@ -133,77 +134,60 @@
       padding: 0.2em 0.1em; 
       display: inline-block; 
     }
-    nav .nav-link:hover { color: var(--accent); }
+    body.scrolled header#site-header nav .nav-link {
+        color: white; /* MODIFIED: White text for dark scrolled header */
+    }
+    nav .nav-link:hover { color: var(--accent); } /* Accent color for hover remains */
 
     .nav-item.dropdown {
       position: relative; 
       display: inline-block; 
     }
-    .nav-item.dropdown > .nav-link.articles-link { /* Ensure Articles link uses Inter */
+    .nav-item.dropdown > .nav-link.articles-link { 
         font-family: 'Inter', sans-serif;
     }
-
     .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: var(--bg-light); 
-      min-width: 220px; 
-      max-width: 350px; 
+      display: none; position: absolute; background-color: var(--bg-light); 
+      min-width: 220px; max-width: 350px; 
       box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      z-index: 1001; 
-      border-radius: 4px;
-      padding: 0.5rem 0;
-      top: 100%; 
-      left: 0; 
-      margin-top: 0.25rem; 
+      z-index: 1001; border-radius: 4px; padding: 0.5rem 0;
+      top: 100%; left: 0; margin-top: 0.25rem; 
     }
     .nav-item.dropdown:hover .dropdown-content,
     .nav-item.dropdown .nav-link:focus + .dropdown-content, 
-    .nav-item.dropdown .dropdown-content:hover { 
-      display: block;
-    }
+    .nav-item.dropdown .dropdown-content:hover { display: block; }
     .dropdown-content a {
-      color: var(--text-dark); 
-      padding: 0.75rem 1rem;
-      text-decoration: none;
-      display: block;
-      white-space: normal;   
-      overflow-wrap: break-word; 
-      word-wrap: break-word;     
-      font-family: 'Inter', sans-serif; /* Dropdown items Inter for readability */
-      font-size: 0.8rem; 
-      line-height: 1.4;
-      font-weight: 400; 
+      color: var(--text-dark); padding: 0.75rem 1rem; text-decoration: none;
+      display: block; white-space: normal;   
+      overflow-wrap: break-word; word-wrap: break-word;     
+      font-family: 'Inter', sans-serif; font-size: 0.8rem; 
+      line-height: 1.4; font-weight: 400; 
     }
-    .dropdown-content a:hover {
-      background-color: var(--secondary); 
-      color: white; 
-    }
+    .dropdown-content a:hover { background-color: var(--secondary); color: white; }
     #heart-animation { z-index: 1; }
 
     /* Section Headings (h2) - Font and Color Change */
-    h2 { /* General h2 style, refine selectors if needed */
+    h2 { 
       font-family: 'Dancing Script', cursive;
       font-weight: 600;
       color: var(--heading-color);
-      /* margin-bottom: 1rem; /* Example: Add some default margin if desired */
     }
-    /* Specific h2 adjustments if the general one is too broad */
     #testimonials h2, #location h2, #booking h2 { 
-        /* font-size: 1.8rem; /* Already set in #testimonials h2, this can be common */
-        margin-bottom: 2rem; /* From #testimonials h2 */
-        text-align: center; /* From #testimonials h2 */
+        font-size: 2rem; /* Increased default size for Dancing Script */
+        margin-bottom: 2rem; 
+        text-align: center; 
     }
-     #location h2, #booking h2 { /* Apply similar styling to other h2s if desired */
-        font-size: 1.8rem; /* Example, match testimonial h2 */
-        /* text-align: left; /* Or center, depending on design */
+     #location h2 { /* Specific adjustments if needed */
+        text-align: center; /* Ensure location H2 is also centered if desired */
     }
-
 
     @media (max-width: 480px) {
       header#site-header { padding: 0 0.5rem; }
-      body.scrolled header#site-header h1 { /* Main title in scrolled mobile header */
-        font-size: 1.3rem; /* Slightly larger for "Awakenings" in Dancing Script */
+      header#site-header h1 { /* Large header title on mobile */
+          font-size: 2.2rem; /* Adjust for Dancing script on mobile */
+      }
+      body.scrolled header#site-header h1 { /* Scrolled header title on mobile */
+        font-size: 1.3rem; /* Adjusted for "Awakenings" in Dancing Script */
         line-height: 1.2; 
         white-space: nowrap;    
         overflow: hidden;       
@@ -214,6 +198,8 @@
       body.scrolled header#site-header h1 .title-full { display: none; }
       body.scrolled header#site-header h1 .title-short { display: inline; }
       
+      #services .card header { text-align: center; }
+      
       header#site-header nav { 
         gap: 0.3rem; 
         right: 0.5rem; 
@@ -222,15 +208,10 @@
         font-size: 0.8rem; 
       }
       .dropdown-content { 
-        min-width: 160px;
-        max-width: calc(100vw - 30px); 
-        left: auto;   
-        right: 0;     
-        transform: none;
+        min-width: 160px; max-width: calc(100vw - 30px); 
+        left: auto; right: 0; transform: none;
       }
-      .dropdown-content a {
-        font-size: 0.75rem;
-      }
+      .dropdown-content a { font-size: 0.75rem; }
     }
 
     .container { 
@@ -245,27 +226,41 @@
     .card.no-dark-override {}
     .card header { 
       padding: 1rem; background: var(--secondary); color: white; 
-      font-family: 'Dancing Script', cursive; /* Apply Dancing Script to card headers */
+      font-family: 'Dancing Script', cursive; 
       font-weight: 600; 
-      font-size: 1.4rem; /* Slightly increase if using script font for readability */
+      font-size: 1.4rem; 
     }
     #services .card header { text-align: center; }
     .card .content { padding: 1rem; }
-    .btn { display: inline-block; background: var(--accent); color: white; padding: 0.75rem 1.5rem; border-radius: 4px; text-decoration: none; font-weight: 600; margin: 0.5rem; transition: background .3s, opacity .3s; }
-    .btn.secondary { background: var(--secondary); }
+
+    /* Button Color Changes */
+    .btn { 
+      display: inline-block; 
+      background: var(--heading-color); /* NEW: Primary button uses heading color */
+      color: white; 
+      padding: 0.75rem 1.5rem; border-radius: 4px; text-decoration: none; 
+      font-weight: 600; margin: 0.5rem; 
+      transition: background .3s, opacity .3s; 
+    }
+    .btn.secondary { 
+      background: var(--secondary); /* Secondary button keeps using secondary color */
+      /* color: white; /* Already white */
+    }
     .btn:hover { opacity: .9; }
     
     .booking-button-container { padding: 1rem; }
 
     .separator { display: block; width: 100%; height: 80px; }
     .separator path { transition: fill .3s; } 
+
+    /* Accordion Header Font & Gap */
     .accordion .acc-header { 
       background: var(--secondary); color: white; cursor: pointer; 
       padding: 1rem; border: none; width: 100%; text-align: left; 
       outline: none; 
-      font-family: 'Dancing Script', cursive; /* Apply Dancing Script to accordion headers */
+      font-family: 'Inter', sans-serif; /* CHANGED: Back to Inter */
       font-weight: 600;
-      font-size: 1.2rem; /* Adjust size for script font */
+      font-size: 1.1rem; /* Adjusted size for Inter */
       transition: background .3s; 
     }
     .accordion .acc-header.active { background: var(--accent); }
@@ -276,11 +271,25 @@
     .accordion .acc-body p { padding: 1rem 0; }
     .skeleton { background: #ddd; position: relative; }
     #testimonials { padding: 2rem 0; }
-    /* #testimonials h2 is covered by general h2 style */
+    /* #testimonials h2 uses general h2 style */
     .testimonial-card { background: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); font-style: italic; text-align: center; margin-bottom: 1.5rem; max-width: 650px; margin-left: auto; margin-right: auto; }
     .testimonial-card:last-child { margin-bottom: 0; }
-    #to-top { position: fixed; bottom: 2rem; right: 2rem; background: var(--accent); border: none; color: white; padding: 0.75rem; border-radius: 50%; font-size: 1.2rem; cursor: pointer; opacity: 0; transition: opacity .3s; z-index: 1000; }
+    
+    /* To Top Button Color Change */
+    #to-top { 
+      position: fixed; bottom: 2rem; right: 2rem; 
+      background: var(--heading-color); /* NEW: Matches primary button color */
+      border: none; color: white; 
+      padding: 0.75rem; border-radius: 50%; font-size: 1.2rem; 
+      cursor: pointer; opacity: 0; transition: opacity .3s; z-index: 1000; 
+    }
     body.scrolled #to-top { opacity: 1; }
+
+    /* Center align address text */
+    section#location address {
+        text-align: center;
+        margin-top: 0.5rem; /* Optional: space below H2 */
+    }
   </style>
 </head>
 <body>
@@ -322,8 +331,14 @@
     <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none"> <path d="M0,100 C300,0 900,100 1200,0 L1200,100 L0,100 Z" fill="var(--bg-light)"/> </svg>
 
     <section id="location" class="grid-2" data-aos="fade-right">
-      <div> <h2>Our Location</h2> <address> 6126 W State St #104<br> Boise, ID 83703 </address> </div>
-      <iframe class="skeleton lazy-embed" loading="lazy" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3080.1234567890123!2d-116.253456!3d43.6034567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54aef5e4b2c7f789%3A0x123456789abcdef!2s6126%20W%20State%20St%20%23104%2C%20Boise%2C%20ID%2083703!5e0!3m2!1sen!2sus!4v1650000000000" width="100%" height="250" style="border:0;" allowfullscreen> </iframe>
+      <div> 
+        <h2>Our Location</h2> 
+        <address> 
+          6126 W State St #104<br> 
+          Boise, ID 83703 
+        </address> 
+      </div>
+      <iframe class="skeleton lazy-embed" loading="lazy" src="YOUR_Maps_EMBED_URL" width="100%" height="250" style="border:0;" allowfullscreen> </iframe>
     </section>
 
     <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none"> <path d="M0,0 C300,100 900,0 1200,100 L1200,0 L0,0 Z" fill="var(--bg-light)"/> </svg>
