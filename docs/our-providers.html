@@ -1,1 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Providers - Awakenings Mental Health</title>
 
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+
+  <style>
+    :root {
+      --primary: #2F3E46; 
+      --accent: #E07A5F;    
+      --bg-light: #f1f1f2;    
+      --text-dark: #1c1c1c;   
+      --heading-color: #27296d; 
+      --theme-blue-static: #27296d; 
+      --bg-dark: #1D2021;
+      --text-light: #F0F3F4;
+      --secondary-color-for-buttons: #84A98C; 
+    }
+    html.dark { 
+      --bg-light: var(--bg-dark);
+      --text-dark: var(--text-light);
+      --heading-color: var(--text-light); 
+    }
+    html.dark .testimonial-card { background: #2c3032; }
+    html.dark .card:not(.no-dark-override),
+    html.dark .provider-profile { 
+        background: #272b2c; 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
+    }
+    html.dark .card header,
+    html.dark .accordion .acc-header,
+    html.dark .btn, html.dark .btn.secondary, 
+    html.dark #to-top {
+        background: var(--theme-blue-static); 
+        color: white; 
+    }
+    html.dark .accordion .acc-header.active {
+        background: var(--accent);
+    }
+    html.dark .accordion .acc-body { background: #2c3032; }
+    html.dark .skeleton { background: #444; }
+    html.dark .separator path { fill: var(--bg-dark); } 
+    
+    html.dark .btn:active, html.dark .btn.secondary:active, html.dark #to-top:active {
+        background-color: var(--bg-dark); 
+        color: var(--text-light);    
+    }
+    html.dark footer#contact { 
+        color: var(--text-light);
+        background-color: var(--primary); 
+    }
+    html.dark footer#contact .footer-text-content a {
+        color: var(--accent); 
+    }
+    html.dark .provider-contact strong {
+        color: var(--text-light);
+    }
+
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif; 
+      background: var(--bg-light); color: var(--text-dark);
+      line-height: 1.6; transition: background .3s, color .3s;
+      overflow-x: hidden; 
+    }
+    header#site-header {
+      position: fixed; top: 0; left: 0; width: 100%;
+      background: var(--primary) url('Wide Awakenings Building Sketch.png') center/cover no-repeat; 
+      height: 60vh; 
+      display: flex; align-items: center; justify-content: center; 
+      transition: all .3s ease; z-index: 1000; padding: 0 1rem; 
+    }
+    header#site-header::after {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(47,62,70,0.2); z-index: 0;
+    }
+    body.scrolled header#site-header {
+      height: 60px; justify-content: space-between; align-items: center; 
+      background-image: none; 
+      background-color: var(--theme-blue-static); 
+      box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    }
+    header#site-header h1 {
+      position: relative; color: var(--theme-blue-static); 
+      font-family: 'Dancing Script', cursive; font-weight: 600;
+      font-size: 3rem; z-index: 1; 
+      transition: font-size .3s ease, color .3s ease; 
+      margin: 0; text-align: center;
+      display: flex; 
+      align-items: center; 
+    }
+    body.scrolled header#site-header h1 {
+      font-size: 1.5rem; line-height: 1.2; margin: 0; 
+      color: white; 
+    }
+
+    .header-favicon {
+      display: none; 
+      width: 32px;   
+      height: 32px;  
+      margin-right: 10px; 
+      vertical-align: middle; 
+    }
+    body.scrolled header#site-header h1 .header-favicon {
+      display: inline-block; 
+    }
+    header#site-header h1 .title-short { display: none; }
+    header#site-header h1 .title-full { display: inline; }
+
+    header#site-header nav { 
+      position: absolute; top: 1rem; right: 1rem;
+      z-index: 1002; display: flex; align-items: center;
+      gap: 0.75rem; 
+    }
+    body.scrolled header#site-header nav { 
+      position: static; gap: 0.6rem; 
+    }
+    nav .nav-link { 
+      color: var(--theme-blue-static); 
+      text-decoration: none; font-family: 'Inter', sans-serif; 
+      font-weight: 600; font-size: 0.85rem; 
+      transition: color .3s; white-space: nowrap;
+      line-height: 1.2; padding: 0.2em 0.1em; display: inline-block; 
+    }
+    body.scrolled header#site-header nav .nav-link {
+        color: white; 
+    }
+    nav .nav-link:hover { color: var(--accent); }
+    #heart-animation { z-index: 1; display: none; } /* Hidden on this page by default */
+
+    h2 { 
+      font-family: 'Dancing Script', cursive; font-weight: 600;
+      color: var(--heading-color);
+      text-align: center; 
+      margin-bottom: 2rem; 
+      font-size: 2.2rem; 
+    }
+    .provider-section-title { /* Class for the main "Meet Our Providers" title */
+        font-size: 2.5rem; /* Larger for main page title */
+        margin-top: 2rem; /* Space above */
+    }
+     #location h2, #booking h2 { /* If these sections were on this page */
+        font-size: 2.2rem; 
+        margin-bottom: 2rem; 
+        text-align: center; 
+    }
+
+    @media (max-width: 480px) {
+      header#site-header { padding: 0 0.5rem; }
+      header#site-header h1 { font-size: 2.2rem; } 
+      body.scrolled header#site-header h1 { 
+        font-size: 1rem; 
+        line-height: 1.2; 
+        white-space: nowrap;    
+        overflow: hidden;       
+        text-overflow: ellipsis;
+        margin-right: 3px;      
+        min-width: 0; 
+        flex-shrink: 1; 
+        display: flex; align-items: center;
+      }
+      body.scrolled header#site-header h1 .header-favicon {
+          width: 28px; height: 28px;
+          margin-right: 5px; 
+      }
+      body.scrolled header#site-header h1 .title-full { display: none; }
+      body.scrolled header#site-header h1 .title-short { display: inline; }
+            
+      header#site-header nav { 
+        gap: 0.25rem; 
+        right: 0.5rem; 
+        flex-shrink: 0; 
+      }
+      nav .nav-link { 
+        font-size: 0.75rem; 
+      }
+    }
+
+    .container { 
+      max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;
+      padding-top: 60vh; 
+    }
+    body.scrolled .container { padding-top: 70px; }
+    .card { background: var(--bg-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
+    .card.no-dark-override {}
+    .card header { 
+      padding: 1rem; 
+      background: var(--theme-blue-static); 
+      color: white; 
+      font-family: 'Dancing Script', cursive; font-weight: 600; font-size: 1.4rem; 
+    }
+    /* Services card header text-align was here, removed as it's specific to index */
+    .card .content { padding: 1rem; }
+    .btn { 
+      display: inline-block; 
+      background: var(--theme-blue-static); 
+      color: white; 
+      padding: 0.75rem 1.5rem; border-radius: 4px; text-decoration: none; 
+      font-weight: 600; margin: 0.5rem; 
+      transition: background-color .2s, color .2s, opacity .3s; 
+    }
+    .btn.secondary { 
+      background: var(--theme-blue-static); 
+    }
+    .btn:hover { opacity: .9; }
+    .btn:active, .btn.secondary:active { 
+        background-color: var(--bg-light); 
+        color: var(--theme-blue-static);    
+        opacity: 1;
+    }
+    .skeleton { background: #ddd; position: relative; }
+    #to-top { 
+      position: fixed; bottom: 2rem; right: 2rem; 
+      background: var(--theme-blue-static); 
+      border: none; color: white; 
+      padding: 0.75rem; border-radius: 50%; font-size: 1.2rem; 
+      cursor: pointer; opacity: 0; 
+      transition: background-color .2s, opacity .3s; 
+    }
+    #to-top:active { 
+        background-color: var(--bg-light); 
+        color: var(--theme-blue-static);    
+        opacity: 1;
+    }
+    body.scrolled #to-top { opacity: 1; }
+        
+    /* Styles for Our Providers Page */
+    .page-intro {
+        text-align: center;
+        margin-bottom: 3rem;
+        font-size: 1.1rem;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .provider-profile {
+        background: var(--bg-light); 
+        border-radius: 8px;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+        padding: 2rem;
+        margin-bottom: 3rem;
+        display: flex;
+        gap: 2rem;
+        align-items: flex-start; 
+    }
+    .provider-photo-container {
+        flex-shrink: 0;
+        text-align: center; 
+    }
+    .provider-profile img.provider-photo {
+        width: 180px; 
+        height: 180px; 
+        object-fit: cover;
+        border-radius: 50%; 
+        border: 3px solid white;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .provider-info {
+        flex-grow: 1;
+    }
+    .provider-info h3 { /* Provider Name */
+        font-family: 'Dancing Script', cursive; 
+        font-weight: 600;
+        color: var(--heading-color);
+        font-size: 1.9rem; 
+        margin-top: 0;
+        margin-bottom: 0.25rem;
+        text-align: left; /* Override general h2 centering if needed */
+    }
+    .provider-info .credentials {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.9rem;
+        color: var(--accent); 
+        margin-bottom: 1rem;
+        font-style: italic;
+    }
+    .provider-contact { /* New class for contact info */
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem; 
+        font-family: 'Inter', sans-serif;
+    }
+    .provider-contact p {
+        margin-bottom: 0.35rem;
+        line-height: 1.5;
+    }
+    .provider-contact strong {
+        font-weight: 600;
+        color: var(--text-dark);
+    }
+    .provider-contact a {
+        color: var(--accent);
+        text-decoration: none;
+    }
+    .provider-contact a:hover {
+        text-decoration: underline;
+    }
+    .provider-info p:not(.credentials) { /* Bio paragraphs */
+        margin-bottom: 1rem;
+        line-height: 1.7;
+        font-size: 0.95rem;
+        font-family: 'Inter', sans-serif;
+    }
+    .provider-info p:last-child {
+        margin-bottom: 0;
+    }
+    .psychology-today-seal {
+        margin-top: 1.5rem;
+        display: block; 
+    }
+    .psychology-today-seal img {
+        max-width: 150px; 
+        height: auto;
+        border: 1px solid #ddd; 
+    }
+
+    @media (max-width: 768px) { 
+        .provider-profile {
+            flex-direction: column;
+            align-items: center; 
+        }
+        .provider-photo-container {
+            margin-bottom: 1rem;
+        }
+        .provider-info h3, .provider-info .credentials, .provider-contact { /* Center these on mobile stack */
+            text-align: center; 
+        }
+        .provider-info p:not(.credentials) { /* Keep bio text left-aligned */
+            text-align: left;
+        }
+        .psychology-today-seal {
+            text-align: center; 
+        }
+    }
+    /* End of New Styles for Our Providers Page */
+
+    footer#contact {
+        text-align:center; 
+        padding: 2rem 1rem;
+        background-color: var(--bg-light); 
+        position: relative;
+        color: var(--text-dark); 
+    }
+    .footer-logo-container { 
+        padding-bottom: 1.5rem;
+    }
+    .footer-logo-container img {
+        max-width: 250px; 
+        height: auto;
+        display: block; 
+        margin: 0 auto; 
+    }
+    .footer-text-content p {
+        margin-bottom: 0.5rem;
+    }
+    .footer-text-content p:last-child {
+        margin-bottom: 0;
+    }
+    footer#contact a {
+        color: var(--accent); 
+    }
+  </style>
+</head>
+<body>
+
+  <header id="site-header">
+    <h1 data-aos="fade-down">
+      <img src="Square Logo.png" alt="Awakenings Logo" class="header-favicon">
+      <span class="title-full">Awakenings Mental Health</span>
+      <span class="title-short">Awakenings</span>
+    </h1> 
+    <nav>
+      <a href="index.html" class="nav-link" target="_top">Home</a>
+      <a href="our-providers.html" class="nav-link" target="_top">Our Providers</a>
+      <a href="articles.html" class="nav-link" target="_top">Articles</a>
+    </nav>
+    <div id="heart-animation" style="position:absolute; bottom:1rem; right:1rem; width:60px; height:60px; display: none;"></div>
+  </header>
+
+  <main class="container">
+    <h2 class="provider-section-title" data-aos="fade-up">Meet Our Providers</h2>
+    <p class="page-intro" data-aos="fade-up" data-aos-delay="100">
+      At Awakenings Mental Health, our dedicated team of psychiatric mental health nurse practitioners is committed to providing compassionate and comprehensive care. We believe in a collaborative approach, working closely with you to understand your unique needs and develop a personalized treatment plan. Get to know our skilled providers below.
+    </p>
+
+    <section class="provider-profile" data-aos="fade-up" data-aos-delay="200">
+      <div class="provider-photo-container">
+        <img src="TALIA_SIERRA_PHOTO_URL" alt="Talia Sierra, PA-C, DMSc" class="provider-photo">
+      </div>
+      <div class="provider-info">
+        <h3>Talia Sierra</h3>
+        <p class="credentials">PA-C, DMSc</p>
+        <div class="provider-contact">
+            <p><strong>Call or Text:</strong> <a href="tel:2082950297">(208) 295-0297</a></p>
+            <p><strong>Email:</strong> <a href="mailto:talia@awakeningsmentalhealth.com">talia@awakeningsmentalhealth.com</a></p>
+            </div>
+        <p>Welcome! Are you ready to embark on your journey to well-being? I provide compassionate, personalized care tailored to meet your unique needs. Mental health can profoundly impact your well-being and I want to help you develop your individual path to healing.</p>
+        <p>As a doctorally trained PA I specialize in understanding the unique nuances of each individual's mental health journey and address concerns such as depression, anxiety, ADHD, bipolar disorder, PTSD, and more. I fully understand the impact mental health disorders can have on all aspects of your life, so reach out and let’s start a conversation!</p>
+        <div class="psychology-today-seal">
+          <a href="https://www.psychologytoday.com/profile/1233174" class="sx-verified-seal" target="_blank" rel="noopener noreferrer">
+            <img src="https://www.awakeningsmentalhealth.com/images/logo/psychology-today.png" alt="Psychology Today Verified - Talia Sierra" loading="lazy">
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="provider-profile" data-aos="fade-up" data-aos-delay="100">
+      <div class="provider-photo-container">
+        <img src="PROVIDER_STEPHANIE_IMAGE_URL" alt="Stephanie Loya" class="provider-photo">
+      </div>
+      <div class="provider-info">
+        <h3>Stephanie Loya</h3>
+        <p class="credentials">APRN, PMHNP-BC</p>
+        <p>Stephanie is a dedicated and board-certified Psychiatric Mental Health Nurse Practitioner. She earned her Master of Science in Nursing with a specialization in Psychiatric Mental Health from a leading institution, driven by her passion for mental health advocacy and patient well-being. Stephanie brings a wealth of experience from diverse clinical environments, including outpatient clinics, community health centers, and telepsychiatry services, where she has worked with individuals across all age groups.</p>
+        <p>Stephanie’s philosophy of care emphasizes a holistic, evidence-based, and collaborative partnership with her patients. She is adept at creating a safe and non-judgmental space where individuals can openly discuss their concerns. Stephanie specializes in diagnosing and managing a spectrum of mental health conditions, including but not limited to, depression, anxiety, bipolar disorder, ADHD, trauma-related disorders, and OCD. She provides comprehensive psychiatric evaluations, medication management, and incorporates therapeutic modalities tailored to individual needs.</p>
+        <p>She is committed to ongoing professional development and staying abreast of the latest advancements in psychiatric care to offer the most effective treatments. Stephanie firmly believes in the resilience of the human spirit and is dedicated to supporting her patients in achieving their mental health goals and improving their overall quality of life.</p>
+        <div class="psychology-today-seal">
+          <a href="http://www.psychologytoday.com/profile/1179007" class="sx-verified-seal" target="_blank" rel="noopener noreferrer">
+             <img src="https://www.awakeningsmentalhealth.com/images/logo/psychology-today.png" alt="Psychology Today Verified - Stephanie Loya" loading="lazy">
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <button id="to-top">▲</button>
+
+  <footer id="contact" data-aos="fade-up">
+    <div class="footer-logo-container">
+        <img src="Rectangle Logo.jpg" alt="Awakenings Mental Health Logo">
+    </div>
+    <div class="footer-text-content">
+      <p>© <span id="current-year">2025</span> Awakenings Mental Health</p>
+      <p>Questions? <a href="mailto:admin@awakeningsmentalhealth.com">admin@awakeningsmentalhealth.com</a> <a href="tel:2082950297">(208)295-0297</a></p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/lottie-web@latest/build/player/lottie.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <script>
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+    AOS.init({ duration: 600, once: true });
+
+    try {
+        const heartAnimContainer = document.getElementById('heart-animation');
+        if(heartAnimContainer && heartAnimContainer.style.display !== 'none') { 
+            lottie.loadAnimation({
+              container: heartAnimContainer,
+              path: 'https://assets7.lottiefiles.com/packages/lf20_heart.json', 
+              renderer: 'svg', loop: true, autoplay: true
+            });
+        }
+    } catch (e) {
+        console.error("Lottie animation could not be loaded.", e);
+        const heartAnimContainer = document.getElementById('heart-animation');
+        if(heartAnimContainer) heartAnimContainer.style.display = 'none';
+    }
+
+    const toTop = document.getElementById('to-top');
+
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY > 50;
+      document.body.classList.toggle('scrolled', scrolled);
+    });
+    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    const applySystemTheme = (isDark) => {
+        if (isDark) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        if (typeof AOS !== 'undefined') { 
+            AOS.refreshHard(); 
+        }
+        let currentBg;
+        if (document.documentElement.classList.contains('dark')) {
+            currentBg = getComputedStyle(document.documentElement).getPropertyValue('--bg-dark').trim();
+        } else {
+            currentBg = getComputedStyle(document.documentElement).getPropertyValue('--bg-light').trim();
+        }
+        document.querySelectorAll('.separator path').forEach(p => p.style.fill = currentBg);
+    };
+
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    applySystemTheme(prefersDarkScheme.matches); 
+    prefersDarkScheme.addEventListener('change', (e) => { 
+        applySystemTheme(e.matches);
+    });
+
+    document.querySelectorAll('.accordion .acc-header').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.classList.toggle('active');
+        const body = btn.nextElementSibling;
+        body.style.maxHeight = btn.classList.contains('active') ? body.scrollHeight + 'px' : '0';
+      });
+    });
+
+    document.querySelectorAll('iframe.lazy-embed').forEach(iframe => { 
+      if (iframe.classList.contains('skeleton')) { 
+          iframe.addEventListener('load', () => {
+              iframe.classList.remove('skeleton');
+              if (typeof AOS !== 'undefined') { 
+                AOS.refresh(); 
+              }
+          });
+      }
+    });
+  </script>
+</body>
+</html>
