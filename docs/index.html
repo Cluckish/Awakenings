@@ -41,46 +41,66 @@
       z-index: 9999;
     }
     /* Sticky header */
-    header#site-header { /* Made selector more specific */
+    header#site-header {
       position: fixed; top: 0; left: 0; width: 100%;
       background: var(--primary) url('https://www.awakeningsmentalhealth.com/images/hero.jpg') center/cover no-repeat;
       height: 60vh; display: flex; align-items: center; justify-content: center;
       transition: all .3s ease;
       z-index: 1000;
     }
-    body.scrolled header#site-header { /* Made selector more specific */
+    body.scrolled header#site-header {
       background: var(--primary) center/cover no-repeat;
       height: 60px;
       box-shadow: 0 2px 8px rgba(0,0,0,.2);
     }
-    header#site-header::after { /* Made selector more specific */
+    header#site-header::after {
       content: ''; position: absolute; inset: 0;
       background: rgba(47,62,70,0.6);
     }
-    header#site-header h1 { /* Made selector more specific */
+    header#site-header h1 {
       position: relative; color: white; font-size: 3rem; z-index: 1;
       transition: font-size .3s ease;
     }
-    body.scrolled header#site-header h1 { font-size: 1.5rem; } /* Made selector more specific */
+    body.scrolled header#site-header h1 { font-size: 1.5rem; }
     nav {
       position: absolute; top: 1rem; right: 2rem; z-index: 2;
+      display: flex; /* Added for aligning items including button */
+      align-items: center; /* Added for aligning items including button */
     }
     nav a {
       color: white; margin-left: 1.5rem; text-decoration: none; font-weight: 600;
       font-size: 0.9rem; transition: color .3s;
     }
     nav a:hover { color: var(--accent); }
-    /* Dark mode toggle */
+    
+    /* OLD Dark mode toggle CSS - REMOVED
     #theme-toggle {
       position: absolute; top: 1rem; left: 2rem;
       background: var(--accent); border: none;
       color: white; padding: 0.5rem; border-radius: 4px;
       cursor: pointer; font-size: 0.8rem; z-index: 2;
+    } */
+
+    /* NEW Dark mode toggle CSS - for button inside nav */
+    nav #theme-toggle {
+      background: var(--accent);
+      border: none;
+      color: white;
+      padding: 0.4rem 0.8rem; /* Adjusted padding */
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem; /* Matched nav links */
+      font-weight: 600; /* Matched nav links */
+      margin-left: 1.5rem; /* Spacing from other nav items */
+      line-height: 1; /* Adjust for better vertical alignment if needed */
+      /* vertical-align: middle; /* Alternative alignment */
     }
+    nav #theme-toggle:hover {
+        opacity: .9;
+    }
+
     .container {
       max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;
-      /* Add initial padding-top to prevent overlap with tall fixed header */
-      /* This will be dynamically adjusted by JS */
     }
     .grid-2 {
       display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
@@ -100,7 +120,7 @@
       color: white; padding: 0.75rem 1.5rem;
       border-radius: 4px; text-decoration: none;
       font-weight: 600; margin: 0.5rem;
-      transition: background .3s;
+      transition: background .3s, opacity .3s; /* Added opacity transition */
     }
     .btn.secondary { background: var(--secondary); }
     .btn:hover { opacity: .9; }
@@ -144,12 +164,12 @@
   <div id="progress-bar"></div>
 
   <header id="site-header">
-    <button id="theme-toggle">Toggle Dark</button>
     <nav>
       <a href="#services">Services</a>
       <a href="#insurance">Insurance</a>
       <a href="#booking">Book</a>
       <a href="#contact">Contact</a>
+      <button id="theme-toggle">Toggle Dark</button> 
     </nav>
     <h1 data-aos="fade-down">Awakenings Mental Health</h1>
     <div id="heart-animation" style="position:absolute; bottom:1rem; right:1rem; width:60px; height:60px;"></div>
@@ -212,7 +232,7 @@
       <div class="accordion card">
         <button class="acc-header">What insurances do you accept?</button>
         <div class="acc-body">
-          <p>Blue Cross, Select Health, Pacific Source, Saint Luke's Health Plan, Anthem Blue Cross, Blue Shield, Regence, Aetna, Cash Pay</p>
+          <p>Blue Cross, Select Health, Aetna, …</p>
         </div>
         <button class="acc-header">How do I verify coverage?</button>
         <div class="acc-body">
@@ -230,14 +250,13 @@
       <div class="card">
         <div class="content">
           <a href="https://www.therapyportal.com/p/awakenings83703/"
-             class="btn"
+             class="btn" 
              target="_blank"
              rel="noopener noreferrer">
             Patient Portal
           </a>
           <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeYABYxDoscWL3jH-SNU51X0hgomcb0bEqshRIUnCRg7aSgA/viewform"
-             class="btn"
-             target="_blank"
+             class="btn secondary" target="_blank"
              rel="noopener noreferrer">
             Appointment Interest Form
           </a>
@@ -245,17 +264,12 @@
       </div>
     </section>
 
-    <section style="text-align:center; margin-bottom:3rem;" data-aos="fade-up">
-      <a href="#contact" class="btn">Contact Us</a>
-      <a href="#booking" class="btn secondary">Schedule Now</a>
-    </section>
-
-  </main>
+    </main>
 
   <button id="to-top">▲</button>
 
   <footer id="contact" style="text-align:center; padding:2rem 0;" data-aos="fade-up">
-    <p>© 2025 Awakenings Mental Health</p>
+    <p>© <span id="current-year">2025</span> Awakenings Mental Health</p>
     <p>Questions? <a href="mailto:admin@awakeningsmentalhealth.com" style="color: var(--accent);">admin@awakeningsmentalhealth.com</a> <a href="tel:2082950297" style="color: var(--accent);">(208)295-0297</a></p>
   </footer>
 
@@ -264,6 +278,9 @@
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
   <script>
+    // Set current year in footer
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
     // AOS init
     AOS.init({ duration: 600, once: true });
 
@@ -275,11 +292,18 @@
     });
 
     // Lottie animation
-    lottie.loadAnimation({
-      container: document.getElementById('heart-animation'),
-      path: 'https://assets7.lottiefiles.com/packages/lf20_heart.json', // Ensure this Lottie JSON path is valid
-      renderer: 'svg', loop: true, autoplay: true
-    });
+    try {
+        lottie.loadAnimation({
+          container: document.getElementById('heart-animation'),
+          path: 'https://assets7.lottiefiles.com/packages/lf20_heart.json', // Ensure this Lottie JSON path is valid
+          renderer: 'svg', loop: true, autoplay: true
+        });
+    } catch (e) {
+        console.error("Lottie animation could not be loaded.", e);
+        const heartAnimContainer = document.getElementById('heart-animation');
+        if(heartAnimContainer) heartAnimContainer.style.display = 'none'; // Hide container if Lottie fails
+    }
+
 
     // DOM elements
     const siteHeader = document.getElementById('site-header');
@@ -296,7 +320,6 @@
 
     // Initial adjustment after elements are loaded
     window.addEventListener('load', adjustMainContentPadding);
-    // Adjust if window is resized (e.g., header height changes due to responsive styles not present here, but good practice)
     window.addEventListener('resize', adjustMainContentPadding);
 
 
@@ -305,11 +328,9 @@
       const scrolled = window.scrollY > 50;
       document.body.classList.toggle('scrolled', scrolled);
       
-      // If header height changes on scroll (it does: 60vh -> 60px), adjust padding
       adjustMainContentPadding(); 
 
-      // progress bar
-      if (document.body.scrollHeight > window.innerHeight) { // Avoid division by zero if content is not scrollable
+      if (document.body.scrollHeight > window.innerHeight) { 
         const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
         progressBar.style.width = pct + '%';
       } else {
@@ -320,16 +341,26 @@
 
     // Dark mode toggle
     const toggle = document.getElementById('theme-toggle');
-    toggle.addEventListener('click', () => {
-      document.documentElement.classList.toggle('dark');
-      localStorage.setItem('dark', document.documentElement.classList.contains('dark'));
-    });
-    if (localStorage.getItem('dark') === 'true') {
-      document.documentElement.classList.add('dark');
+    if (toggle) {
+        toggle.addEventListener('click', () => {
+          document.documentElement.classList.toggle('dark');
+          localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+        });
+        // Apply saved theme on load
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else if (savedTheme === 'light') {
+          document.documentElement.classList.remove('dark'); // Explicitly set light if needed
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            // Optional: Default to system preference if no theme saved
+            // document.documentElement.classList.add('dark'); 
+        }
     }
 
+
     // Accordion
-    document.querySelectorAll('.acc-header').forEach(btn => {
+    document.querySelectorAll('.accordion .acc-header').forEach(btn => {
       btn.addEventListener('click', () => {
         btn.classList.toggle('active');
         const body = btn.nextElementSibling;
