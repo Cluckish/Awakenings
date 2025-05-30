@@ -49,17 +49,16 @@
         background-color: var(--bg-dark); 
         color: var(--text-light);    
     }
-    html.dark footer#contact { 
+    html.dark footer#contact { /* Footer text and BG in dark mode */
         color: var(--text-light);
-        background-color: var(--bg-dark); 
+        background-color: var(--bg-dark); /* Matches page dark background */
     }
-    html.dark footer#contact .footer-text-content a {
+    html.dark footer#contact .footer-text-content a { /* Links in footer text in dark mode */
         color: var(--accent); 
     }
     html.dark .provider-contact strong {
         color: var(--text-light);
     }
-
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -144,7 +143,7 @@
         font-size: 2.5rem; 
         margin-top: 2rem; 
     }
-     #location h2, #booking h2 { /* If these sections were on this page */
+     #location h2, #booking h2 { 
         font-size: 2.2rem; 
         margin-bottom: 2rem; 
         text-align: center; 
@@ -331,32 +330,30 @@
     }
     /* End of Styles for Our Providers Page */
 
+    /* Footer Styling Updated */
     footer#contact {
         text-align:center; 
-        padding: 0; 
-        background-image: url('Rectangle Logo.jpg');
-        background-size: contain; 
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-color: var(--bg-light); 
+        padding: 2rem 1rem 1rem; /* Add padding for overall footer spacing */
+        background-color: var(--bg-light); /* Page background will show where logo doesn't cover */
         position: relative;
-        min-height: 280px; 
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end; 
-        align-items: center;
+        color: var(--text-dark); 
+        /* min-height removed, height will be determined by content */
+    }
+    .footer-logo-container { /* Container for the logo image */
+        margin-bottom: 1.5rem; /* Space between logo and text below */
+    }
+    .footer-logo-container img {
+        max-width: 250px; /* Adjust as needed */
+        height: auto;
+        display: block; 
+        margin: 0 auto; /* Center the image */
     }
     .footer-text-content { 
-        background-color: rgba(241, 241, 242, 0.8); 
-        padding: 1rem;
-        border-radius: 8px;
-        margin: 1rem; 
-        display: inline-block; 
-        max-width: 90%; 
-        color: var(--text-dark); 
+        /* background-color removed - no longer needs a separate backdrop if footer BG is simple */
+        padding: 0; 
     }
     html.dark .footer-text-content { 
-        background-color: rgba(29, 32, 33, 0.85); 
+        /* background-color removed */
         color: var(--text-light); 
     }
     footer#contact p {
@@ -440,6 +437,9 @@
   <button id="to-top">▲</button>
 
   <footer id="contact" data-aos="fade-up">
+    <div class="footer-logo-container">
+        <img src="Rectangle Logo.jpg" alt="Awakenings Mental Health Logo">
+    </div>
     <div class="footer-text-content"> 
       <p>© <span id="current-year">2025</span> Awakenings Mental Health</p>
       <p>Questions? <a href="mailto:admin@awakeningsmentalhealth.com">admin@awakeningsmentalhealth.com</a> <a href="tel:2082950297">(208)295-0297</a></p>
