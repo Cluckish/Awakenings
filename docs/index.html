@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Awakenings Mental Health</title> {/* Changed Title */}
+  <title>Awakenings Mental Health</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
@@ -18,7 +18,7 @@
       --theme-blue-static: #27296d; 
       --bg-dark: #1D2021;
       --text-light: #F0F3F4;
-      --secondary-color-for-buttons: #84A98C; /* Can be used if .btn.secondary needs distinct style */
+      /* --secondary-color-for-buttons: #84A98C; /* Not actively used if buttons are blue */
     }
     html.dark { 
       --bg-light: var(--bg-dark);
@@ -26,7 +26,7 @@
       --heading-color: var(--text-light); 
     }
     html.dark .testimonial-card { background: #2c3032; }
-    html.dark .card:not(.no-dark-override){ 
+    html.dark .card:not(.no-dark-override) { 
         background: #272b2c; 
         box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
     }
@@ -50,9 +50,9 @@
     }
     html.dark footer#contact { 
         color: var(--text-light);
-        background-color: var(--primary); /* Darker footer bg for dark mode */
+        background-color: var(--bg-dark); /* Footer BG matches page dark BG */
     }
-    html.dark footer#contact .footer-text-content a { /* Ensure footer links are styled for dark mode */
+    html.dark footer#contact .footer-text-content a {
         color: var(--accent); 
     }
 
@@ -135,13 +135,16 @@
       margin-bottom: 2rem; 
       font-size: 2.2rem; 
     }
-    /* Specific h2s if needed */
-    #testimonials h2, #location h2, #booking h2 { 
+    #testimonials h2, #location h2, #booking h2, /* Added #services h2 for consistency if desired */
+    #services h2, /* This might not exist as h2, services are cards with headers */
+    #insurance h2 /* This might not exist as h2, insurance is an accordion */
+     { 
         font-size: 2.2rem; 
         margin-bottom: 2rem; 
         text-align: center; 
     }
-     #location h2 { text-align: center; }
+    #location h2 { text-align: center; } /* Explicitly center location H2 */
+
 
     @media (max-width: 480px) {
       header#site-header { padding: 0 0.5rem; }
@@ -158,8 +161,8 @@
         display: flex; align-items: center;
       }
       body.scrolled header#site-header h1 .header-favicon {
-          width: 28px; height: 28px;
-          margin-right: 5px; 
+          width: 24px; height: 24px;
+          margin-right: 4px; 
       }
       body.scrolled header#site-header h1 .title-full { display: none; }
       body.scrolled header#site-header h1 .title-short { display: inline; }
@@ -173,14 +176,19 @@
       }
       nav .nav-link { 
         font-size: 0.75rem; 
+        padding: 0.2em 0;
       }
     }
 
     .container { 
-      max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;
+      max-width: 1000px; margin: 0 auto; 
+      padding: 2rem 1rem 100px; /* Added 100px padding-bottom */
       padding-top: 60vh; 
     }
-    body.scrolled .container { padding-top: 70px; }
+    body.scrolled .container { 
+      padding-top: 70px; 
+      /* padding-bottom: 100px is inherited */
+    }
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 2rem; align-items: start; margin-bottom: 3rem; }
     .card { background: var(--bg-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
     .card.no-dark-override {}
@@ -190,7 +198,7 @@
       color: white; 
       font-family: 'Dancing Script', cursive; font-weight: 600; font-size: 1.4rem; 
     }
-    #services .card header { text-align: center; }
+    #services .card header { text-align: center; } /* Ensures service card headers are centered */
     .card .content { padding: 1rem; }
     .btn { 
       display: inline-block; 
@@ -244,15 +252,17 @@
     body.scrolled #to-top { opacity: 1; }
     section#location address { text-align: center; margin-top: 0.5rem; }
     
+    /* Footer Styling Updated */
     footer#contact {
         text-align:center; 
-        padding: 2rem 1rem;
-        background-color: var(--bg-light); 
+        padding: 2rem 1rem 1rem; /* Overall padding */
+        background-color: var(--bg-light); /* Page background shows where logo doesn't cover */
         position: relative;
         color: var(--text-dark); 
+        /* min-height is removed, height will be from content + padding */
     }
     .footer-logo-container { 
-        padding-bottom: 1.5rem;
+        margin-bottom: 1.5rem; /* Space between logo and text below */
     }
     .footer-logo-container img {
         max-width: 250px; 
@@ -260,10 +270,21 @@
         display: block; 
         margin: 0 auto; 
     }
-    .footer-text-content p {
+    .footer-text-content { 
+        /* background-color removed - no separate backdrop if footer bg is simple */
+        padding: 0; 
+        /* display, max-width, margin, border-radius removed as it's direct text now */
+    }
+    html.dark footer#contact { 
+        background-color: var(--bg-dark); /* Dark mode footer BG matches page dark BG */
+        color: var(--text-light); 
+    }
+    /* html.dark .footer-text-content styles for background and color are removed */
+    
+    footer#contact p {
         margin-bottom: 0.5rem;
     }
-    .footer-text-content p:last-child {
+    footer#contact p:last-child {
         margin-bottom: 0;
     }
     footer#contact a {
@@ -289,17 +310,13 @@
 
   <main class="container">
     <section id="services" class="grid-2" data-aos="fade-up">
-      <div class="card" data-aos="zoom-in">
-        <header>Individual Therapy</header>
-        <div class="content">
-          <p>Personalized support for anxiety, depression, and life transitions.</p>
-        </div>
+      <div class="card" data-aos="zoom-in"> 
+        <header>Individual Therapy</header> 
+        <div class="content"> <p>Personalized support for anxiety, depression, and life transitions.</p> </div> 
       </div>
-      <div class="card" data-aos="zoom-in" data-aos-delay="100">
-        <header>Medication Management</header>
-        <div class="content">
-          <p>Expert psychiatric care to optimize your treatment plan.</p>
-        </div>
+      <div class="card" data-aos="zoom-in" data-aos-delay="100"> 
+        <header>Medication Management</header> 
+        <div class="content"> <p>Expert psychiatric care to optimize your treatment plan.</p> </div> 
       </div>
     </section>
 
@@ -351,7 +368,7 @@
     <div class="footer-logo-container">
         <img src="Rectangle Logo.jpg" alt="Awakenings Mental Health Logo">
     </div>
-    <div class="footer-text-content">
+    <div class="footer-text-content"> 
       <p>© <span id="current-year">2025</span> Awakenings Mental Health</p>
       <p>Questions? <a href="mailto:admin@awakeningsmentalhealth.com">admin@awakeningsmentalhealth.com</a> <a href="tel:2082950297">(208)295-0297</a></p>
     </div>
@@ -366,7 +383,6 @@
 
     try {
         const heartAnimContainer = document.getElementById('heart-animation');
-        // Only load Lottie if the container is intended to be visible
         if(heartAnimContainer && (typeof heartAnimContainer.style.display === 'undefined' || heartAnimContainer.style.display !== 'none')) { 
             lottie.loadAnimation({
               container: heartAnimContainer,
@@ -413,6 +429,14 @@
     applySystemTheme(prefersDarkScheme.matches); 
     prefersDarkScheme.addEventListener('change', (e) => { 
         applySystemTheme(e.matches);
+    });
+    
+    window.addEventListener('load', function() {
+      if (typeof AOS !== 'undefined') {
+        setTimeout(function() {
+          AOS.refreshHard(); 
+        }, 1200); 
+      }
     });
 
     const accordionHeaders = document.querySelectorAll('.accordion .acc-header');
