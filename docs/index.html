@@ -65,48 +65,68 @@
     header#site-header {
       position: fixed; top: 0; left: 0; width: 100%;
       background: var(--primary) url('Wide Awakenings Building Sketch.png') center/cover no-repeat; 
-      height: 30vh; 
+      height: 30vh; /* Initial height */
       display: flex; align-items: center; justify-content: center; 
-      transition: all 1.2s ease; 
+      /* MODIFIED: Transition for properties not handled by JS scroll, or remove if all handled by JS */
+      transition: background-color 0.3s ease, box-shadow 0.3s ease; 
       z-index: 1000; padding: 0 1rem; 
     }
     header#site-header::after {
       content: ''; position: absolute; inset: 0;
       background: rgba(47,62,70,0.2); z-index: 0;
+      /* transition: opacity 0.7s ease; /* If you want to fade out the overlay too */
+      /* opacity: 1; */
     }
     body.scrolled header#site-header {
-      height: 60px; justify-content: space-between; align-items: center; 
+      /* height: 60px; /* Now controlled by JS */
+      justify-content: space-between; align-items: center; 
       background-image: none; 
       background-color: var(--theme-blue-static); 
       box-shadow: 0 2px 8px rgba(0,0,0,.2);
     }
+    /* H1 initial state (JS will override size/color on scroll) */
     header#site-header h1 {
       position: relative; color: var(--theme-blue-static); 
       font-family: 'Dancing Script', cursive; font-weight: 600;
       font-size: 2.5rem; 
       z-index: 1; 
-      transition: font-size 1.2s ease, color 1.2s ease; 
       margin: 0; text-align: center;
       display: flex; 
       align-items: center; 
+      /* MODIFIED: Removed font-size and color transitions, JS handles it */
     }
+    /* H1 scrolled state (JS will set these values, but CSS can be fallback) */
     body.scrolled header#site-header h1 {
-      font-size: 1.5rem; line-height: 1.2; margin: 0; 
-      color: white; 
+      /* font-size: 1.5rem; /* JS handles this now */
+      line-height: 1.2; margin: 0; 
+      /* color: white; /* JS handles this now */
+      display: flex; /* Ensures favicon and text align when scrolled */
+      align-items: center;
     }
 
     .header-favicon {
-      display: none; 
+      display: inline-block; /* Start as inline-block to allow opacity animation */
+      opacity: 0; /* Hidden by opacity initially */
       width: 32px;   
       height: 32px;  
       margin-right: 10px; 
       vertical-align: middle; 
+      transition: opacity 0.3s ease; /* Smooth fade for favicon */
     }
-    body.scrolled header#site-header h1 .header-favicon {
+    /* body.scrolled rule for .header-favicon display:inline-block is less needed if JS controls opacity */
+    
+    header#site-header h1 .title-short { 
       display: inline-block; 
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
-    header#site-header h1 .title-short { display: none; }
-    header#site-header h1 .title-full { display: inline; }
+    header#site-header h1 .title-full { 
+      display: inline-block;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+    /* body.scrolled rules for title-short/full display:none/inline are less needed if JS controls opacity */
+
 
     header#site-header nav { 
       position: absolute; top: 1rem; right: 1rem;
@@ -120,12 +140,12 @@
       color: var(--theme-blue-static); 
       text-decoration: none; font-family: 'Inter', sans-serif; 
       font-weight: 600; font-size: 0.85rem; 
-      transition: color 1.2s ease; 
       white-space: nowrap;
       line-height: 1.2; padding: 0.2em 0.1em; display: inline-block; 
+      /* MODIFIED: Removed color transition, JS handles it */
     }
     body.scrolled header#site-header nav .nav-link {
-        color: white; 
+        /* color: white; /* JS handles this now */
     }
     nav .nav-link:hover { color: var(--accent); }
     #heart-animation { z-index: 1; } 
@@ -146,12 +166,12 @@
     }
     #location h2 { text-align: center; }
 
-
     @media (max-width: 480px) {
       header#site-header { padding: 0 0.5rem; }
-      header#site-header h1 { font-size: 1.8rem; } 
+      header#site-header h1 { font-size: 1.8rem; } /* Initial large header title on mobile */
+      
       body.scrolled header#site-header h1 { 
-        font-size: 1rem; 
+        /* font-size: 1rem; /* JS will handle this */
         line-height: 1.2; 
         white-space: nowrap;    
         overflow: hidden;       
@@ -159,14 +179,12 @@
         margin-right: 3px;      
         min-width: 0; 
         flex-shrink: 1; 
-        display: flex; align-items: center;
       }
       body.scrolled header#site-header h1 .header-favicon {
           width: 24px; height: 24px;
           margin-right: 4px; 
       }
-      body.scrolled header#site-header h1 .title-full { display: none; }
-      body.scrolled header#site-header h1 .title-short { display: inline; }
+      /* JS will handle title-full/title-short display/opacity */
             
       #services .card header { text-align: center; } 
       
@@ -184,10 +202,10 @@
     .container { 
       max-width: 1000px; margin: 0 auto; 
       padding: 2rem 1rem 100px; 
-      padding-top: 30vh; 
+      padding-top: 30vh; /* Matches new initial header height */
     }
     body.scrolled .container { 
-      padding-top: 70px; 
+      padding-top: 70px; /* For 60px header + buffer */
     }
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 2rem; align-items: start; margin-bottom: 3rem; }
     .card { background: var(--bg-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
@@ -397,12 +415,114 @@
     }
 
     const toTop = document.getElementById('to-top');
+    
+    // New Scroll-Linked Animation Logic
+    const siteHeader = document.getElementById('site-header');
+    const h1Title = siteHeader.querySelector('h1');
+    const titleFull = h1Title.querySelector('.title-full');
+    const titleShort = h1Title.querySelector('.title-short');
+    const headerFavicon = h1Title.querySelector('.header-favicon');
+    const navLinks = Array.from(siteHeader.querySelectorAll('nav .nav-link')); // Convert NodeList to Array
+
+    const initialHeaderHeightVh = 30;
+    const finalHeaderHeightPx = 60;
+    const initialH1FontSizeRem = 2.5; 
+    const finalH1DesktopFontSizeRem = 1.5;
+    const finalH1MobileFontSizeRem = 1.0;
+    const animationScrollStart = 0;
+    const animationScrollEnd = 150; // Scroll distance in pixels for animation to complete
+
+    const initialTextColor = getComputedStyle(document.documentElement).getPropertyValue('--theme-blue-static').trim();
+    const finalTextColor = '#FFFFFF'; // White
+
+    // Simple function to interpolate between two values
+    function interpolate(startVal, endVal, progress) {
+        return startVal + (endVal - startVal) * progress;
+    }
+    // Simple function to switch color based on progress threshold
+    function switchColor(progress, threshold, colorStart, colorEnd) {
+        return progress >= threshold ? colorEnd : colorStart;
+    }
 
     window.addEventListener('scroll', () => {
-      const scrolled = window.scrollY > 50;
+      const scrollY = window.scrollY;
+      const scrolled = scrollY > 50; // For body.scrolled class logic (background, layout)
       document.body.classList.toggle('scrolled', scrolled);
+
+      let progress = 0;
+      if (scrollY <= animationScrollStart) {
+        progress = 0;
+      } else if (scrollY >= animationScrollEnd) {
+        progress = 1;
+      } else {
+        progress = (scrollY - animationScrollStart) / (animationScrollEnd - animationScrollStart);
+      }
+
+      // Header Height
+      const initialHeaderActualHeight = (initialHeaderHeightVh / 100) * window.innerHeight;
+      const newHeaderHeight = interpolate(initialHeaderActualHeight, finalHeaderHeightPx, progress);
+      siteHeader.style.height = `${newHeaderHeight}px`;
+
+      // H1 Font Size
+      let targetFinalH1FontSize = window.innerWidth <= 480 ? finalH1MobileFontSizeRem : finalH1DesktopFontSizeRem;
+      const newH1FontSize = interpolate(initialH1FontSizeRem, targetFinalH1FontSize, progress);
+      h1Title.style.fontSize = `${newH1FontSize}rem`;
+      
+      // Title and Favicon Opacity/Display (using opacity for smooth transition)
+      if (titleFull) titleFull.style.opacity = 1 - progress;
+      if (titleShort) titleShort.style.opacity = progress;
+      if (headerFavicon) headerFavicon.style.opacity = progress;
+
+      // Handle display property for titles/favicon to remove them from layout when fully transparent
+      if (progress > 0.95) { // Almost fully transitioned
+          if (titleFull) titleFull.style.display = 'none';
+          if (titleShort) titleShort.style.display = 'inline';
+          if (headerFavicon) headerFavicon.style.display = 'inline-block';
+      } else if (progress < 0.05) { // Almost fully initial state
+          if (titleFull) titleFull.style.display = 'inline';
+          if (titleShort) titleShort.style.display = 'none';
+          if (headerFavicon) headerFavicon.style.display = 'none';
+      } else { // In between, allow opacity to work
+          if (titleFull) titleFull.style.display = 'inline';
+          if (titleShort) titleShort.style.display = 'inline';
+          if (headerFavicon) headerFavicon.style.display = 'inline-block';
+      }
+
+
+      // Text Colors (H1 and Nav links) - switch at 50% progress for simplicity
+      const currentH1Color = switchColor(progress, 0.5, initialTextColor, finalTextColor);
+      const currentNavLinkColor = switchColor(progress, 0.5, initialTextColor, finalTextColor);
+
+      h1Title.style.color = currentH1Color;
+      navLinks.forEach(link => {
+        link.style.color = currentNavLinkColor;
+      });
+
+      // When fully scrolled (using body.scrolled as a final state check from CSS)
+      if (document.body.classList.contains('scrolled')) {
+          siteHeader.style.height = `${finalHeaderHeightPx}px`; // Ensure final height
+          h1Title.style.color = 'white';
+          navLinks.forEach(link => { link.style.color = 'white'; });
+          if(window.innerWidth <= 480) {
+            h1Title.style.fontSize = `${finalH1MobileFontSizeRem}rem`;
+          } else {
+            h1Title.style.fontSize = `${finalH1DesktopFontSizeRem}rem`;
+          }
+          if (titleFull) titleFull.style.display = 'none';
+          if (titleShort) titleShort.style.display = 'inline';
+          if (headerFavicon) headerFavicon.style.display = 'inline-block';
+      } else if (scrollY < 5) { // Ensure reset to initial state if scrolled all the way up
+          siteHeader.style.height = `${initialHeaderHeightVh}vh`;
+          h1Title.style.color = initialTextColor;
+          navLinks.forEach(link => { link.style.color = initialTextColor; });
+          h1Title.style.fontSize = `${initialH1FontSizeRem}rem`;
+          if (titleFull) titleFull.style.display = 'inline';
+          if (titleShort) titleShort.style.display = 'none';
+          if (headerFavicon) headerFavicon.style.display = 'none';
+      }
     });
-    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    // End of New Scroll-Linked Animation Logic
+
 
     const applySystemTheme = (isDark) => {
         if (isDark) {
@@ -437,6 +557,8 @@
           AOS.refreshHard(); 
         }, 1200); 
       }
+      // Trigger initial scroll animation state if page is already scrolled on load
+      window.dispatchEvent(new Event('scroll'));
     });
 
     const accordionHeaders = document.querySelectorAll('.accordion .acc-header');
