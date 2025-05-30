@@ -51,7 +51,7 @@
     }
     html.dark footer#contact { 
         color: var(--text-light);
-        background-color: var(--bg-dark); /* CHANGED: Footer BG in dark mode matches page BG */
+        background-color: var(--bg-dark); 
     }
     html.dark footer#contact .footer-text-content a {
         color: var(--accent); 
@@ -59,6 +59,7 @@
     html.dark .provider-contact strong {
         color: var(--text-light);
     }
+
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -143,7 +144,7 @@
         font-size: 2.5rem; 
         margin-top: 2rem; 
     }
-     #location h2, #booking h2 { 
+     #location h2, #booking h2 { /* If these sections were on this page */
         font-size: 2.2rem; 
         margin-bottom: 2rem; 
         text-align: center; 
@@ -332,31 +333,31 @@
 
     footer#contact {
         text-align:center; 
-        padding: 0; /* Padding will be on .footer-content-wrapper now */
+        padding: 0; 
         background-image: url('Rectangle Logo.jpg');
         background-size: contain; 
         background-position: center center;
         background-repeat: no-repeat;
-        background-color: var(--bg-light); /* Page background shows through */
+        background-color: var(--bg-light); 
         position: relative;
-        min-height: 280px; /* Adjust as needed */
+        min-height: 280px; 
         display: flex;
         flex-direction: column;
-        justify-content: flex-end; /* Push text content to the bottom */
+        justify-content: flex-end; 
         align-items: center;
     }
-    .footer-text-content { /* Wrapper for text to ensure readability over image */
-        background-color: rgba(241, 241, 242, 0.8); /* Light semi-transparent backdrop for light mode */
+    .footer-text-content { 
+        background-color: rgba(241, 241, 242, 0.8); 
         padding: 1rem;
         border-radius: 8px;
-        margin: 1rem; /* Margin around the text box */
+        margin: 1rem; 
         display: inline-block; 
         max-width: 90%; 
-        color: var(--text-dark); /* Explicitly set text color for this box */
+        color: var(--text-dark); 
     }
     html.dark .footer-text-content { 
-        background-color: rgba(29, 32, 33, 0.85); /* Darker semi-transparent backdrop */
-        color: var(--text-light); /* Light text in dark mode */
+        background-color: rgba(29, 32, 33, 0.85); 
+        color: var(--text-light); 
     }
     footer#contact p {
         margin-bottom: 0.5rem;
@@ -367,7 +368,6 @@
     footer#contact a {
         color: var(--accent); 
     }
-    /* html.dark footer#contact a is already handled to use --accent */
   </style>
 </head>
 <body>
@@ -501,6 +501,14 @@
     applySystemTheme(prefersDarkScheme.matches); 
     prefersDarkScheme.addEventListener('change', (e) => { 
         applySystemTheme(e.matches);
+    });
+    
+    window.addEventListener('load', function() {
+      if (typeof AOS !== 'undefined') {
+        setTimeout(function() {
+          AOS.refreshHard(); 
+        }, 750); 
+      }
     });
 
     const accordionHeaders = document.querySelectorAll('.accordion .acc-header');
