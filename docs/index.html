@@ -25,7 +25,7 @@
       --heading-color: var(--text-light); 
     }
     html.dark .testimonial-card { background: #2c3032; }
-    html.dark .card:not(.no-dark-override) { 
+    html.dark .card:not(.no-dark-override){ 
         background: #272b2c; 
         box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
     }
@@ -65,9 +65,10 @@
     header#site-header {
       position: fixed; top: 0; left: 0; width: 100%;
       background: var(--primary) url('Wide Awakenings Building Sketch.png') center/cover no-repeat; 
-      height: 60vh; 
+      height: 30vh; /* MODIFIED: Initial height reduced */
       display: flex; align-items: center; justify-content: center; 
-      transition: all .3s ease; z-index: 1000; padding: 0 1rem; 
+      transition: all 0.7s ease; /* MODIFIED: Slower and smoother transition */
+      z-index: 1000; padding: 0 1rem; 
     }
     header#site-header::after {
       content: ''; position: absolute; inset: 0;
@@ -82,8 +83,9 @@
     header#site-header h1 {
       position: relative; color: var(--theme-blue-static); 
       font-family: 'Dancing Script', cursive; font-weight: 600;
-      font-size: 3rem; z-index: 1; 
-      transition: font-size .3s ease, color .3s ease; 
+      font-size: 2.5rem; /* Slightly adjusted for potentially smaller 30vh header */
+      z-index: 1; 
+      transition: font-size .7s ease, color .7s ease; /* Match transition duration */
       margin: 0; text-align: center;
       display: flex; 
       align-items: center; 
@@ -118,7 +120,8 @@
       color: var(--theme-blue-static); 
       text-decoration: none; font-family: 'Inter', sans-serif; 
       font-weight: 600; font-size: 0.85rem; 
-      transition: color .3s; white-space: nowrap;
+      transition: color .7s ease; /* Match transition duration */
+      white-space: nowrap;
       line-height: 1.2; padding: 0.2em 0.1em; display: inline-block; 
     }
     body.scrolled header#site-header nav .nav-link {
@@ -146,7 +149,7 @@
 
     @media (max-width: 480px) {
       header#site-header { padding: 0 0.5rem; }
-      header#site-header h1 { font-size: 2.2rem; } 
+      header#site-header h1 { font-size: 1.8rem; } /* Adjusted for 30vh header on mobile */
       body.scrolled header#site-header h1 { 
         font-size: 1rem; 
         line-height: 1.2; 
@@ -181,10 +184,10 @@
     .container { 
       max-width: 1000px; margin: 0 auto; 
       padding: 2rem 1rem 100px; 
-      padding-top: 60vh; 
+      padding-top: 30vh; /* MODIFIED: Matches new initial header height */
     }
     body.scrolled .container { 
-      padding-top: 70px; 
+      padding-top: 70px; /* Remains based on 60px scrolled header + buffer */
     }
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 2rem; align-items: start; margin-bottom: 3rem; }
     .card { background: var(--bg-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
@@ -240,7 +243,7 @@
       padding: 0.75rem; border-radius: 50%; font-size: 1.2rem; 
       cursor: pointer; opacity: 0; 
       transition: background-color .2s, opacity .3s; 
-      z-index: 10001; /* MODIFIED: Increased z-index */
+      z-index: 10001; 
     }
     #to-top:active { 
         background-color: var(--bg-light); 
