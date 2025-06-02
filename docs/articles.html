@@ -1,13 +1,459 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Psychology Today Seal Test</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Articles - Awakenings Mental Health</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+
+  <style>
+    :root {
+      --primary: #2F3E46; 
+      --accent: #E07A5F;    
+      --bg-light: #f1f1f2;    
+      --text-dark: #1c1c1c;   
+      --heading-color: #27296d; 
+      --theme-blue-static: #27296d; 
+      --bg-dark: #1D2021;
+      --text-light: #F0F3F4;
+    }
+    html.dark { 
+      --bg-light: var(--bg-dark);
+      --text-dark: var(--text-light);
+      --heading-color: var(--text-light); 
+    }
+    html.dark .testimonial-card { background: #2c3032; }
+    html.dark .card:not(.no-dark-override){ 
+        background: #272b2c; 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
+    }
+    html.dark .card header,
+    html.dark .accordion .acc-header,
+    html.dark .btn, html.dark .btn.secondary, 
+    html.dark #to-top {
+        background: var(--theme-blue-static); 
+        color: white; 
+    }
+    html.dark .accordion .acc-header.active {
+        background: var(--accent);
+    }
+    html.dark .accordion .acc-body { background: #2c3032; }
+    html.dark .skeleton { background: #444; }
+    html.dark .separator path { fill: var(--bg-dark); } 
+    
+    html.dark .btn:active, html.dark .btn.secondary:active, html.dark #to-top:active {
+        background-color: var(--bg-dark); 
+        color: var(--text-light);    
+    }
+    html.dark footer#contact { 
+        color: var(--text-light);
+        background-color: var(--bg-dark); 
+    }
+    html.dark footer#contact .footer-text-content a {
+        color: var(--accent); 
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif; 
+      background: var(--bg-light); color: var(--text-dark);
+      line-height: 1.6; transition: background .3s, color .3s;
+      overflow-x: hidden; 
+    }
+    header#site-header {
+      position: fixed; top: 0; left: 0; width: 100%;
+      background: var(--primary) url('Wide Awakenings Building Sketch.png') center/cover no-repeat; 
+      display: flex; align-items: center; 
+      transition: background-color 0.3s ease, background-image 0.3s ease, box-shadow 0.3s ease, justify-content 0.3s ease, height 0.3s ease; 
+      z-index: 1000; padding: 0 1rem; 
+    }
+    header#site-header::after { 
+      content: ''; position: absolute; inset: 0;
+      background: rgba(47,62,70,0.2); z-index: 0;
+      transition: opacity 0.7s ease; 
+      opacity: 1;
+    }
+    header#site-header:not(.scrolled-header-layout) {
+        justify-content: center;
+    }
+    .scrolled-header-layout {
+      justify-content: space-between !important; 
+      align-items: center !important; 
+      background-image: none !important; 
+      background-color: var(--theme-blue-static) !important; 
+      box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    }
+    .scrolled-header-layout::after {
+        opacity: 0;
+    }
+
+    header#site-header h1 {
+      position: relative; 
+      font-family: 'Dancing Script', cursive; font-weight: 600;
+      z-index: 1; 
+      margin: 0; 
+      display: flex; 
+      align-items: center; 
+    }
+    .scrolled-header-layout h1 {
+      font-size: 1.5rem !important; 
+      line-height: 1.2 !important; 
+      color: white !important; 
+      text-align: left; 
+    }
+
+    .header-favicon {
+      display: inline-block; 
+      opacity: 0; 
+      width: 32px;   
+      height: 32px;  
+      margin-right: 10px; 
+      vertical-align: middle; 
+    }
+    header#site-header h1 .title-short { 
+      display: inline-block; 
+      opacity: 0; 
+      vertical-align: middle;
+    }
+    header#site-header h1 .title-full { 
+      display: inline-block;
+      opacity: 1; 
+      vertical-align: middle;
+    }
+
+    header#site-header nav { 
+      position: absolute; top: 1rem; right: 1rem;
+      z-index: 1002; display: flex; align-items: center;
+      gap: 0.75rem; 
+    }
+    .scrolled-header-layout nav { 
+      position: static; gap: 0.6rem; 
+    }
+    nav .nav-link { 
+      text-decoration: none; font-family: 'Inter', sans-serif; 
+      font-weight: 600; font-size: 0.85rem; 
+      white-space: nowrap;
+      line-height: 1.2; padding: 0.2em 0.1em; display: inline-block; 
+    }
+    .scrolled-header-layout nav .nav-link { 
+        color: white !important; 
+    }
+    nav .nav-link:hover { color: var(--accent); }
+    #heart-animation { z-index: 1; } 
+
+    h2 { 
+      font-family: 'Dancing Script', cursive; font-weight: 600;
+      color: var(--heading-color);
+      text-align: center; 
+      margin-bottom: 2rem; 
+      font-size: 2.2rem; 
+    }
+
+    @media (max-width: 480px) {
+      header#site-header:not(.scrolled-header-layout) h1 { font-size: 1.8rem; } 
+      
+      .scrolled-header-layout h1 { 
+        font-size: 1rem !important; 
+        line-height: 1.2 !important; 
+        white-space: nowrap;    
+        overflow: hidden;       
+        text-overflow: ellipsis;
+        margin-right: 3px;      
+        min-width: 0; 
+        flex-shrink: 1; 
+      }
+      .scrolled-header-layout h1 .header-favicon {
+          width: 24px !important; height: 24px !important;
+          margin-right: 4px !important; 
+      }
+      
+      header#site-header:not(.scrolled-header-layout) nav { 
+        gap: 0.25rem; 
+        right: 0.5rem; 
+      }
+      .scrolled-header-layout nav { 
+        gap: 0.2rem !important;
+        flex-shrink: 0;
+      }
+      nav .nav-link { 
+        font-size: 0.75rem; 
+        padding: 0.2em 0;
+      }
+    }
+
+    .container { 
+      max-width: 1000px; margin: 0 auto; 
+      padding: 2rem 1rem 100px; 
+      padding-top: 30vh; 
+    }
+    body.scrolled .container { 
+      padding-top: 70px; 
+    }
+    .btn { 
+      display: inline-block; 
+      background: var(--theme-blue-static); 
+      color: white; 
+      padding: 0.75rem 1.5rem; border-radius: 4px; text-decoration: none; 
+      font-weight: 600; margin: 0.5rem; 
+      transition: background-color .2s, color .2s, opacity .3s; 
+    }
+    .btn:hover { opacity: .9; }
+    .btn:active { 
+        background-color: var(--bg-light); 
+        color: var(--theme-blue-static);    
+        opacity: 1;
+    }
+    .separator { display: block; width: 100%; height: 80px; }
+    .separator path { transition: fill .3s; } 
+    
+    #to-top { 
+      position: fixed; bottom: 2rem; right: 2rem; 
+      background: var(--theme-blue-static); 
+      border: none; color: white; 
+      padding: 0.75rem; border-radius: 50%; font-size: 1.2rem; 
+      cursor: pointer; opacity: 0; 
+      transition: background-color .2s, opacity .3s; 
+      z-index: 10001; 
+    }
+    #to-top:active { 
+        background-color: var(--bg-light); 
+        color: var(--theme-blue-static);    
+        opacity: 1;
+    }
+    body.scrolled #to-top { opacity: 1; } 
+    
+    footer#contact {
+        text-align:center; 
+        padding: 2rem 1rem 1rem; 
+        background-color: var(--bg-light); 
+        position: relative;
+        color: var(--text-dark); 
+    }
+    .footer-logo-container { 
+        margin-bottom: 1.5rem; 
+    }
+    .footer-logo-container img {
+        max-width: 250px; 
+        height: auto;
+        display: block; 
+        margin: 0 auto; 
+    }
+    .footer-text-content { 
+        padding: 0; 
+    }
+    html.dark footer#contact { 
+        background-color: var(--bg-dark); 
+        color: var(--text-light); 
+    }
+    
+    footer#contact p {
+        margin-bottom: 0.5rem;
+    }
+    footer#contact p:last-child {
+        margin-bottom: 0;
+    }
+    footer#contact a {
+        color: var(--accent); 
+    }
+  </style>
 </head>
 <body>
-    <p>Test Seal Below:</p>
-    <a href="https://www.psychologytoday.com/profile/1233174" class="sx-verified-seal"></a>
-    <script type="text/javascript" src="https://member.psychologytoday.com/verified-seal.js" data-badge="13" data-id="1233174" data-code="aHR0cHM6Ly93d3cucHN5Y2hvbG9neXRvZGF5LmNvbS9hcGkvdmVyaWZpZWQtc2VhbC9zZWFscy8xMy9wcm9maWxlLzEyMzMxNzQ/Y2FsbGJhY2s9c3hjYWxsYmFjaw==" async defer></script>
-    <p>Test Seal Above.</p>
+
+  <header id="site-header"> <h1 data-aos="fade-down">
+      <img src="Square Logo.png" alt="Awakenings Logo" class="header-favicon">
+      <span class="title-full">Awakenings Mental Health</span>
+      <span class="title-short">Awakenings</span>
+    </h1> 
+    <nav>
+      <a href="index.html" class="nav-link" target="_top">Home</a>
+      <a href="our-providers.html" class="nav-link" target="_top">Our Providers</a>
+      <a href="articles.html" class="nav-link" target="_top">Articles</a>
+    </nav>
+    <div id="heart-animation" style="position:absolute; bottom:1rem; right:1rem; width:60px; height:60px; display: none;"></div>
+  </header>
+
+  <main class="container">
+    <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none" data-aos="fade-up">
+      <path d="M0,0 C300,100 900,0 1200,100 L1200,0 L0,0 Z" fill="var(--bg-light)"/>
+    </svg>
+    <section id="articles-content" style="text-align: center; padding: 3rem 0; min-height: 30vh;">
+      <h2 data-aos="fade-up">Articles</h2>
+      <p data-aos="fade-up" data-aos-delay="100" style="font-size: 1.2rem; margin-top: 1rem;">
+        Our insightful articles are coming soon. Please check back later for updates and resources.
+      </p>
+    </section>
+    <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none"> <path d="M0,100 C300,0 900,100 1200,0 L1200,100 L0,100 Z" fill="var(--bg-light)"/> </svg>
+  </main>
+
+  <button id="to-top">▲</button>
+
+  <footer id="contact" data-aos="fade-up">
+    <div class="footer-logo-container">
+        <img src="Rectangle Logo.jpg" alt="Awakenings Mental Health Logo">
+    </div>
+    <div class="footer-text-content"> 
+      <p>© <span id="current-year">2025</span> Awakenings Mental Health</p>
+      <p>Questions? <a href="mailto:admin@awakeningsmentalhealth.com">admin@awakeningsmentalhealth.com</a> <a href="tel:2082950297">(208)295-0297</a></p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/lottie-web@latest/build/player/lottie.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <script>
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+    AOS.init({ duration: 600, once: true });
+
+    try {
+        const heartAnimContainer = document.getElementById('heart-animation');
+        if(heartAnimContainer && (typeof heartAnimContainer.style.display === 'undefined' || heartAnimContainer.style.display !== 'none')) { 
+            lottie.loadAnimation({
+              container: heartAnimContainer,
+              path: 'https://assets7.lottiefiles.com/packages/lf20_heart.json', 
+              renderer: 'svg', loop: true, autoplay: true
+            });
+        }
+    } catch (e) {
+        console.error("Lottie animation could not be loaded.", e);
+        const heartAnimContainer = document.getElementById('heart-animation');
+        if(heartAnimContainer) heartAnimContainer.style.display = 'none';
+    }
+
+    const toTop = document.getElementById('to-top');
+    if (toTop) toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    
+    const siteHeader = document.getElementById('site-header');
+    const h1Title = siteHeader ? siteHeader.querySelector('h1') : null;
+    const titleFull = h1Title ? h1Title.querySelector('.title-full') : null;
+    const titleShort = h1Title ? h1Title.querySelector('.title-short') : null;
+    const headerFavicon = h1Title ? h1Title.querySelector('.header-favicon') : null;
+
+    const initialHeaderHeightVh = 30;
+    const finalHeaderHeightPx = 60;
+    let initialH1FontSizeRem = 2.5; 
+    const finalH1DesktopFontSizeRem = 1.5;
+    const finalH1MobileFontSizeRem = 1.0; 
+    const initialH1ColorHex = "#27296d";
+    const finalH1ColorHex = "#FFFFFF";
+    const animationScrollStart = 0;
+    const animationScrollEnd = 200;
+    const initialH1ColorRgb = hexToRgb(initialH1ColorHex);
+    const finalH1ColorRgb = hexToRgb(finalH1ColorHex);
+
+    function hexToRgb(hex) {
+        let r = 0, g = 0, b = 0;
+        if (hex.length == 4) { 
+            r = parseInt(hex[1] + hex[1], 16);
+            g = parseInt(hex[2] + hex[2], 16);
+            b = parseInt(hex[3] + hex[3], 16);
+        } else if (hex.length == 7) { 
+            r = parseInt(hex[1] + hex[2], 16);
+            g = parseInt(hex[3] + hex[4], 16);
+            b = parseInt(hex[5] + hex[6], 16);
+        }
+        return [r, g, b];
+    }
+
+    function interpolateValue(start, end, progress) {
+        return start + (end - start) * progress;
+    }
+
+    function interpolateRgbColor(colorStartRgb, colorEndRgb, progress) {
+        const r = Math.round(interpolateValue(colorStartRgb[0], colorEndRgb[0], progress));
+        const g = Math.round(interpolateValue(colorStartRgb[1], colorEndRgb[1], progress));
+        const b = Math.round(interpolateValue(colorStartRgb[2], colorEndRgb[2], progress));
+        return `rgb(${r},${g},${b})`;
+    }
+
+    let lastKnownScrollY = 0;
+    let ticking = false;
+
+    function updateHeaderStylesOnScroll(scrollY) {
+      if (!siteHeader || !h1Title) return; // Guard against missing elements
+      let progress = Math.max(0, Math.min(1, (scrollY - animationScrollStart) / (animationScrollEnd - animationScrollStart)));
+
+      requestAnimationFrame(() => {
+        const initialHeaderActualHeight = (initialHeaderHeightVh / 100) * window.innerHeight;
+        siteHeader.style.height = `${interpolateValue(initialHeaderActualHeight, finalHeaderHeightPx, progress)}px`;
+
+        let targetFinalH1FontSize = window.innerWidth <= 480 ? finalH1MobileFontSizeRem : finalH1DesktopFontSizeRem;
+        let currentInitialH1SizeRem = initialH1FontSizeRem;
+        // Adjust initial font size based on current computed style if at top
+        if (progress === 0) {
+            const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+            const h1ComputedSize = parseFloat(getComputedStyle(h1Title).fontSize);
+            if (rootFontSize > 0 && h1ComputedSize > 0) currentInitialH1SizeRem = h1ComputedSize / rootFontSize;
+        }
+        h1Title.style.fontSize = `${interpolateValue(currentInitialH1SizeRem, targetFinalH1FontSize, progress)}rem`;
+        
+        if (titleFull) titleFull.style.opacity = 1 - progress;
+        if (titleShort) titleShort.style.opacity = progress;
+        if (headerFavicon) headerFavicon.style.opacity = progress;
+
+        if (progress > 0.9) { 
+            if (titleFull) titleFull.style.display = 'none';
+            if (titleShort) titleShort.style.display = 'inline-block';
+            if (headerFavicon) headerFavicon.style.display = 'inline-block';
+        } else if (progress < 0.1) {
+            if (titleFull) titleFull.style.display = 'inline-block';
+            if (titleShort) titleShort.style.display = 'none';
+            if (headerFavicon) headerFavicon.style.display = 'none';
+        } else { 
+            if (titleFull) titleFull.style.display = 'inline-block';
+            if (titleShort) titleShort.style.display = 'inline-block';
+            if (headerFavicon) headerFavicon.style.display = 'inline-block';
+        }
+        h1Title.style.color = interpolateRgbColor(initialH1ColorRgb, finalH1ColorRgb, progress);
+        siteHeader.classList.toggle('scrolled-header-layout', progress >= 0.95);
+      });
+    }
+    
+    function setInitialH1FontSize() {
+        if (h1Title) {
+            const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+            const h1ComputedSize = parseFloat(getComputedStyle(h1Title).fontSize);
+            if (rootFontSize > 0 && h1ComputedSize > 0) initialH1FontSizeRem = h1ComputedSize / rootFontSize;
+        }
+    }
+
+    window.addEventListener('scroll', () => {
+        lastKnownScrollY = window.scrollY;
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                updateHeaderStylesOnScroll(lastKnownScrollY);
+                document.body.classList.toggle('scrolled', lastKnownScrollY > 50); 
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+    window.addEventListener('resize', () => {
+        setInitialH1FontSize();
+        updateHeaderStylesOnScroll(window.scrollY);
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+        setInitialH1FontSize();
+        updateHeaderStylesOnScroll(window.scrollY);
+    });
+
+    const applySystemTheme = (isDark) => {
+        document.documentElement.classList.toggle('dark', isDark);
+        if (typeof AOS !== 'undefined') AOS.refreshHard(); 
+        let currentBg = getComputedStyle(document.documentElement).getPropertyValue(isDark ? '--bg-dark' : '--bg-light').trim();
+        document.querySelectorAll('.separator path').forEach(p => p.style.fill = currentBg);
+    };
+
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    applySystemTheme(prefersDarkScheme.matches); 
+    prefersDarkScheme.addEventListener('change', (e) => applySystemTheme(e.matches));
+    
+    window.addEventListener('load', function() {
+      if (typeof AOS !== 'undefined') setTimeout(() => AOS.refreshHard(), 1200); 
+      setInitialH1FontSize();
+      updateHeaderStylesOnScroll(window.scrollY); 
+    });
+  </script>
 </body>
 </html>
