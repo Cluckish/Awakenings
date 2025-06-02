@@ -24,23 +24,23 @@
       --text-dark: var(--text-light);
       --heading-color: var(--text-light); 
     }
-    html.dark .testimonial-card { background: #2c3032; }
-    html.dark .card:not(.no-dark-override){ 
+    html.dark .testimonial-card { background: #2c3032; } /* Kept for potential future use */
+    html.dark .card:not(.no-dark-override),
+    html.dark .article-card { /* Added .article-card */
         background: #272b2c; 
         box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
     }
-    html.dark .card header,
-    html.dark .accordion .acc-header,
+    html.dark .card header, /* Kept for potential future use */
+    html.dark .article-card header, /* Added .article-card header */
+    html.dark .accordion .acc-header, /* Kept for potential future use */
     html.dark .btn, html.dark .btn.secondary, 
     html.dark #to-top {
         background: var(--theme-blue-static); 
         color: white; 
     }
-    html.dark .accordion .acc-header.active {
-        background: var(--accent);
-    }
-    html.dark .accordion .acc-body { background: #2c3032; }
-    html.dark .skeleton { background: #444; }
+    html.dark .accordion .acc-header.active { background: var(--accent); } /* Kept */
+    html.dark .accordion .acc-body { background: #2c3032; } /* Kept */
+    html.dark .skeleton { background: #444; } /* Kept */
     html.dark .separator path { fill: var(--bg-dark); } 
     
     html.dark .btn:active, html.dark .btn.secondary:active, html.dark #to-top:active {
@@ -196,7 +196,7 @@
       background: var(--theme-blue-static); 
       color: white; 
       padding: 0.75rem 1.5rem; border-radius: 4px; text-decoration: none; 
-      font-weight: 600; margin: 0.5rem; 
+      font-weight: 600; margin-top: 1rem; /* Adjusted margin for article card */ 
       transition: background-color .2s, color .2s, opacity .3s; 
     }
     .btn:hover { opacity: .9; }
@@ -223,6 +223,46 @@
         opacity: 1;
     }
     body.scrolled #to-top { opacity: 1; } 
+
+    /* Article Hub Styles */
+    .article-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+    .article-card {
+        background: var(--bg-light); 
+        border-radius: 8px; 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+    .article-card header {
+        padding: 1rem;
+        background: var(--theme-blue-static);
+        color: white;
+        font-family: 'Dancing Script', cursive; 
+        font-weight: 600; 
+        font-size: 1.6rem; /* Slightly larger for article titles */
+        text-align: center;
+    }
+    .article-card .content {
+        padding: 1.5rem;
+        flex-grow: 1; /* Allows content to fill space */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Pushes button to bottom */
+    }
+    .article-card .content p {
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+    }
+    .article-card .content .btn {
+        align-self: center; /* Center button */
+    }
+    /* End Article Hub Styles */
     
     footer#contact {
         text-align:center; 
@@ -278,11 +318,27 @@
     <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none" data-aos="fade-up">
       <path d="M0,0 C300,100 900,0 1200,100 L1200,0 L0,0 Z" fill="var(--bg-light)"/>
     </svg>
-    <section id="articles-content" style="text-align: center; padding: 3rem 0; min-height: 30vh;">
-      <h2 data-aos="fade-up">Articles</h2>
-      <p data-aos="fade-up" data-aos-delay="100" style="font-size: 1.2rem; margin-top: 1rem;">
-        Our insightful articles are coming soon. Please check back later for updates and resources.
+    <section id="articles-hub" style="padding: 1rem 0; min-height: 50vh;">
+      <h2 data-aos="fade-up">Our Articles</h2>
+      <p data-aos="fade-up" data-aos-delay="100" style="text-align: center; font-size: 1.1rem; max-width: 700px; margin: 0 auto 2rem auto;">
+        Explore insights and information on mental wellness. Our articles cover a range of topics to support your journey.
       </p>
+      <div class="article-grid">
+        <div class="article-card" data-aos="zoom-in-up">
+          <header>Understanding Anxiety</header>
+          <div class="content">
+            <p>Learn about the common signs of anxiety, its impact on daily life, and effective strategies for managing it. (Content coming soon)</p>
+            <a href="#" class="btn">Read More</a> 
+          </div>
+        </div>
+        <div class="article-card" data-aos="zoom-in-up" data-aos-delay="150">
+          <header>Coping with Depression</header>
+          <div class="content">
+            <p>An overview of depression, its symptoms, and various approaches to treatment and self-care. (Content coming soon)</p>
+            <a href="#" class="btn">Read More</a>
+          </div>
+        </div>
+      </div>
     </section>
     <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none"> <path d="M0,100 C300,0 900,100 1200,0 L1200,100 L0,100 Z" fill="var(--bg-light)"/> </svg>
   </main>
@@ -309,11 +365,7 @@
     try {
         const heartAnimContainer = document.getElementById('heart-animation');
         if(heartAnimContainer && (typeof heartAnimContainer.style.display === 'undefined' || heartAnimContainer.style.display !== 'none')) { 
-            lottie.loadAnimation({
-              container: heartAnimContainer,
-              path: 'https://assets7.lottiefiles.com/packages/lf20_heart.json', 
-              renderer: 'svg', loop: true, autoplay: true
-            });
+            // Lottie animation is intentionally not loaded on this page
         }
     } catch (e) {
         console.error("Lottie animation could not be loaded.", e);
@@ -371,7 +423,7 @@
     let ticking = false;
 
     function updateHeaderStylesOnScroll(scrollY) {
-      if (!siteHeader || !h1Title) return; // Guard against missing elements
+      if (!siteHeader || !h1Title) return;
       let progress = Math.max(0, Math.min(1, (scrollY - animationScrollStart) / (animationScrollEnd - animationScrollStart)));
 
       requestAnimationFrame(() => {
@@ -380,7 +432,6 @@
 
         let targetFinalH1FontSize = window.innerWidth <= 480 ? finalH1MobileFontSizeRem : finalH1DesktopFontSizeRem;
         let currentInitialH1SizeRem = initialH1FontSizeRem;
-        // Adjust initial font size based on current computed style if at top
         if (progress === 0) {
             const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
             const h1ComputedSize = parseFloat(getComputedStyle(h1Title).fontSize);
