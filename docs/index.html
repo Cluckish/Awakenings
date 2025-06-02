@@ -141,7 +141,6 @@
         color: white !important; 
     }
     nav .nav-link:hover { color: var(--accent); }
-    /* #heart-animation { z-index: 1; } /* Lottie animation removed */
 
     h2 { 
       font-family: 'Dancing Script', cursive; font-weight: 600;
@@ -196,11 +195,11 @@
     .container { 
       max-width: 1000px; margin: 0 auto; 
       padding: 2rem 1rem 100px; 
-      padding-top: 30vh; 
+      /* padding-top: 30vh; /* Initial padding set by JS */
     }
-    body.scrolled .container { 
-      padding-top: 70px; 
-    }
+    /* body.scrolled .container { 
+      padding-top: 70px; /* Replaced by dynamic JS padding */
+    } */
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 2rem; align-items: start; margin-bottom: 3rem; }
     .card { background: var(--bg-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
     .card.no-dark-override {}
@@ -312,7 +311,6 @@
       <a href="our-providers.html" class="nav-link" target="_top">Our Providers</a>
       <a href="articles.html" class="nav-link" target="_top">Articles</a>
     </nav>
-    <!-- <div id="heart-animation" style="position:absolute; bottom:1rem; right:1rem; width:60px; height:60px;"></div> Lottie animation removed -->
   </header>
 
   <main class="container">
@@ -385,39 +383,21 @@
     </div>
   </footer>
 
-  <!-- <script src="https://unpkg.com/lottie-web@latest/build/player/lottie.min.js"></script> Lottie script removed -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
   <script>
     document.getElementById('current-year').textContent = new Date().getFullYear();
     AOS.init({ duration: 600, once: true });
 
-    /* Lottie animation script removed
-    try {
-        const heartAnimContainer = document.getElementById('heart-animation');
-        if(heartAnimContainer && (typeof heartAnimContainer.style.display === 'undefined' || heartAnimContainer.style.display !== 'none')) { 
-            lottie.loadAnimation({
-              container: heartAnimContainer,
-              path: 'https://assets7.lottiefiles.com/packages/lf20_heart.json', 
-              renderer: 'svg', loop: true, autoplay: true
-            });
-        }
-    } catch (e) {
-        console.error("Lottie animation could not be loaded.", e);
-        const heartAnimContainer = document.getElementById('heart-animation');
-        if(heartAnimContainer) heartAnimContainer.style.display = 'none';
-    }
-    */
-
     const toTop = document.getElementById('to-top');
-    if (toTop) toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' })); // Added null check for toTop
+    if (toTop) toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     
     const siteHeader = document.getElementById('site-header');
-    const h1Title = siteHeader ? siteHeader.querySelector('h1') : null; // Added null check
+    const mainContainer = document.querySelector('main.container'); // Get main container
+    const h1Title = siteHeader ? siteHeader.querySelector('h1') : null; 
     const titleFull = h1Title ? h1Title.querySelector('.title-full') : null;
     const titleShort = h1Title ? h1Title.querySelector('.title-short') : null;
     const headerFavicon = h1Title ? h1Title.querySelector('.header-favicon') : null;
-    // const navLinks = siteHeader ? Array.from(siteHeader.querySelectorAll('nav .nav-link')) : []; // navLinks not used in current script
 
     const initialHeaderHeightVh = 30;
     const finalHeaderHeightPx = 60;
@@ -426,7 +406,7 @@
     if(h1Title) {
         const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
         const computedFontSize = parseFloat(getComputedStyle(h1Title).fontSize);
-        if (rootFontSize > 0 && computedFontSize > 0) { // Check for valid numbers
+        if (rootFontSize > 0 && computedFontSize > 0) { 
             initialH1FontSizeRem = computedFontSize / rootFontSize;
         }
     }
@@ -436,8 +416,6 @@
 
     const initialH1ColorHex = "#27296d"; 
     const finalH1ColorHex = "#FFFFFF";   
-    // const initialNavLinkColorHex = "#27296d"; // Not used
-    // const finalNavLinkColorHex = "#FFFFFF";   // Not used
 
     const animationScrollStart = 0;
     const animationScrollEnd = 200; 
@@ -458,8 +436,6 @@
     
     const initialH1ColorRgb = hexToRgb(initialH1ColorHex);
     const finalH1ColorRgb = hexToRgb(finalH1ColorHex);
-    // const initialNavLinkColorRgb = hexToRgb(initialNavLinkColorHex); // Not used
-    // const finalNavLinkColorRgb = hexToRgb(finalNavLinkColorHex); // Not used
 
     function interpolateValue(start, end, progress) {
         return start + (end - start) * progress;
@@ -476,7 +452,7 @@
     let ticking = false;
 
     function updateHeaderStylesOnScroll(scrollY) {
-      if (!siteHeader || !h1Title) return; // Guard if elements are not found
+      if (!siteHeader || !h1Title || !mainContainer) return; 
 
       let progress = 0;
       if (scrollY <= animationScrollStart) {
@@ -490,7 +466,9 @@
 
       requestAnimationFrame(() => {
         const initialHeaderActualHeight = (initialHeaderHeightVh / 100) * window.innerHeight;
-        siteHeader.style.height = `${interpolateValue(initialHeaderActualHeight, finalHeaderHeightPx, progress)}px`;
+        const currentHeaderHeight = interpolateValue(initialHeaderActualHeight, finalHeaderHeightPx, progress);
+        siteHeader.style.height = `${currentHeaderHeight}px`;
+        mainContainer.style.paddingTop = `${currentHeaderHeight}px`; // Dynamically set padding
 
         let targetFinalH1FontSize = window.innerWidth <= 480 ? finalH1MobileFontSizeRem : finalH1DesktopFontSizeRem;
         let currentInitialH1Size = initialH1FontSizeRem;
@@ -530,7 +508,7 @@
       });
     }
     
-    function setInitialH1FontSize() { // Helper to set initialH1FontSizeRem based on computed style
+    function setInitialH1FontSize() { 
         if(h1Title) {
             const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
             const computedFontSize = parseFloat(getComputedStyle(h1Title).fontSize);
