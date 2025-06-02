@@ -18,32 +18,31 @@
       --theme-blue-static: #27296d; 
       --bg-dark: #1D2021;
       --text-light: #F0F3F4;
-      /* --secondary-color-for-buttons: #84A98C; /* Not actively used */
     }
     html.dark { 
       --bg-light: var(--bg-dark);
       --text-dark: var(--text-light);
       --heading-color: var(--text-light); 
     }
-    html.dark .testimonial-card { background: #2c3032; } /* If testimonials were on this page */
+    html.dark .testimonial-card { background: #2c3032; }
     html.dark .card:not(.no-dark-override),
     html.dark .provider-profile { 
         background: #272b2c; 
         box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
     }
-    html.dark .card header, /* If general cards were on this page */
-    html.dark .accordion .acc-header, /* If accordions were on this page */
+    html.dark .card header,
+    html.dark .accordion .acc-header,
     html.dark .btn, html.dark .btn.secondary, 
     html.dark #to-top {
         background: var(--theme-blue-static); 
         color: white; 
     }
-    html.dark .accordion .acc-header.active { /* If accordions were on this page */
+    html.dark .accordion .acc-header.active {
         background: var(--accent);
     }
-    html.dark .accordion .acc-body { background: #2c3032; } /* If accordions were on this page */
+    html.dark .accordion .acc-body { background: #2c3032; }
     html.dark .skeleton { background: #444; }
-    html.dark .separator path { fill: var(--bg-dark); }  /* If separators were on this page */
+    html.dark .separator path { fill: var(--bg-dark); } 
     
     html.dark .btn:active, html.dark .btn.secondary:active, html.dark #to-top:active {
         background-color: var(--bg-dark); 
@@ -51,7 +50,7 @@
     }
     html.dark footer#contact { 
         color: var(--text-light);
-        background-color: var(--bg-dark); /* Footer BG matches page dark BG */
+        background-color: var(--bg-dark); 
     }
     html.dark footer#contact .footer-text-content a {
         color: var(--accent); 
@@ -59,7 +58,6 @@
     html.dark .provider-contact strong {
         color: var(--text-light);
     }
-
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -71,107 +69,137 @@
     header#site-header {
       position: fixed; top: 0; left: 0; width: 100%;
       background: var(--primary) url('Wide Awakenings Building Sketch.png') center/cover no-repeat; 
-      height: 60vh; 
-      display: flex; align-items: center; justify-content: center; 
-      transition: all .3s ease; z-index: 1000; padding: 0 1rem; 
+      /* height is set by JS */
+      display: flex; align-items: center; 
+      /* justify-content is set by body.scrolled or defaults to center for large header */
+      transition: background-color 0.3s ease, background-image 0.3s ease, box-shadow 0.3s ease, justify-content 0.3s ease, height 0.3s ease; 
+      z-index: 1000; padding: 0 1rem; 
     }
-    header#site-header::after {
+    header#site-header::after { /* Overlay for sketch */
       content: ''; position: absolute; inset: 0;
       background: rgba(47,62,70,0.2); z-index: 0;
+      transition: opacity 0.7s ease; 
+      opacity: 1;
     }
-    body.scrolled header#site-header {
-      height: 60px; justify-content: space-between; align-items: center; 
-      background-image: none; 
-      background-color: var(--theme-blue-static); 
+    /* Default justify-content for large header */
+    header#site-header:not(.scrolled-header-layout) {
+        justify-content: center;
+    }
+    /* Scrolled state class for layout and background, now toggled by JS */
+    .scrolled-header-layout {
+      /* height: 60px; /* JS will set this target */
+      justify-content: space-between !important; /* Ensure this wins for layout */
+      align-items: center !important; 
+      background-image: none !important; 
+      background-color: var(--theme-blue-static) !important; 
       box-shadow: 0 2px 8px rgba(0,0,0,.2);
     }
+    .scrolled-header-layout::after {
+        opacity: 0; /* Hide overlay when scrolled */
+    }
+
     header#site-header h1 {
-      position: relative; color: var(--theme-blue-static); 
+      position: relative; 
+      /* color: var(--theme-blue-static); /* Initial color set by JS */
       font-family: 'Dancing Script', cursive; font-weight: 600;
-      font-size: 3rem; z-index: 1; 
-      transition: font-size .3s ease, color .3s ease; 
-      margin: 0; text-align: center;
+      /* font-size: 2.5rem; /* Initial font-size set by JS */
+      z-index: 1; 
+      margin: 0; 
+      /* text-align: center; /* Will be left-aligned by flex parent in scrolled state */
       display: flex; 
       align-items: center; 
     }
-    body.scrolled header#site-header h1 {
-      font-size: 1.5rem; line-height: 1.2; margin: 0; 
-      color: white; 
+    /* Scrolled state target styles (JS animates towards these) */
+    .scrolled-header-layout h1 {
+      font-size: 1.5rem !important; 
+      line-height: 1.2 !important; 
+      color: white !important; 
+      text-align: left; /* Ensure content within h1 aligns left */
     }
 
     .header-favicon {
-      display: none; 
+      display: inline-block; /* Changed from none to inline-block for JS opacity animation */
+      opacity: 0; 
       width: 32px;   
       height: 32px;  
       margin-right: 10px; 
       vertical-align: middle; 
     }
-    body.scrolled header#site-header h1 .header-favicon {
-      display: inline-block; 
+    header#site-header h1 .title-short { 
+      display: inline-block; /* Changed from none to inline-block for JS opacity animation */
+      opacity: 0; 
+      vertical-align: middle;
     }
-    header#site-header h1 .title-short { display: none; }
-    header#site-header h1 .title-full { display: inline; }
+    header#site-header h1 .title-full { 
+      display: inline-block;
+      opacity: 1; 
+      vertical-align: middle;
+    }
 
     header#site-header nav { 
       position: absolute; top: 1rem; right: 1rem;
       z-index: 1002; display: flex; align-items: center;
       gap: 0.75rem; 
     }
-    body.scrolled header#site-header nav { 
+    .scrolled-header-layout nav { 
       position: static; gap: 0.6rem; 
     }
     nav .nav-link { 
-      color: var(--theme-blue-static); 
+      /* color: var(--theme-blue-static); /* Initial color set by JS */
       text-decoration: none; font-family: 'Inter', sans-serif; 
       font-weight: 600; font-size: 0.85rem; 
-      transition: color .3s; white-space: nowrap;
+      white-space: nowrap;
       line-height: 1.2; padding: 0.2em 0.1em; display: inline-block; 
     }
-    body.scrolled header#site-header nav .nav-link {
-        color: white; 
+    .scrolled-header-layout nav .nav-link { /* Scrolled nav links */
+        color: white !important; 
     }
     nav .nav-link:hover { color: var(--accent); }
-    #heart-animation { z-index: 1; display: none; } /* Hidden on providers page */
+    #heart-animation { z-index: 1; display: none !important; } /* Ensure it stays hidden on this page */
 
-    h2 { /* General H2 for sections like "Meet Our Providers" */
+    h2 { 
       font-family: 'Dancing Script', cursive; font-weight: 600;
       color: var(--heading-color);
       text-align: center; 
       margin-bottom: 2rem; 
       font-size: 2.2rem; 
     }
-    .provider-section-title { /* Specific class for the main title of this page */
+    .provider-section-title { 
         font-size: 2.5rem; 
         margin-top: 2rem; 
     }
 
     @media (max-width: 480px) {
-      header#site-header { padding: 0 0.5rem; }
-      header#site-header h1 { font-size: 2.2rem; } 
-      body.scrolled header#site-header h1 { 
-        font-size: 1rem; 
-        line-height: 1.2; 
+      /* header#site-header { padding: 0 0.5rem; } /* This was specific to providers, index.html uses 1rem padding */
+      header#site-header:not(.scrolled-header-layout) h1 { font-size: 1.8rem; } /* Initial large header title on mobile, from index.html */
+      
+      .scrolled-header-layout h1 { /* Combined from index.html and providers.html for mobile scrolled */
+        font-size: 1rem !important; 
+        line-height: 1.2 !important; 
         white-space: nowrap;    
         overflow: hidden;       
         text-overflow: ellipsis;
         margin-right: 3px;      
         min-width: 0; 
         flex-shrink: 1; 
-        display: flex; align-items: center;
+        /* display: flex; align-items: center; /* Already on base h1 */
       }
-      body.scrolled header#site-header h1 .header-favicon {
-          width: 24px; height: 24px;
-          margin-right: 4px; 
+      .scrolled-header-layout h1 .header-favicon {
+          width: 24px !important; height: 24px !important;
+          margin-right: 4px !important; 
       }
-      body.scrolled header#site-header h1 .title-full { display: none; }
-      body.scrolled header#site-header h1 .title-short { display: inline; }
+      /* .scrolled-header-layout h1 .title-full { display: none; } /* JS handles this */
+      /* .scrolled-header-layout h1 .title-short { display: inline; } /* JS handles this */
             
-      header#site-header nav { 
+      header#site-header:not(.scrolled-header-layout) nav { /* Large header nav on mobile, from index.html */
         gap: 0.25rem; 
         right: 0.5rem; 
-        flex-shrink: 0; 
       }
-      nav .nav-link { 
+      .scrolled-header-layout nav { /* Scrolled header nav on mobile, from index.html */
+        gap: 0.2rem !important;
+        flex-shrink: 0;
+      }
+      nav .nav-link { /* Base mobile nav link size, from index.html */
         font-size: 0.75rem; 
         padding: 0.2em 0;
       }
@@ -179,12 +207,11 @@
 
     .container { 
       max-width: 1000px; margin: 0 auto; 
-      padding: 2rem 1rem 100px; /* Added 100px padding-bottom */
-      padding-top: 60vh; 
+      padding: 2rem 1rem 100px; 
+      padding-top: 30vh; /* Changed from 60vh to match index.html for animation */
     }
     body.scrolled .container { 
       padding-top: 70px; 
-      /* padding-bottom: 100px is inherited */
     }
     .btn { 
       display: inline-block; 
@@ -203,7 +230,7 @@
         color: var(--theme-blue-static);    
         opacity: 1;
     }
-    .skeleton { background: #ddd; position: relative; } /* For any iframes if used */
+    .skeleton { background: #ddd; position: relative; }
     #to-top { 
       position: fixed; bottom: 2rem; right: 2rem; 
       background: var(--theme-blue-static); 
@@ -211,7 +238,7 @@
       padding: 0.75rem; border-radius: 50%; font-size: 1.2rem; 
       cursor: pointer; opacity: 0; 
       transition: background-color .2s, opacity .3s; 
-      z-index: 10001; /* Ensured high z-index */
+      z-index: 10001; 
     }
     #to-top:active { 
         background-color: var(--bg-light); 
@@ -220,7 +247,6 @@
     }
     body.scrolled #to-top { opacity: 1; }
         
-    /* Styles for Our Providers Page */
     .page-intro {
         text-align: center;
         margin-bottom: 3rem;
@@ -321,9 +347,7 @@
             text-align: center;
         }
     }
-    /* End of Styles for Our Providers Page */
 
-    /* Footer Styling Consistent with index.html */
     footer#contact {
         text-align:center; 
         padding: 2rem 1rem 1rem; 
@@ -371,7 +395,7 @@
       <a href="our-providers.html" class="nav-link" target="_top">Our Providers</a>
       <a href="articles.html" class="nav-link" target="_top">Articles</a>
     </nav>
-    <div id="heart-animation" style="position:absolute; bottom:1rem; right:1rem; width:60px; height:60px; display: none;"></div>
+    <div id="heart-animation" style="position:absolute; bottom:1rem; right:1rem; width:60px; height:60px; display: none !important;"></div>
   </header>
 
   <main class="container">
@@ -396,8 +420,8 @@
         <p>As a doctorally trained PA I specialize in understanding the unique nuances of each individual's mental health journey and address concerns such as depression, anxiety, ADHD, bipolar disorder, PTSD, and more. I fully understand the impact mental health disorders can have on all aspects of your life, so reach out and let’s start a conversation!</p>
         
         <div class="psychology-today-embed-wrapper">
-            <a href="https://www.psychologytoday.com/profile/1233174" class="sx-verified-seal"></a>
-            <script type="text/javascript" src="https://member.psychologytoday.com/verified-seal.js" data-badge="13" data-id="1233174" data-code="aHR0cHM6Ly93d3cucHN5Y2hvbG9neXRvZGF5LmNvbS9hcGkvdmVyaWZpZWQtc2VhbC9zZWFscy8xMy9wcm9maWxlLzEyMzMxNzQ/Y2FsbGJhY2s9c3hjYWxsYmFjaw==" async defer></script>
+            <a href="https://www.psychologytoday.com/profile/1226261" class="sx-verified-seal"></a>
+            <script type="text/javascript" src="https://member.psychologytoday.com/verified-seal.js" data-badge="13" data-id="1226261" data-code="aHR0cHM6Ly93d3cucHN5Y2hvbG9neXRvZGF5LmNvbS9hcGkvdmVyaWZpZWQtc2VhbC9zZWFscy8xMy9wcm9maWxlLzEyMjYyNjE/Y2FsbGJhY2s9c3hjYWxsYmFjaw==" async defer></script>
         </div>
       </div>
     </section>
@@ -446,26 +470,168 @@
 
     try {
         const heartAnimContainer = document.getElementById('heart-animation');
-        if(heartAnimContainer && heartAnimContainer.style.display !== 'none') { 
-            lottie.loadAnimation({
-              container: heartAnimContainer,
-              path: 'https://assets7.lottiefiles.com/packages/lf20_heart.json', 
-              renderer: 'svg', loop: true, autoplay: true
-            });
+        if(heartAnimContainer && (typeof heartAnimContainer.style.display === 'undefined' || heartAnimContainer.style.display !== 'none')) { 
+            // Lottie animation is intentionally not loaded on this page as per display:none !important style
         }
     } catch (e) {
         console.error("Lottie animation could not be loaded.", e);
         const heartAnimContainer = document.getElementById('heart-animation');
-        if(heartAnimContainer) heartAnimContainer.style.display = 'none';
+        if(heartAnimContainer) heartAnimContainer.style.display = 'none !important';
     }
 
     const toTop = document.getElementById('to-top');
+    if (toTop) toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // --- Scroll-Linked Animation Logic (Copied from index.html) ---
+    const siteHeader = document.getElementById('site-header');
+    const h1Title = siteHeader.querySelector('h1');
+    const titleFull = h1Title.querySelector('.title-full');
+    const titleShort = h1Title.querySelector('.title-short');
+    const headerFavicon = h1Title.querySelector('.header-favicon');
+    const navLinks = Array.from(siteHeader.querySelectorAll('nav .nav-link'));
+
+    const initialHeaderHeightVh = 30;
+    const finalHeaderHeightPx = 60;
+
+    let initialH1FontSizeRem = 2.5; 
+    if(h1Title) {
+        const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+        const computedFontSize = parseFloat(getComputedStyle(h1Title).fontSize);
+        if (rootFontSize > 0 && computedFontSize > 0) { 
+            initialH1FontSizeRem = computedFontSize / rootFontSize;
+        }
+    }
+    
+    const finalH1DesktopFontSizeRem = 1.5;
+    const finalH1MobileFontSizeRem = 1.0; 
+
+    const initialH1ColorHex = "#27296d"; 
+    const finalH1ColorHex = "#FFFFFF";   
+    const initialNavLinkColorHex = "#27296d"; 
+    const finalNavLinkColorHex = "#FFFFFF";   
+
+    const animationScrollStart = 0;
+    const animationScrollEnd = 200; 
+
+    function hexToRgb(hex) {
+        let r = 0, g = 0, b = 0;
+        if (hex.length == 4) { 
+            r = parseInt(hex[1] + hex[1], 16);
+            g = parseInt(hex[2] + hex[2], 16);
+            b = parseInt(hex[3] + hex[3], 16);
+        } else if (hex.length == 7) { 
+            r = parseInt(hex[1] + hex[2], 16);
+            g = parseInt(hex[3] + hex[4], 16);
+            b = parseInt(hex[5] + hex[6], 16);
+        }
+        return [r, g, b];
+    }
+    
+    const initialH1ColorRgb = hexToRgb(initialH1ColorHex);
+    const finalH1ColorRgb = hexToRgb(finalH1ColorHex);
+    const initialNavLinkColorRgb = hexToRgb(initialNavLinkColorHex);
+    const finalNavLinkColorRgb = hexToRgb(finalNavLinkColorHex);
+
+    function interpolateValue(start, end, progress) {
+        return start + (end - start) * progress;
+    }
+
+    function interpolateRgbColor(colorStartRgb, colorEndRgb, progress) {
+        const r = Math.round(interpolateValue(colorStartRgb[0], colorEndRgb[0], progress));
+        const g = Math.round(interpolateValue(colorStartRgb[1], colorEndRgb[1], progress));
+        const b = Math.round(interpolateValue(colorStartRgb[2], colorEndRgb[2], progress));
+        return `rgb(${r},${g},${b})`;
+    }
+
+    let lastKnownScrollY = 0;
+    let ticking = false;
+
+    function updateHeaderStylesOnScroll(scrollY) {
+      let progress = 0;
+      if (scrollY <= animationScrollStart) {
+        progress = 0;
+      } else if (scrollY >= animationScrollEnd) {
+        progress = 1;
+      } else {
+        progress = (scrollY - animationScrollStart) / (animationScrollEnd - animationScrollStart);
+      }
+      progress = Math.max(0, Math.min(1, progress));
+
+      requestAnimationFrame(() => {
+        const initialHeaderActualHeight = (initialHeaderHeightVh / 100) * window.innerHeight;
+        siteHeader.style.height = `${interpolateValue(initialHeaderActualHeight, finalHeaderHeightPx, progress)}px`;
+
+        let targetFinalH1FontSize = window.innerWidth <= 480 ? finalH1MobileFontSizeRem : finalH1DesktopFontSizeRem;
+        let currentInitialH1Size = initialH1FontSizeRem;
+        // On initial load (progress 0), if h1Title.style.fontSize is empty, use initialH1FontSizeRem.
+        // Otherwise, use the currently set h1Title.style.fontSize (parsed) for smoother transitions if called multiple times.
+        if (progress === 0 && h1Title.style.fontSize === '') currentInitialH1Size = initialH1FontSizeRem;
+        else if (h1Title.style.fontSize) currentInitialH1Size = parseFloat(h1Title.style.fontSize);
+        else currentInitialH1Size = initialH1FontSizeRem; // Fallback
+
+        h1Title.style.fontSize = `${interpolateValue(currentInitialH1Size, targetFinalH1FontSize, progress)}rem`;
+        
+        if (titleFull) titleFull.style.opacity = 1 - progress;
+        if (titleShort) titleShort.style.opacity = progress;
+        if (headerFavicon) headerFavicon.style.opacity = progress;
+
+        if (progress > 0.9) { 
+            if (titleFull) titleFull.style.display = 'none';
+            if (titleShort) titleShort.style.display = 'inline-block';
+            if (headerFavicon) headerFavicon.style.display = 'inline-block';
+        } else if (progress < 0.1) {
+            if (titleFull) titleFull.style.display = 'inline-block';
+            if (titleShort) titleShort.style.display = 'none';
+            if (headerFavicon) headerFavicon.style.display = 'none';
+        } else { 
+            if (titleFull) titleFull.style.display = 'inline-block';
+            if (titleShort) titleShort.style.display = 'inline-block';
+            if (headerFavicon) headerFavicon.style.display = 'inline-block';
+        }
+
+        h1Title.style.color = interpolateRgbColor(initialH1ColorRgb, finalH1ColorRgb, progress);
+        // navLinks.forEach(link => { // Kept commented to match index.html behavior
+        //   link.style.color = interpolateRgbColor(initialNavLinkColorRgb, finalNavLinkColorRgb, progress);
+        // });
+
+        if (progress >= 0.95) { 
+          siteHeader.classList.add('scrolled-header-layout');
+        } else {
+          siteHeader.classList.remove('scrolled-header-layout');
+        }
+      });
+    }
+    
+    function setInitialH1FontSize() { // Helper to set initialH1FontSizeRem based on computed style
+        if(h1Title) {
+            const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+            const computedFontSize = parseFloat(getComputedStyle(h1Title).fontSize);
+            if (rootFontSize > 0 && computedFontSize > 0) { 
+                initialH1FontSizeRem = computedFontSize / rootFontSize;
+            }
+        }
+    }
 
     window.addEventListener('scroll', () => {
-      const scrolled = window.scrollY > 50;
-      document.body.classList.toggle('scrolled', scrolled);
+        lastKnownScrollY = window.scrollY;
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                updateHeaderStylesOnScroll(lastKnownScrollY);
+                document.body.classList.toggle('scrolled', lastKnownScrollY > 50); 
+                ticking = false;
+            });
+            ticking = true;
+        }
     });
-    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    window.addEventListener('resize', () => { 
+        setInitialH1FontSize(); // Recalculate on resize
+        updateHeaderStylesOnScroll(window.scrollY); 
+    });
+    document.addEventListener('DOMContentLoaded', () => { 
+        setInitialH1FontSize(); // Set on DOM ready
+        updateHeaderStylesOnScroll(window.scrollY); 
+    });
+    // --- End of Scroll-Linked Animation Logic ---
 
     const applySystemTheme = (isDark) => {
         if (isDark) {
@@ -482,7 +648,7 @@
         } else {
             currentBg = getComputedStyle(document.documentElement).getPropertyValue('--bg-light').trim();
         }
-        const separators = document.querySelectorAll('.separator path'); // Only applies if .separator svgs exist on this page
+        const separators = document.querySelectorAll('.separator path'); 
         if (separators.length > 0) {
             separators.forEach(p => p.style.fill = currentBg);
         }
@@ -498,11 +664,12 @@
       if (typeof AOS !== 'undefined') {
         setTimeout(function() {
           AOS.refreshHard(); 
-        }, 1200); // Ensured longer delay for AOS refresh
+        }, 1200); 
       }
+      setInitialH1FontSize(); // Ensure correct font size on full load
+      updateHeaderStylesOnScroll(window.scrollY); 
     });
 
-    // Accordion JS - only relevant if accordion HTML exists on this page
     const accordionHeaders = document.querySelectorAll('.accordion .acc-header');
     if (accordionHeaders.length > 0) {
         accordionHeaders.forEach(btn => {
@@ -514,7 +681,6 @@
         });
     }
 
-    // Iframe JS - only relevant if iframes with these classes exist on this page
     const lazyIframes = document.querySelectorAll('iframe.lazy-embed');
     if (lazyIframes.length > 0) {
         lazyIframes.forEach(iframe => { 

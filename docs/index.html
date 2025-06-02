@@ -65,52 +65,43 @@
     header#site-header {
       position: fixed; top: 0; left: 0; width: 100%;
       background: var(--primary) url('Wide Awakenings Building Sketch.png') center/cover no-repeat; 
-      /* height is set by JS */
       display: flex; align-items: center; 
-      /* justify-content is set by body.scrolled or defaults to center for large header */
-      transition: background-color 0.3s ease, background-image 0.3s ease, box-shadow 0.3s ease, justify-content 0.3s ease; 
+      transition: background-color 0.3s ease, background-image 0.3s ease, box-shadow 0.3s ease, justify-content 0.3s ease, height 0.3s ease; 
       z-index: 1000; padding: 0 1rem; 
     }
-    header#site-header::after { /* Overlay for sketch */
+    header#site-header::after { 
       content: ''; position: absolute; inset: 0;
       background: rgba(47,62,70,0.2); z-index: 0;
       transition: opacity 0.7s ease; 
       opacity: 1;
     }
-    /* Default justify-content for large header */
     header#site-header:not(.scrolled-header-layout) {
         justify-content: center;
     }
-    /* Scrolled state class for layout and background, now toggled by JS */
     .scrolled-header-layout {
-      /* height: 60px; /* JS will set this target */
-      justify-content: space-between !important; /* Ensure this wins for layout */
+      justify-content: space-between !important; 
       align-items: center !important; 
       background-image: none !important; 
       background-color: var(--theme-blue-static) !important; 
       box-shadow: 0 2px 8px rgba(0,0,0,.2);
     }
     .scrolled-header-layout::after {
-        opacity: 0; /* Hide overlay when scrolled */
+        opacity: 0;
     }
 
     header#site-header h1 {
       position: relative; 
-      /* color: var(--theme-blue-static); /* Initial color set by JS */
       font-family: 'Dancing Script', cursive; font-weight: 600;
-      /* font-size: 2.5rem; /* Initial font-size set by JS */
       z-index: 1; 
       margin: 0; 
-      /* text-align: center; /* Will be left-aligned by flex parent in scrolled state */
       display: flex; 
       align-items: center; 
     }
-    /* Scrolled state target styles (JS animates towards these) */
     .scrolled-header-layout h1 {
       font-size: 1.5rem !important; 
       line-height: 1.2 !important; 
       color: white !important; 
-      text-align: left; /* Ensure content within h1 aligns left */
+      text-align: left; 
     }
 
     .header-favicon {
@@ -141,17 +132,16 @@
       position: static; gap: 0.6rem; 
     }
     nav .nav-link { 
-      /* color: var(--theme-blue-static); /* Initial color set by JS */
       text-decoration: none; font-family: 'Inter', sans-serif; 
       font-weight: 600; font-size: 0.85rem; 
       white-space: nowrap;
       line-height: 1.2; padding: 0.2em 0.1em; display: inline-block; 
     }
-    .scrolled-header-layout nav .nav-link { /* Scrolled nav links */
+    .scrolled-header-layout nav .nav-link { 
         color: white !important; 
     }
     nav .nav-link:hover { color: var(--accent); }
-    #heart-animation { z-index: 1; } 
+    /* #heart-animation { z-index: 1; } /* Lottie animation removed */
 
     h2 { 
       font-family: 'Dancing Script', cursive; font-weight: 600;
@@ -170,7 +160,7 @@
     #location h2 { text-align: center; }
 
     @media (max-width: 480px) {
-      header#site-header:not(.scrolled-header-layout) h1 { font-size: 1.8rem; } /* Initial large header title on mobile */
+      header#site-header:not(.scrolled-header-layout) h1 { font-size: 1.8rem; } 
       
       .scrolled-header-layout h1 { 
         font-size: 1rem !important; 
@@ -189,15 +179,15 @@
             
       #services .card header { text-align: center; } 
       
-      header#site-header:not(.scrolled-header-layout) nav { /* Large header nav on mobile */
+      header#site-header:not(.scrolled-header-layout) nav { 
         gap: 0.25rem; 
         right: 0.5rem; 
       }
-      .scrolled-header-layout nav { /* Scrolled header nav on mobile */
+      .scrolled-header-layout nav { 
         gap: 0.2rem !important;
         flex-shrink: 0;
       }
-      nav .nav-link { /* Base mobile nav link size */
+      nav .nav-link { 
         font-size: 0.75rem; 
         padding: 0.2em 0;
       }
@@ -208,7 +198,7 @@
       padding: 2rem 1rem 100px; 
       padding-top: 30vh; 
     }
-    body.scrolled .container { /* This class is still useful for general body state if needed */
+    body.scrolled .container { 
       padding-top: 70px; 
     }
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 2rem; align-items: start; margin-bottom: 3rem; }
@@ -272,7 +262,7 @@
         color: var(--theme-blue-static);    
         opacity: 1;
     }
-    body.scrolled #to-top { opacity: 1; } /* Still use .scrolled for this */
+    body.scrolled #to-top { opacity: 1; } 
     section#location address { text-align: center; margin-top: 0.5rem; }
     
     footer#contact {
@@ -322,7 +312,7 @@
       <a href="our-providers.html" class="nav-link" target="_top">Our Providers</a>
       <a href="articles.html" class="nav-link" target="_top">Articles</a>
     </nav>
-    <div id="heart-animation" style="position:absolute; bottom:1rem; right:1rem; width:60px; height:60px;"></div>
+    <!-- <div id="heart-animation" style="position:absolute; bottom:1rem; right:1rem; width:60px; height:60px;"></div> Lottie animation removed -->
   </header>
 
   <main class="container">
@@ -377,8 +367,8 @@
     <section id="booking" data-aos="zoom-in-up" style="text-align:center; margin-bottom:3rem;">
       <h2>Book an Appointment</h2>
       <div class="booking-button-container"> 
-          <a href="https://www.therapyportal.com/p/awakenings83703/" class="btn" target="_top" rel="noopener noreferrer"> Patient Portal </a>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeYABYxDoscWL3jH-SNU51X0hgomcb0bEqshRIUnCRg7aSgA/viewform" class="btn secondary" target="_top" rel="noopener noreferrer"> Appointment Interest Form </a>
+          <a href="https://www.therapyportal.com/p/awakenings83703/" class="btn" target="_blank" rel="noopener noreferrer"> Patient Portal </a>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeYABYxDoscWL3jH-SNU51X0hgomcb0bEqshRIUnCRg7aSgA/viewform" class="btn secondary" target="_blank" rel="noopener noreferrer"> Appointment Interest Form </a>
       </div>
     </section>
   </main>
@@ -395,13 +385,14 @@
     </div>
   </footer>
 
-  <script src="https://unpkg.com/lottie-web@latest/build/player/lottie.min.js"></script>
+  <!-- <script src="https://unpkg.com/lottie-web@latest/build/player/lottie.min.js"></script> Lottie script removed -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
   <script>
     document.getElementById('current-year').textContent = new Date().getFullYear();
     AOS.init({ duration: 600, once: true });
 
+    /* Lottie animation script removed
     try {
         const heartAnimContainer = document.getElementById('heart-animation');
         if(heartAnimContainer && (typeof heartAnimContainer.style.display === 'undefined' || heartAnimContainer.style.display !== 'none')) { 
@@ -416,46 +407,48 @@
         const heartAnimContainer = document.getElementById('heart-animation');
         if(heartAnimContainer) heartAnimContainer.style.display = 'none';
     }
+    */
 
     const toTop = document.getElementById('to-top');
+    if (toTop) toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' })); // Added null check for toTop
     
-    // --- Scroll-Linked Animation Logic ---
     const siteHeader = document.getElementById('site-header');
-    const h1Title = siteHeader.querySelector('h1');
-    const titleFull = h1Title.querySelector('.title-full');
-    const titleShort = h1Title.querySelector('.title-short');
-    const headerFavicon = h1Title.querySelector('.header-favicon');
-    const navLinks = Array.from(siteHeader.querySelectorAll('nav .nav-link'));
+    const h1Title = siteHeader ? siteHeader.querySelector('h1') : null; // Added null check
+    const titleFull = h1Title ? h1Title.querySelector('.title-full') : null;
+    const titleShort = h1Title ? h1Title.querySelector('.title-short') : null;
+    const headerFavicon = h1Title ? h1Title.querySelector('.header-favicon') : null;
+    // const navLinks = siteHeader ? Array.from(siteHeader.querySelectorAll('nav .nav-link')) : []; // navLinks not used in current script
 
     const initialHeaderHeightVh = 30;
     const finalHeaderHeightPx = 60;
 
-    // Get initial font size from CSS for h1 (more robust)
-    let initialH1FontSizeRem = 2.5; // Default if not found
+    let initialH1FontSizeRem = 2.5; 
     if(h1Title) {
         const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
-        initialH1FontSizeRem = parseFloat(getComputedStyle(h1Title).fontSize) / rootFontSize;
+        const computedFontSize = parseFloat(getComputedStyle(h1Title).fontSize);
+        if (rootFontSize > 0 && computedFontSize > 0) { // Check for valid numbers
+            initialH1FontSizeRem = computedFontSize / rootFontSize;
+        }
     }
     
     const finalH1DesktopFontSizeRem = 1.5;
     const finalH1MobileFontSizeRem = 1.0; 
 
-    // Hex colors for interpolation
-    const initialH1ColorHex = "#27296d"; // var(--theme-blue-static)
-    const finalH1ColorHex = "#FFFFFF";   // white
-    const initialNavLinkColorHex = "#27296d"; // var(--theme-blue-static)
-    const finalNavLinkColorHex = "#FFFFFF";   // white
+    const initialH1ColorHex = "#27296d"; 
+    const finalH1ColorHex = "#FFFFFF";   
+    // const initialNavLinkColorHex = "#27296d"; // Not used
+    // const finalNavLinkColorHex = "#FFFFFF";   // Not used
 
     const animationScrollStart = 0;
-    const animationScrollEnd = 200; // Pixels scrolled for animation to complete
+    const animationScrollEnd = 200; 
 
     function hexToRgb(hex) {
         let r = 0, g = 0, b = 0;
-        if (hex.length == 4) { // 3-digit hex
+        if (hex.length == 4) { 
             r = parseInt(hex[1] + hex[1], 16);
             g = parseInt(hex[2] + hex[2], 16);
             b = parseInt(hex[3] + hex[3], 16);
-        } else if (hex.length == 7) { // 6-digit hex
+        } else if (hex.length == 7) { 
             r = parseInt(hex[1] + hex[2], 16);
             g = parseInt(hex[3] + hex[4], 16);
             b = parseInt(hex[5] + hex[6], 16);
@@ -465,9 +458,8 @@
     
     const initialH1ColorRgb = hexToRgb(initialH1ColorHex);
     const finalH1ColorRgb = hexToRgb(finalH1ColorHex);
-    const initialNavLinkColorRgb = hexToRgb(initialNavLinkColorHex);
-    const finalNavLinkColorRgb = hexToRgb(finalNavLinkColorHex);
-
+    // const initialNavLinkColorRgb = hexToRgb(initialNavLinkColorHex); // Not used
+    // const finalNavLinkColorRgb = hexToRgb(finalNavLinkColorHex); // Not used
 
     function interpolateValue(start, end, progress) {
         return start + (end - start) * progress;
@@ -484,6 +476,8 @@
     let ticking = false;
 
     function updateHeaderStylesOnScroll(scrollY) {
+      if (!siteHeader || !h1Title) return; // Guard if elements are not found
+
       let progress = 0;
       if (scrollY <= animationScrollStart) {
         progress = 0;
@@ -499,11 +493,14 @@
         siteHeader.style.height = `${interpolateValue(initialHeaderActualHeight, finalHeaderHeightPx, progress)}px`;
 
         let targetFinalH1FontSize = window.innerWidth <= 480 ? finalH1MobileFontSizeRem : finalH1DesktopFontSizeRem;
-        let currentInitialH1Size = (progress === 0 && h1Title.style.fontSize === '') ? initialH1FontSizeRem : parseFloat(h1Title.style.fontSize || initialH1FontSizeRem);
-        if(progress === 0) currentInitialH1Size = initialH1FontSizeRem;
+        let currentInitialH1Size = initialH1FontSizeRem;
+        if (progress === 0 && h1Title.style.fontSize === '') {
+             currentInitialH1Size = initialH1FontSizeRem;
+        } else if (h1Title.style.fontSize) {
+            currentInitialH1Size = parseFloat(h1Title.style.fontSize) || initialH1FontSizeRem;
+        } 
 
-
-        h1Title.style.fontSize = `${interpolateValue(initialH1FontSizeRem, targetFinalH1FontSize, progress)}rem`;
+        h1Title.style.fontSize = `${interpolateValue(currentInitialH1Size, targetFinalH1FontSize, progress)}rem`;
         
         if (titleFull) titleFull.style.opacity = 1 - progress;
         if (titleShort) titleShort.style.opacity = progress;
@@ -511,27 +508,20 @@
 
         if (progress > 0.9) { 
             if (titleFull) titleFull.style.display = 'none';
-            if (titleShort) titleShort.style.display = 'inline';
+            if (titleShort) titleShort.style.display = 'inline-block';
             if (headerFavicon) headerFavicon.style.display = 'inline-block';
         } else if (progress < 0.1) {
-            if (titleFull) titleFull.style.display = 'inline';
+            if (titleFull) titleFull.style.display = 'inline-block';
             if (titleShort) titleShort.style.display = 'none';
             if (headerFavicon) headerFavicon.style.display = 'none';
         } else { 
-            if (titleFull) titleFull.style.display = 'inline';
-            if (titleShort) titleShort.style.display = 'inline';
+            if (titleFull) titleFull.style.display = 'inline-block';
+            if (titleShort) titleShort.style.display = 'inline-block';
             if (headerFavicon) headerFavicon.style.display = 'inline-block';
         }
 
         h1Title.style.color = interpolateRgbColor(initialH1ColorRgb, finalH1ColorRgb, progress);
-        // Nav link color will be handled by CSS class .scrolled-header-layout for simplicity
-        // Or, if you want smooth nav link color transition:
-        // navLinks.forEach(link => {
-        //   link.style.color = interpolateRgbColor(initialNavLinkColorRgb, finalNavLinkColorRgb, progress);
-        // });
-
-
-        // Toggle .scrolled-header-layout class for non-interpolated CSS changes
+        
         if (progress >= 0.95) { 
           siteHeader.classList.add('scrolled-header-layout');
         } else {
@@ -539,57 +529,52 @@
         }
       });
     }
+    
+    function setInitialH1FontSize() { // Helper to set initialH1FontSizeRem based on computed style
+        if(h1Title) {
+            const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+            const computedFontSize = parseFloat(getComputedStyle(h1Title).fontSize);
+            if (rootFontSize > 0 && computedFontSize > 0) { 
+                initialH1FontSizeRem = computedFontSize / rootFontSize;
+            }
+        }
+    }
 
     window.addEventListener('scroll', () => {
         lastKnownScrollY = window.scrollY;
         if (!ticking) {
             window.requestAnimationFrame(() => {
                 updateHeaderStylesOnScroll(lastKnownScrollY);
-                document.body.classList.toggle('scrolled', lastKnownScrollY > 50); // For to-top button and .container padding
+                document.body.classList.toggle('scrolled', lastKnownScrollY > 50); 
                 ticking = false;
             });
             ticking = true;
         }
     });
-    window.addEventListener('resize', () => updateHeaderStylesOnScroll(window.scrollY));
-    document.addEventListener('DOMContentLoaded', () => updateHeaderStylesOnScroll(window.scrollY));
-    // --- End of Scroll-Linked Animation Logic ---
-
+    window.addEventListener('resize', () => { 
+        setInitialH1FontSize();
+        updateHeaderStylesOnScroll(window.scrollY); 
+    });
+    document.addEventListener('DOMContentLoaded', () => { 
+        setInitialH1FontSize();
+        updateHeaderStylesOnScroll(window.scrollY); 
+    });
 
     const applySystemTheme = (isDark) => {
-        if (isDark) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-        if (typeof AOS !== 'undefined') { 
-            AOS.refreshHard(); 
-        }
-        let currentBg;
-        if (document.documentElement.classList.contains('dark')) {
-            currentBg = getComputedStyle(document.documentElement).getPropertyValue('--bg-dark').trim();
-        } else {
-            currentBg = getComputedStyle(document.documentElement).getPropertyValue('--bg-light').trim();
-        }
-        const separators = document.querySelectorAll('.separator path');
-        if (separators.length > 0) {
-            separators.forEach(p => p.style.fill = currentBg);
-        }
+        document.documentElement.classList.toggle('dark', isDark);
+        if (typeof AOS !== 'undefined') AOS.refreshHard(); 
+        let currentBg = getComputedStyle(document.documentElement).getPropertyValue(isDark ? '--bg-dark' : '--bg-light').trim();
+        document.querySelectorAll('.separator path').forEach(p => p.style.fill = currentBg);
     };
 
     const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
     applySystemTheme(prefersDarkScheme.matches); 
-    prefersDarkScheme.addEventListener('change', (e) => { 
-        applySystemTheme(e.matches);
-    });
+    prefersDarkScheme.addEventListener('change', (e) => applySystemTheme(e.matches));
     
     window.addEventListener('load', function() {
-      if (typeof AOS !== 'undefined') {
-        setTimeout(function() {
-          AOS.refreshHard(); 
-        }, 1200); 
-      }
-      updateHeaderStylesOnScroll(window.scrollY); // Ensure styles are correct after all resources load
+      if (typeof AOS !== 'undefined') setTimeout(() => AOS.refreshHard(), 1200); 
+      setInitialH1FontSize();
+      updateHeaderStylesOnScroll(window.scrollY); 
     });
 
     const accordionHeaders = document.querySelectorAll('.accordion .acc-header');
