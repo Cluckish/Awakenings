@@ -182,11 +182,7 @@
     .container { 
       max-width: 1000px; margin: 0 auto; 
       padding: 2rem 1rem 100px; 
-      /* padding-top: 30vh; /* Initial padding set by JS */
     }
-    /* body.scrolled .container { 
-      padding-top: 70px; /* Replaced by dynamic JS padding */
-    } */
     .btn { 
       display: inline-block; 
       background: var(--theme-blue-static); 
@@ -259,6 +255,8 @@
         font-weight: 600; 
         font-size: 1.7rem; 
         text-align: center;
+        min-height: 80px; /* Ensure headers have similar height */
+        display: flex; align-items: center; justify-content: center;
     }
     .article-card .content {
         padding: 1.5rem;
@@ -351,18 +349,16 @@
         <div class="article-card" data-aos="zoom-in-up" data-aos-delay="200">
           <header>Can Good Psychiatry Really Help You Take Less Medication?</header>
           <div class="content">
-            <p>Psychiatry is often associated with overmedication and polypharmacy. This article explores how/when medication can be reduced, and how lifestyle changes can sometimes reduce of the need for certain medications.</p>
-            <p>The journey to wellness begins not with perfection, but with small, intentional actions. Psychiatric medications are powerful, but their effectiveness is significantly influenced by daily habits—particularly movement and nutrition. Even minimal efforts, like a 10-minute walk or choosing whole foods, can meaningfully support mental health and medication outcomes.</p>
-            <!-- <a href="#" class="btn">Read More</a> Placeholder for actual link -->
+            <p>Psychiatry is often associated with overmedication. This article explores how/when medication can be reduced, and how lifestyle changes can sometimes reduce the need for certain medications.</p>
+            <a href="article-reducing-meds.html" class="btn" target="_top">Read More</a> 
           </div>
         </div>
         
-        <!-- Placeholder for a second article -->
         <div class="article-card" data-aos="zoom-in-up" data-aos-delay="300">
-            <header>Future Article Title</header>
+            <header>How Exercise and Nutrition Transform Psychiatry</header>
             <div class="content">
-              <p>Brief description of the second future article will go here. This card serves as a placeholder until new content is ready. (Content coming soon)</p>
-              <a href="#" class="btn">Read More</a> 
+              <p>Discover how daily habits like movement and mindful eating can powerfully support psychiatric treatment and overall mental wellness, often reducing the need for medication.</p>
+              <a href="article-exercise-nutrition.html" class="btn" target="_top">Read More</a> 
             </div>
           </div>
       </div>
@@ -395,7 +391,7 @@
     if (toTop) toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     
     const siteHeader = document.getElementById('site-header');
-    const mainContainer = document.querySelector('main.container'); // Get main container
+    const mainContainer = document.querySelector('main.container'); 
     const h1Title = siteHeader ? siteHeader.querySelector('h1') : null;
     const titleFull = h1Title ? h1Title.querySelector('.title-full') : null;
     const titleShort = h1Title ? h1Title.querySelector('.title-short') : null;
@@ -449,7 +445,7 @@
         const initialHeaderActualHeight = (initialHeaderHeightVh / 100) * window.innerHeight;
         const currentHeaderHeight = interpolateValue(initialHeaderActualHeight, finalHeaderHeightPx, progress);
         siteHeader.style.height = `${currentHeaderHeight}px`;
-        mainContainer.style.paddingTop = `${currentHeaderHeight}px`; // Dynamically set padding
+        mainContainer.style.paddingTop = `${currentHeaderHeight}px`;
 
         let targetFinalH1FontSize = window.innerWidth <= 480 ? finalH1MobileFontSizeRem : finalH1DesktopFontSizeRem;
         let currentInitialH1SizeRem = initialH1FontSizeRem;
