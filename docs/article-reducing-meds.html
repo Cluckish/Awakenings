@@ -54,16 +54,29 @@
     }
     header#site-header {
       position: fixed; top: 0; left: 0; width: 100%;
-      background: var(--primary) url('Wide Awakenings Building Sketch.png') center/cover no-repeat; 
+      background-color: transparent; /* Ensure initial background is transparent */
       display: flex; align-items: center; 
-      transition: background-color 0.3s ease, background-image 0.3s ease, box-shadow 0.3s ease, justify-content 0.3s ease, height 0.3s ease; 
+      /* background-color transition removed, will be handled by JS */
+      transition: box-shadow 0.15s ease, justify-content 0.15s ease, height 0.05s ease; 
       z-index: 1000; padding: 0 1rem; 
     }
+
+    header#site-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('Wide Awakenings Building Sketch.png') center/cover no-repeat;
+      opacity: var(--header-bg-image-opacity, 1); /* Use CSS variable */
+      transition: opacity 0.3s ease;
+      z-index: -2; 
+    }
+
     header#site-header::after { 
       content: ''; position: absolute; inset: 0;
-      background: rgba(47,62,70,0.2); z-index: 0;
-      transition: opacity 0.7s ease; 
-      opacity: 1;
+      background: rgba(47,62,70,0.2); 
+      z-index: -1; 
+      transition: opacity 0.3s ease; 
+      opacity: var(--header-bg-overlay-opacity, 1); /* Use CSS variable */
     }
     header#site-header:not(.scrolled-header-layout) {
         justify-content: center;
@@ -71,13 +84,15 @@
     .scrolled-header-layout {
       justify-content: space-between !important; 
       align-items: center !important; 
-      background-image: none !important; 
-      background-color: var(--theme-blue-static) !important; 
+      /* background-color: var(--theme-blue-static); -- Removed, JS will handle background color animation */
       box-shadow: 0 2px 8px rgba(0,0,0,.2);
     }
+
+    /* Remove opacity change from CSS for scrolled state, JS will handle it */
+    /* .scrolled-header-layout::before,
     .scrolled-header-layout::after {
-        opacity: 0;
-    }
+        opacity: 0; 
+    } */
 
     header#site-header h1 {
       position: relative; 
@@ -88,9 +103,9 @@
       align-items: center; 
     }
     .scrolled-header-layout h1 {
-      font-size: 1.5rem !important; 
-      line-height: 1.2 !important; 
-      color: white !important; 
+      font-size: 1.5rem; /* !important removed */
+      line-height: 1.2; /* !important removed */
+      color: white; /* !important removed */
       text-align: left; 
     }
 
@@ -133,12 +148,12 @@
     nav .nav-link:hover { color: var(--accent); }
     #heart-animation { z-index: 1; display: none !important; }
 
-    h2 { /* General page title, like 'Article Hub' or article title */
+    h2 { 
       font-family: 'Dancing Script', cursive; font-weight: 600;
       color: var(--heading-color);
       text-align: center; 
-      margin-bottom: 1rem; /* Reduced for article title */ 
-      font-size: 2.5rem; /* Larger for article title */
+      margin-bottom: 1rem; 
+      font-size: 2.5rem; 
     }
 
     @media (max-width: 480px) {
@@ -171,11 +186,11 @@
         font-size: 0.75rem; 
         padding: 0.2em 0;
       }
-      h2 { font-size: 2rem; } /* Smaller article title on mobile */
+      h2 { font-size: 2rem; } 
     }
 
     .container { 
-      max-width: 800px; /* Adjusted for single article content */ 
+      max-width: 800px; 
       margin: 0 auto; 
       padding: 2rem 1rem 100px; 
     }
@@ -212,43 +227,136 @@
     }
     body.scrolled #to-top { opacity: 1; } 
 
-    /* Single Article Page Styles */
-    .article-page-content {
-        padding: 1rem 0;
+    /* Standard Blog Article Styles */
+    .blog-article {
+      padding: 2rem 0;
     }
-    .article-subtitle {
-        text-align: center;
-        font-style: italic;
-        color: var(--accent);
-        margin-bottom: 2.5rem;
-        font-size: 1.1rem;
-        font-weight: 600;
+    .blog-article-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
     }
-    .article-body p, .article-body ul li {
-        margin-bottom: 1.25rem;
-        font-size: 1.05rem;
-        line-height: 1.7;
+    .blog-article-title {
+      font-family: 'Dancing Script', cursive;
+      font-weight: 600;
+      color: var(--heading-color);
+      font-size: 2.8rem; 
+      margin-bottom: 0.75rem;
     }
-    .article-body h3 {
-        font-family: 'Inter', sans-serif; /* More standard for subheadings */
-        font-weight: 700;
-        color: var(--heading-color); /* Match H2 color */
-        font-size: 1.5rem;
-        margin-top: 2.5rem;
+    html.dark .blog-article-title {
+      color: var(--text-light);
+    }
+    .blog-article-subtitle { 
+      font-style: italic;
+      color: var(--accent);
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .blog-article-meta { 
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 2rem;
+    }
+    html.dark .blog-article-meta {
+        color: #aaa;
+    }
+    .blog-article-content { 
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+    .blog-article-content h3 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      color: var(--heading-color);
+      font-size: 1.6rem; 
+      margin-top: 2.5rem;
+      margin-bottom: 1.25rem;
+      text-align: left;
+    }
+    html.dark .blog-article-content h3 {
+      color: var(--accent);
+    }
+    .blog-article-content p, .blog-article-content ul li {
+      margin-bottom: 1.5rem; 
+    }
+    .blog-article-content img { 
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 2rem auto; 
+      display: block;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+    .blog-article-blockquote { 
+      margin: 2.5rem 0;
+      padding: 1.5rem 2rem;
+      border-left: 5px solid var(--accent);
+      background-color: #e9e9ea; 
+      font-style: italic;
+      font-size: 1.15rem; 
+      color: #333;
+    }
+    html.dark .blog-article-blockquote {
+      background-color: #2c3032;
+      border-left-color: var(--accent);
+      color: var(--text-light);
+    }
+    .blog-article-cta { 
+      text-align: center;
+      margin-top: 0; /* Adjusted to be part of the wrapper */
+      padding: 2rem;
+      /* background-color: #e9e9ea; No separate background, inherits from wrapper */
+      border-radius: 0 0 8px 8px; /* Rounded bottom corners if wrapper has top rounded */
+    }
+    html.dark .blog-article-cta {
+      /* background-color: #2c3032; No separate background */
+    }
+    .blog-article-cta p {
         margin-bottom: 1rem;
-        text-align: left;
-    }
-    .article-blockquote {
-        margin: 2rem 0;
-        padding: 1rem 1.5rem;
-        border-left: 4px solid var(--accent);
-        background-color: #e9e9ea;
-        font-style: italic;
         font-size: 1.1rem;
     }
-    .article-cta {
-        text-align: center;
-        margin-top: 3rem;
+    .blog-article-main-content-wrapper {
+        background-color: var(--bg-light);
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        margin-top: 2rem; 
+        display: flow-root; /* To contain floated elements */
+    }
+    html.dark .blog-article-main-content-wrapper {
+        background-color: #2c3032; 
+    }
+    .image-text-container { 
+        overflow: auto; /* Clearfix for floated children */
+        margin-bottom: 1.5rem;
+    }
+    .image-container {
+        max-width: 35%; 
+        margin-bottom: 0.5rem; 
+    }
+    .image-container.float-left {
+        float: left;
+        margin-right: 1rem; 
+    }
+    .image-container.float-right {
+        float: right;
+        margin-left: 1rem; 
+    }
+    .image-container img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    @media (max-width: 768px) {
+        .image-container.float-left,
+        .image-container.float-right {
+            float: none;
+            max-width: 80%; 
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 1rem;
+        }
     }
     /* End Single Article Page Styles */
     
@@ -306,37 +414,51 @@
     <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none" data-aos="fade-up">
       <path d="M0,0 C300,100 900,0 1200,100 L1200,0 L0,0 Z" fill="var(--bg-light)"/>
     </svg>
-    <article class="article-page-content">
-      <h2 data-aos="fade-up">Can Psychiatry Really Help You Take Less Medication?</h2>
-      <p class="article-subtitle" data-aos="fade-up" data-aos-delay="100">
-        “Our goal is to untangle the mess of medications so people aren’t treating side‑effects with more meds.” -- Heidi and Talia, Providers at Awakenings
-      </p>
+    <article class="blog-article">
+      <header class="blog-article-header" data-aos="fade-up">
+        <h1 class="blog-article-title">Can Psychiatry Really Help You Take Less Medication?</h1>
+        <p class="blog-article-subtitle" data-aos-delay="100">
+          “Our goal is to untangle the mess of medications so people aren’t treating side‑effects with more meds.” -- Heidi and Talia, Providers at Awakenings
+        </p>
+      </header>
       
-      <div class="article-body" data-aos="fade-up" data-aos-delay="200">
-        <p>When people picture psychiatry, they often imagine prescription pads flying. A pill for anxiety, another for sleep, another to cancel out the side effects of the first two, and finally yet another pill for the side effects of the third. Every week, we meet someone completely overwhelmed by medications. Some patients come in taking over a dozen different medications. To be clear, there are situations where people do need to take multiple medications and those medications may have side effects that can be treated properly with other medications. Nobody should ever feel ashamed of their treatment, but oftentimes it can be easy to rely too heavily on medication, especially for psychiatrists.</p>
+      <div class="blog-article-main-content-wrapper">
+        <section class="blog-article-content" data-aos="fade-up" data-aos-delay="200">
+          <p>When people picture psychiatry, they often imagine prescription pads flying. A pill for anxiety, another for sleep, another to cancel out the side effects of the first two, and finally yet another pill for the side effects of the third. Every week, we meet someone completely overwhelmed by medications. Some patients come in taking over a dozen different medications. To be clear, there are situations where people do need to take multiple medications and those medications may have side effects that can be treated properly with other medications. Nobody should ever feel ashamed of their treatment, but oftentimes it can be easy to rely too heavily on medication, especially for psychiatrists.</p>
 
-        <h3>Why So Many Meds?</h3>
-        <p>Over usage of poly-pharmacy is shockingly common in mental health, and not always for the right reasons. Symptoms snowball, Providers rotate, and side effects get medicated. The result? Plans that are more complicated than the problems they aimed to treat in the first place. We see over-complicated med plans constantly, sometimes providers and patients don’t even know what’s helping and what’s hurting anymore. This leads a lot of people to become distrusting of pharmacology in psychiatry, and rightfully so. That being said, the question then becomes, “what can we do about it?”</p>
+          <h3>Why So Many Meds?</h3>
+          <div class="image-text-container">
+            <div class="image-container float-right">
+              <img src="Pills Stock Photo.png" alt="Assortment of pills">
+            </div>
+            <p>Over usage of poly-pharmacy is shockingly common in mental health, and not always for the right reasons. Symptoms snowball, Providers rotate, and side effects get medicated. The result? Plans that are more complicated than the problems they aimed to treat in the first place. We see over-complicated med plans constantly, sometimes providers and patients don’t even know what’s helping and what’s hurting anymore. This leads a lot of people to become distrusting of pharmacology in psychiatry, and rightfully so. That being said, the question then becomes, “what can we do about it?”</p>
+          </div>
+          
+          <h3>The Truth About De-prescribing</h3>
+          <p class="blog-article-blockquote">“How do you know when it’s time to reduce or remove a medication?”</p>
+          <p>The answer is: it depends. There’s no universal formula. We look at clinical data like the PHQ-9 or GAD-7, but they’re just tools. The real indicators come from stability, usually six to twelve months of consistent function, plus the patient’s own awareness of their warning signs and support system.</p>
+          <p>We also have to consider timing. For example, we rarely initiate a major change between Halloween and Valentine’s Day unless someone has a strong support network and loves winter (most people don’t unless they ski or snowboard). Even if symptoms improve quickly, we often recommend staying on a medication for six to nine months before making changes, just to allow the changes to solidify as oftentimes quick results can be deceptive to the lasting effects of changes.</p>
+          <p>It is worth noting that sometimes reducing medication can be scary for patients, especially if they associate them with feeling better. That’s valid. Our job isn’t to force anything—it’s to walk through the options, make sure the risks are managed, and collaborate on what’s next. Like we mentioned in the intro, it isn't uncommon for people to have legitimate needs for a higher number of medications, and taking those medications away too quickly can also cause a lot of harm.</p>
 
-        <h3>The Truth About De-prescribing</h3>
-        <p class="article-blockquote">“How do you know when it’s time to reduce or remove a medication?”</p>
-        <p>The answer is: it depends. There’s no universal formula. We look at clinical data like the PHQ-9 or GAD-7, but they’re just tools. The real indicators come from stability, usually six to twelve months of consistent function, plus the patient’s own awareness of their warning signs and support system.</p>
-        <p>We also have to consider timing. For example, we rarely initiate a major change between Halloween and Valentine’s Day unless someone has a strong support network and loves winter (most people don’t unless they ski or snowboard). Even if symptoms improve quickly, we often recommend staying on a medication for six to nine months before making changes, just to allow the changes to solidify as oftentimes quick results can be deceptive to the lasting effects of changes.</p>
-        <p>It is worth noting that sometimes reducing medication can be scary for patients, especially if they associate them with feeling better. That’s valid. Our job isn’t to force anything—it’s to walk through the options, make sure the risks are managed, and collaborate on what’s next. Like we mentioned in the intro, it isn't uncommon for people to have legitimate needs for a higher number of medications, and taking those medications away too quickly can also cause a lot of harm.</p>
+          <h3>What Else Can I Do?</h3>
+          <div class="image-text-container reverse">
+            <div class="image-container float-right">
+              <img src="Sleep Stock Photo.png" alt="Person sleeping peacefully">
+            </div>
+            <p>Sleep is one of the first things we ask about in every visit. Without good sleep, it’s almost impossible to make progress. We coach patients on behavioral sleep hygiene, and we’ll sometimes recommend Magnesium, L-theanine, or even Light Therapy if seasonal depression is at play (which is common here in Idaho).</p>
+            <p>Exercise is another powerful tool—at least 30 minutes, three times a week, has shown to match or exceed medication benefits for certain types of depression. Nutrition plays a role too. Depending on a patient's situation, we often suggest Fish oil with a high EPA:DHA ratio, Vitamin D supplementation, L-methylfolate for those with MTHFR variants, and again Magnesium for sleep and anxiety management.</p>
+          </div>
+          <p>These supplements aren’t replacements for medication—they’re just a part of the toolbox that makes tapering realistic.</p>
 
-        <h3>What Else Can I Do?</h3>
-        <p>Sleep is one of the first things we ask about in every visit. Without good sleep, it’s almost impossible to make progress. We coach patients on behavioral sleep hygiene, and we’ll sometimes recommend Magnesium, L-theanine, or even Light Therapy if seasonal depression is at play (which is common here in Idaho).</p>
-        <p>Exercise is another powerful tool—at least 30 minutes, three times a week, has shown to match or exceed medication benefits for certain types of depression. Nutrition plays a role too. Depending on a patient's situation, we often suggest Fish oil with a high EPA:DHA ratio, Vitamin D supplementation, L-methylfolate for those with MTHFR variants, and again Magnesium for sleep and anxiety management.</p>
-        <p>These supplements aren’t replacements for medication—they’re just a part of the toolbox that makes tapering realistic.</p>
+          <h3>What We Want Every Patient (And Therapist) To Know</h3>
+          <p>Medication is just one piece of the picture. Without consistent therapy or some kind of mental health support, medication often falls short. With a heavy respect placed on the patient’s wishes and HIPAA compliance, we occasionally use input from therapists, family members, and anyone else who sees the patient regularly—because as psychiatrists, our time is limited. Even a quick message or observation from a therapist, parent, or loved one can make a huge difference when tapering or adjusting a medication. When collaboration happens, outcomes are better.</p>
+          <p>Every patient is different, that’s why feedback matters so much. If a change in medication doesn’t sit right, or a symptom is more disruptive than we realized, tell us. Our job in psychiatry isn’t just to medicate symptoms—it’s to manage what matters most to the patient; that takes communication, trust, and a shared goal.</p>
+        </section>
 
-        <h3>What We Want Every Patient (And Therapist) To Know</h3>
-        <p>Medication is just one piece of the picture. Without consistent therapy or some kind of mental health support, medication often falls short. With a heavy respect placed on the patient’s wishes and HIPAA compliance, we occasionally use input from therapists, family members, and anyone else who sees the patient regularly—because as psychiatrists, our time is limited. Even a quick message or observation from a therapist, parent, or loved one can make a huge difference when tapering or adjusting a medication. When collaboration happens, outcomes are better.</p>
-        <p>Every patient is different, that’s why feedback matters so much. If a change in medication doesn’t sit right, or a symptom is more disruptive than we realized, tell us. Our job in psychiatry isn’t just to medicate symptoms—it’s to manage what matters most to the patient; that takes communication, trust, and a shared goal.</p>
-      </div>
-
-      <div class="article-cta" data-aos="fade-up">
-        <p>Medications can be complicated. If you're in need of an experienced psychiatrist, click the button below to fill out our appointment interest form below!</p>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeYABYxDoscWL3jH-SNU51X0hgomcb0bEqshRIUnCRg7aSgA/viewform" class="btn secondary" target="_blank" rel="noopener noreferrer"> Appointment Interest Form </a>
+        <section class="blog-article-cta" data-aos="fade-up">
+          <p>Medications can be complicated. If you're in need of an experienced psychiatrist, click the button below to fill out our appointment interest form below!</p>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeYABYxDoscWL3jH-SNU51X0hgomcb0bEqshRIUnCRg7aSgA/viewform" class="btn secondary" target="_blank" rel="noopener noreferrer"> Appointment Interest Form </a>
+        </section>
       </div>
     </article>
     <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none"> <path d="M0,100 C300,0 900,100 1200,0 L1200,100 L0,100 Z" fill="var(--bg-light)"/> </svg>
@@ -378,7 +500,7 @@
     const initialH1ColorHex = "#27296d";
     const finalH1ColorHex = "#FFFFFF";
     const animationScrollStart = 0;
-    const animationScrollEnd = 200;
+    const animationScrollEnd = 100;
     const initialH1ColorRgb = hexToRgb(initialH1ColorHex);
     const finalH1ColorRgb = hexToRgb(finalH1ColorHex);
 
@@ -433,6 +555,14 @@
         if (titleShort) titleShort.style.opacity = progress;
         if (headerFavicon) headerFavicon.style.opacity = progress;
 
+        // Set CSS variables for pseudo-element opacity
+        siteHeader.style.setProperty('--header-bg-image-opacity', 1 - progress);
+        siteHeader.style.setProperty('--header-bg-overlay-opacity', 1 - progress);
+
+        // Animate header background color
+        const themeBlueStaticRGB = hexToRgb(getComputedStyle(document.documentElement).getPropertyValue('--theme-blue-static').trim());
+        siteHeader.style.backgroundColor = `rgba(${themeBlueStaticRGB[0]}, ${themeBlueStaticRGB[1]}, ${themeBlueStaticRGB[2]}, ${progress})`;
+
         if (progress > 0.9) { 
             if (titleFull) titleFull.style.display = 'none';
             if (titleShort) titleShort.style.display = 'inline-block';
@@ -447,7 +577,13 @@
             if (headerFavicon) headerFavicon.style.display = 'inline-block';
         }
         h1Title.style.color = interpolateRgbColor(initialH1ColorRgb, finalH1ColorRgb, progress);
-        siteHeader.classList.toggle('scrolled-header-layout', progress >= 0.95);
+        
+        // Apply scrolled-header-layout class earlier for alignment and shadow
+        if (progress > 0.1) { 
+          siteHeader.classList.add('scrolled-header-layout');
+        } else {
+          siteHeader.classList.remove('scrolled-header-layout');
+        }
       });
     }
     

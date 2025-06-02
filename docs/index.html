@@ -64,16 +64,32 @@
     }
     header#site-header {
       position: fixed; top: 0; left: 0; width: 100%;
-      background: var(--primary) url('Wide Awakenings Building Sketch.png') center/cover no-repeat; 
+      /* Sketch image moved to ::before pseudo-element */
+      background-color: transparent; /* Ensure initial background is transparent */
       display: flex; align-items: center; 
-      transition: background-color 0.3s ease, background-image 0.3s ease, box-shadow 0.3s ease, justify-content 0.3s ease, height 0.3s ease; 
+      /* background-image transition removed, handled by ::before opacity */
+      /* background-color transition removed, will be handled by JS */
+      transition: box-shadow 0.15s ease, justify-content 0.15s ease, height 0.05s ease; 
       z-index: 1000; padding: 0 1rem; 
     }
+
+    /* New pseudo-element for the sketch image background */
+    header#site-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('Wide Awakenings Building Sketch.png') center/cover no-repeat;
+      opacity: var(--header-bg-image-opacity, 1); /* Use CSS variable */
+      transition: opacity 0.3s ease;
+      z-index: -2; /* Behind the ::after overlay and content */
+    }
+
     header#site-header::after { 
       content: ''; position: absolute; inset: 0;
-      background: rgba(47,62,70,0.2); z-index: 0;
-      transition: opacity 0.7s ease; 
-      opacity: 1;
+      background: rgba(47,62,70,0.2); /* Overlay for the sketch */
+      z-index: -1; /* Above ::before, below content */
+      transition: opacity 0.3s ease; 
+      opacity: var(--header-bg-overlay-opacity, 1); /* Use CSS variable */
     }
     header#site-header:not(.scrolled-header-layout) {
         justify-content: center;
@@ -81,13 +97,16 @@
     .scrolled-header-layout {
       justify-content: space-between !important; 
       align-items: center !important; 
-      background-image: none !important; 
-      background-color: var(--theme-blue-static) !important; 
+      /* background-image: none; -- No longer needed, ::before opacity handles this */
+      /* background-color: var(--theme-blue-static); -- Removed, JS will handle background color animation */
       box-shadow: 0 2px 8px rgba(0,0,0,.2);
     }
+
+    /* When scrolled, fade out the sketch image and its overlay */
+    /* .scrolled-header-layout::before,
     .scrolled-header-layout::after {
-        opacity: 0;
-    }
+        opacity: 0; 
+    } */
 
     header#site-header h1 {
       position: relative; 
@@ -96,19 +115,34 @@
       margin: 0; 
       display: flex; 
       align-items: center; 
+      /* transition for properties changed by JS/scroll - background-color and padding removed as JS will handle them */
+      transition: font-size 0.3s ease, color 0.3s ease;
     }
+
+    /* Unscrolled state specific styles for H1 */
+    header#site-header:not(.scrolled-header-layout) h1 {
+      font-size: 3.2rem; /* Increased font size for unscrolled state */
+      background-color: rgba(220, 220, 220, 0.85); /* Silverish background block */
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      color: var(--theme-blue-static); /* Ensure text color contrasts with new background */
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
     .scrolled-header-layout h1 {
-      font-size: 1.5rem !important; 
-      line-height: 1.2 !important; 
-      color: white !important; 
+      font-size: 1.5rem; 
+      line-height: 1.2; 
+      color: white; 
       text-align: left; 
+      background-color: transparent; /* Ensure background is gone when scrolled */
+      padding: 0; /* Reset padding */
+      box-shadow: none; /* Reset shadow */
     }
 
     .header-favicon {
       display: inline-block; 
       opacity: 0; 
-      width: 32px;   
-      height: 32px;  
+      /* width and height will be controlled by JS */
       margin-right: 10px; 
       vertical-align: middle; 
     }
@@ -124,23 +158,44 @@
     }
 
     header#site-header nav { 
-      position: absolute; top: 1rem; right: 1rem;
-      z-index: 1002; display: flex; align-items: center;
-      gap: 0.75rem; 
+      position: absolute; 
+      top: 1rem; /* Default unscrolled top */
+      right: 1rem; /* Default unscrolled right */
+      z-index: 1002; 
+      display: flex; 
+      align-items: center; /* Vertically center links within the nav block */
+      gap: 0.6rem; /* Consistent gap */
+      transition: top 0.3s ease, right 0.3s ease, opacity 0.3s ease; /* For smooth movement */
     }
     .scrolled-header-layout nav { 
-      position: static; gap: 0.6rem; 
+      /* position: absolute; is inherited */
+      /* display: flex; align-items: center; gap: 0.6rem; are inherited */
+      /* top and right will be controlled by JavaScript for scrolled state */
+      /* height: 100%; removed as it's not needed with absolute positioning and calculated top */
     }
     nav .nav-link { 
       text-decoration: none; font-family: 'Inter', sans-serif; 
-      font-weight: 600; font-size: 0.85rem; 
+      font-weight: 600; font-size: 1.6rem; /* 50% of 3.2rem title */
       white-space: nowrap;
-      line-height: 1.2; padding: 0.2em 0.1em; display: inline-block; 
+      line-height: 1.2; 
+      padding: 0.4em 0.8em; /* Padding for bubble effect */
+      display: inline-block; 
+      border-radius: 25px; /* Rounded bubbles */
+      background-color: rgba(220, 220, 220, 0.3); /* Light bubble background for unscrolled */
+      color: var(--theme-blue-static); /* Text color for unscrolled */
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
     }
     .scrolled-header-layout nav .nav-link { 
-        color: white !important; 
+        color: white !important;
+        background-color: rgba(255, 255, 255, 0.25); /* Slightly different bubble for scrolled */
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    nav .nav-link:hover { color: var(--accent); }
+    nav .nav-link:hover { 
+      color: var(--accent); 
+      background-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    }
 
     h2 { 
       font-family: 'Dancing Script', cursive; font-weight: 600;
@@ -162,8 +217,8 @@
       header#site-header:not(.scrolled-header-layout) h1 { font-size: 1.8rem; } 
       
       .scrolled-header-layout h1 { 
-        font-size: 1rem !important; 
-        line-height: 1.2 !important; 
+        font-size: 3.2rem; 
+        line-height: 1.2; 
         white-space: nowrap;    
         overflow: hidden;       
         text-overflow: ellipsis;
@@ -172,7 +227,6 @@
         flex-shrink: 1; 
       }
       .scrolled-header-layout h1 .header-favicon {
-          width: 24px !important; height: 24px !important;
           margin-right: 4px !important; 
       }
             
@@ -180,26 +234,24 @@
       
       header#site-header:not(.scrolled-header-layout) nav { 
         gap: 0.25rem; 
-        right: 0.5rem; 
+        right: 0.5rem; /* Closer to edge for unscrolled mobile */
+        /* top: 1rem; is inherited */
       }
       .scrolled-header-layout nav { 
-        gap: 0.2rem !important;
-        flex-shrink: 0;
+        gap: 0.2rem !important; /* Keep specific mobile scrolled gap */
+        flex-shrink: 0; /* Keep if it was important for mobile layout */
+        /* Scrolled mobile nav top is calculated like desktop, right is 1rem like desktop */
+        /* If header padding is different on mobile, right might need adjustment here */
       }
-      nav .nav-link { 
-        font-size: 0.75rem; 
-        padding: 0.2em 0;
-      }
+      /* All specific nav-link font sizes for mobile are removed, base 1.6rem applies */
     }
+
+    /* All specific nav-link font sizes for desktop scrolled are removed, base 1.6rem applies */
 
     .container { 
       max-width: 1000px; margin: 0 auto; 
       padding: 2rem 1rem 100px; 
-      /* padding-top: 30vh; /* Initial padding set by JS */
     }
-    /* body.scrolled .container { 
-      padding-top: 70px; /* Replaced by dynamic JS padding */
-    } */
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 2rem; align-items: start; margin-bottom: 3rem; }
     .card { background: var(--bg-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
     .card.no-dark-override {}
@@ -398,11 +450,12 @@
     const titleFull = h1Title ? h1Title.querySelector('.title-full') : null;
     const titleShort = h1Title ? h1Title.querySelector('.title-short') : null;
     const headerFavicon = h1Title ? h1Title.querySelector('.header-favicon') : null;
+    const navElement = siteHeader ? siteHeader.querySelector('nav') : null;
 
     const initialHeaderHeightVh = 30;
-    const finalHeaderHeightPx = 60;
+    const finalHeaderHeightPx = 90; /* Increased header height for larger scrolled title */
 
-    let initialH1FontSizeRem = 2.5; 
+    let initialH1FontSizeRem = 3.2; /* Default to 3.2rem as per unscrolled CSS */
     if(h1Title) {
         const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
         const computedFontSize = parseFloat(getComputedStyle(h1Title).fontSize);
@@ -411,14 +464,17 @@
         }
     }
     
-    const finalH1DesktopFontSizeRem = 1.5;
-    const finalH1MobileFontSizeRem = 1.0; 
+    const finalH1DesktopFontSizeRem = 3.2; /* Title Short will be same size as Title Full */
+    const finalH1MobileFontSizeRem = 3.2;  /* Title Short will be same size as Title Full on mobile */
+
+    const initialFaviconSizePx = 0; // Favicon will grow from this size
+    const finalFaviconSizePx = 64;  // Increased target favicon size in scrolled state
 
     const initialH1ColorHex = "#27296d"; 
     const finalH1ColorHex = "#FFFFFF";   
 
     const animationScrollStart = 0;
-    const animationScrollEnd = 200; 
+    const animationScrollEnd = 100; 
 
     function hexToRgb(hex) {
         let r = 0, g = 0, b = 0;
@@ -452,7 +508,7 @@
     let ticking = false;
 
     function updateHeaderStylesOnScroll(scrollY) {
-      if (!siteHeader || !h1Title || !mainContainer) return; 
+      if (!siteHeader || !h1Title || !mainContainer) return;
 
       let progress = 0;
       if (scrollY <= animationScrollStart) {
@@ -480,30 +536,65 @@
 
         h1Title.style.fontSize = `${interpolateValue(currentInitialH1Size, targetFinalH1FontSize, progress)}rem`;
         
-        if (titleFull) titleFull.style.opacity = 1 - progress;
+        // Title Full and its associated block (padding/background on h1) - REVERTED TO INSTANT CHANGE
+        if (titleFull) {
+            if (progress > 0.05) { // Threshold for instant fade/disappear
+                titleFull.style.opacity = 0;
+                titleFull.style.display = 'none';
+                // Remove block styles when titleFull is hidden
+                h1Title.style.padding = '0rem';
+                h1Title.style.backgroundColor = 'transparent';
+            } else {
+                titleFull.style.opacity = 1;
+                titleFull.style.display = 'inline-block';
+                // Apply block styles when titleFull is visible
+                h1Title.style.padding = '0.5rem 1rem'; 
+                h1Title.style.backgroundColor = 'rgba(220, 220, 220, 0.85)'; 
+            }
+        }
+        
+        // Title Short & Favicon: Fades in slowly
         if (titleShort) titleShort.style.opacity = progress;
-        if (headerFavicon) headerFavicon.style.opacity = progress;
+        if (headerFavicon) {
+            headerFavicon.style.opacity = progress;
+            const currentFaviconSize = interpolateValue(initialFaviconSizePx, finalFaviconSizePx, progress);
+            headerFavicon.style.width = `${currentFaviconSize}px`;
+            headerFavicon.style.height = `${currentFaviconSize}px`;
+        }
 
-        if (progress > 0.9) { 
-            if (titleFull) titleFull.style.display = 'none';
+        // Set CSS variables for pseudo-element opacity
+        siteHeader.style.setProperty('--header-bg-image-opacity', 1 - progress);
+        siteHeader.style.setProperty('--header-bg-overlay-opacity', 1 - progress);
+        
+        // Animate header background color
+        const themeBlueStaticRGB = hexToRgb(getComputedStyle(document.documentElement).getPropertyValue('--theme-blue-static').trim());
+        siteHeader.style.backgroundColor = `rgba(${themeBlueStaticRGB[0]}, ${themeBlueStaticRGB[1]}, ${themeBlueStaticRGB[2]}, ${progress})`;
+
+        // Display logic for titleShort and headerFavicon - REVERTED
+        // titleFull display is handled above with its opacity logic
+        if (progress > 0.1) { 
             if (titleShort) titleShort.style.display = 'inline-block';
             if (headerFavicon) headerFavicon.style.display = 'inline-block';
-        } else if (progress < 0.1) {
-            if (titleFull) titleFull.style.display = 'inline-block';
+        } else {
             if (titleShort) titleShort.style.display = 'none';
             if (headerFavicon) headerFavicon.style.display = 'none';
-        } else { 
-            if (titleFull) titleFull.style.display = 'inline-block';
-            if (titleShort) titleShort.style.display = 'inline-block';
-            if (headerFavicon) headerFavicon.style.display = 'inline-block';
         }
 
         h1Title.style.color = interpolateRgbColor(initialH1ColorRgb, finalH1ColorRgb, progress);
         
-        if (progress >= 0.95) { 
+        // Apply scrolled-header-layout class earlier for alignment and shadow
+        if (progress > 0.1) { 
           siteHeader.classList.add('scrolled-header-layout');
+          if (navElement) {
+            navElement.style.top = '1.3rem'; // Raised slightly: JS controlled top for scrolled
+            navElement.style.right = '1rem'; // JS controlled right for scrolled
+          }
         } else {
           siteHeader.classList.remove('scrolled-header-layout');
+          if (navElement) {
+            navElement.style.top = '1rem'; // JS controlled top for unscrolled
+            navElement.style.right = window.innerWidth <= 480 ? '0.5rem' : '1rem'; // JS controlled right for unscrolled
+          }
         }
       });
     }
@@ -582,3 +673,29 @@
   </script>
 </body>
 </html>
+</final_file_content>
+
+IMPORTANT: For any future changes to this file, use the final_file_content shown above as your reference. This content reflects the current state of the file, including any auto-formatting (e.g., if you used single quotes but the formatter converted them to double quotes). Always base your SEARCH/REPLACE operations on this final version to ensure accuracy.<environment_details>
+# VSCode Visible Files
+../../Users/fourw/Downloads/Bussy Cline/index.html
+
+# VSCode Open Tabs
+../../Users/fourw/Downloads/Bussy Cline/article-exercise-nutrition.html
+../../Users/fourw/Downloads/Bussy Cline/index.html
+../../Users/fourw/Downloads/Bussy Cline/article-reducing-meds.html
+../../Users/fourw/Downloads/Bussy Cline/articles.html
+../../Users/fourw/Downloads/Bussy Cline/our-providers.html
+
+# Recently Modified Files
+These files have been modified since you last accessed them (file was just edited so you may need to re-read it before editing):
+../../Users/fourw/Downloads/Bussy Cline/index.html
+
+# Current Time
+6/2/2025, 3:47:30 PM (America/Denver, UTC-6:00)
+
+# Context Window Usage
+524,445 / 1,048.576K tokens used (50%)
+
+# Current Mode
+ACT MODE
+</environment_details>

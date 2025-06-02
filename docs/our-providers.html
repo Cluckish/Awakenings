@@ -68,16 +68,32 @@
     }
     header#site-header {
       position: fixed; top: 0; left: 0; width: 100%;
-      background: var(--primary) url('Wide Awakenings Building Sketch.png') center/cover no-repeat; 
+      /* Sketch image moved to ::before pseudo-element */
+      background-color: transparent; /* Ensure initial background is transparent */
       display: flex; align-items: center; 
-      transition: background-color 0.3s ease, background-image 0.3s ease, box-shadow 0.3s ease, justify-content 0.3s ease, height 0.3s ease; 
+      /* background-image transition removed, handled by ::before opacity */
+      /* background-color transition removed, will be handled by JS */
+      transition: box-shadow 0.15s ease, justify-content 0.15s ease, height 0.05s ease; 
       z-index: 1000; padding: 0 1rem; 
     }
+
+    /* New pseudo-element for the sketch image background */
+    header#site-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('Wide Awakenings Building Sketch.png') center/cover no-repeat;
+      opacity: var(--header-bg-image-opacity, 1); /* Use CSS variable */
+      transition: opacity 0.3s ease;
+      z-index: -2; /* Behind the ::after overlay and content */
+    }
+
     header#site-header::after { 
       content: ''; position: absolute; inset: 0;
-      background: rgba(47,62,70,0.2); z-index: 0;
-      transition: opacity 0.7s ease; 
-      opacity: 1;
+      background: rgba(47,62,70,0.2); /* Overlay for the sketch */
+      z-index: -1; /* Above ::before, below content */
+      transition: opacity 0.3s ease; 
+      opacity: var(--header-bg-overlay-opacity, 1); /* Use CSS variable */
     }
     header#site-header:not(.scrolled-header-layout) {
         justify-content: center;
@@ -85,13 +101,16 @@
     .scrolled-header-layout {
       justify-content: space-between !important; 
       align-items: center !important; 
-      background-image: none !important; 
-      background-color: var(--theme-blue-static) !important; 
+      /* background-image: none; -- No longer needed, ::before opacity handles this */
+      /* background-color: var(--theme-blue-static); -- Removed, JS will handle background color animation */
       box-shadow: 0 2px 8px rgba(0,0,0,.2);
     }
+
+    /* When scrolled, fade out the sketch image and its overlay */
+    /* .scrolled-header-layout::before,
     .scrolled-header-layout::after {
-        opacity: 0;
-    }
+        opacity: 0; 
+    } */
 
     header#site-header h1 {
       position: relative; 
@@ -102,9 +121,9 @@
       align-items: center; 
     }
     .scrolled-header-layout h1 {
-      font-size: 1.5rem !important; 
-      line-height: 1.2 !important; 
-      color: white !important; 
+      font-size: 1.5rem; /* !important removed */
+      line-height: 1.2; /* !important removed */
+      color: white; /* !important removed */
       text-align: left; 
     }
 
@@ -194,11 +213,7 @@
     .container { 
       max-width: 1000px; margin: 0 auto; 
       padding: 2rem 1rem 100px; 
-      /* padding-top: 30vh; /* Initial padding set by JS */
     }
-    /* body.scrolled .container { 
-      padding-top: 70px; /* Replaced by dynamic JS padding */
-    } */
     .btn { 
       display: inline-block; 
       background: var(--theme-blue-static); 
@@ -483,7 +498,7 @@
     const finalH1ColorHex = "#FFFFFF";   
 
     const animationScrollStart = 0;
-    const animationScrollEnd = 200; 
+    const animationScrollEnd = 100; 
 
     function hexToRgb(hex) {
         let r = 0, g = 0, b = 0;
@@ -549,6 +564,14 @@
         if (titleShort) titleShort.style.opacity = progress;
         if (headerFavicon) headerFavicon.style.opacity = progress;
 
+        // Set CSS variables for pseudo-element opacity
+        siteHeader.style.setProperty('--header-bg-image-opacity', 1 - progress);
+        siteHeader.style.setProperty('--header-bg-overlay-opacity', 1 - progress);
+
+        // Animate header background color
+        const themeBlueStaticRGB = hexToRgb(getComputedStyle(document.documentElement).getPropertyValue('--theme-blue-static').trim());
+        siteHeader.style.backgroundColor = `rgba(${themeBlueStaticRGB[0]}, ${themeBlueStaticRGB[1]}, ${themeBlueStaticRGB[2]}, ${progress})`;
+
         if (progress > 0.9) { 
             if (titleFull) titleFull.style.display = 'none';
             if (titleShort) titleShort.style.display = 'inline-block';
@@ -565,7 +588,8 @@
 
         h1Title.style.color = interpolateRgbColor(initialH1ColorRgb, finalH1ColorRgb, progress);
         
-        if (progress >= 0.95) { 
+        // Apply scrolled-header-layout class earlier for alignment and shadow
+        if (progress > 0.1) { 
           siteHeader.classList.add('scrolled-header-layout');
         } else {
           siteHeader.classList.remove('scrolled-header-layout');
