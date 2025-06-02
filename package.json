@@ -1,0 +1,12 @@
+{
+  "name": "awakenings-mental-health",
+  "version": "1.0.0",
+  "description": "Awakenings Mental Health website with Tailwind CSS",
+  "scripts": {
+    "build:css": "tailwindcss -i ./docs/css/input.css -o ./docs/css/output.css --minify",
+    "watch:css": "tailwindcss -i ./docs/css/input.css -o ./docs/css/output.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}
