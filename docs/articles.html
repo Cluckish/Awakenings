@@ -182,11 +182,11 @@
     .container { 
       max-width: 1000px; margin: 0 auto; 
       padding: 2rem 1rem 100px; 
-      padding-top: 30vh; 
+      /* padding-top: 30vh; /* Initial padding set by JS */
     }
-    body.scrolled .container { 
-      padding-top: 70px; 
-    }
+    /* body.scrolled .container { 
+      padding-top: 70px; /* Replaced by dynamic JS padding */
+    } */
     .btn { 
       display: inline-block; 
       background: var(--theme-blue-static); 
@@ -249,7 +249,7 @@
         overflow: hidden;
         display: flex;
         flex-direction: column;
-        padding: 0; /* Remove padding if header/content handles it */
+        padding: 0; 
     }
     .article-card header {
         padding: 1.25rem 1rem;
@@ -269,11 +269,11 @@
     .article-card .content p {
         margin-bottom: 1rem;
         font-size: 0.95rem;
-        flex-grow: 1; /* Allow text to take available space */
+        flex-grow: 1; 
     }
     .article-card .content .btn {
         align-self: center; 
-        margin-top: auto; /* Push button to bottom of content area */
+        margin-top: auto; 
     }
     .disclaimer {
         text-align: center;
@@ -395,6 +395,7 @@
     if (toTop) toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     
     const siteHeader = document.getElementById('site-header');
+    const mainContainer = document.querySelector('main.container'); // Get main container
     const h1Title = siteHeader ? siteHeader.querySelector('h1') : null;
     const titleFull = h1Title ? h1Title.querySelector('.title-full') : null;
     const titleShort = h1Title ? h1Title.querySelector('.title-short') : null;
@@ -441,12 +442,14 @@
     let ticking = false;
 
     function updateHeaderStylesOnScroll(scrollY) {
-      if (!siteHeader || !h1Title) return;
+      if (!siteHeader || !h1Title || !mainContainer) return;
       let progress = Math.max(0, Math.min(1, (scrollY - animationScrollStart) / (animationScrollEnd - animationScrollStart)));
 
       requestAnimationFrame(() => {
         const initialHeaderActualHeight = (initialHeaderHeightVh / 100) * window.innerHeight;
-        siteHeader.style.height = `${interpolateValue(initialHeaderActualHeight, finalHeaderHeightPx, progress)}px`;
+        const currentHeaderHeight = interpolateValue(initialHeaderActualHeight, finalHeaderHeightPx, progress);
+        siteHeader.style.height = `${currentHeaderHeight}px`;
+        mainContainer.style.paddingTop = `${currentHeaderHeight}px`; // Dynamically set padding
 
         let targetFinalH1FontSize = window.innerWidth <= 480 ? finalH1MobileFontSizeRem : finalH1DesktopFontSizeRem;
         let currentInitialH1SizeRem = initialH1FontSizeRem;
@@ -504,7 +507,7 @@
     });
     document.addEventListener('DOMContentLoaded', () => {
         setInitialH1FontSize();
-        updateHeaderStylesOnScroll(window.scrollY);
+        updateHeaderStylesOnScroll(window.scrollY); 
     });
 
     const applySystemTheme = (isDark) => {
