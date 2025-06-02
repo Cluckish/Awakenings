@@ -1,197 +1,344 @@
 <!DOCTYPE html>
-<html lang="en"> <head>
+<html lang="en">
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Awakenings Mental Health</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
 
   <style>
     :root {
-      --primary: #2F3E46;
-      --secondary: #84A98C;
-      --accent: #E07A5F;
-      --bg-light: #F0F3F4;
+      --primary: #2F3E46; 
+      --accent: #E07A5F;    
+      --bg-light: #f1f1f2;    
+      --text-dark: #1c1c1c;   
+      --heading-color: #27296d; 
+      --theme-blue-static: #27296d; 
       --bg-dark: #1D2021;
       --text-light: #F0F3F4;
-      --text-dark: #1D2021;
     }
-    html.dark { /* Use html.dark selector for dark mode styles */
+    html.dark { 
       --bg-light: var(--bg-dark);
       --text-dark: var(--text-light);
+      --heading-color: var(--text-light); 
     }
-    html.dark .testimonial-card {
-        background: #2c3032; /* Example dark mode card background */
+    html.dark .testimonial-card { background: #2c3032; }
+    html.dark .card:not(.no-dark-override){ 
+        background: #272b2c; 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
     }
-    html.dark .card {
-        background: #272b2c; /* Darker than page, lighter than primary for contrast */
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* Dark mode shadow */
+    html.dark .card header,
+    html.dark .accordion .acc-header,
+    html.dark .btn, html.dark .btn.secondary, 
+    html.dark #to-top {
+        background: var(--theme-blue-static); 
+        color: white; 
     }
-    html.dark .accordion .acc-body {
-        background: #2c3032;
+    html.dark .accordion .acc-header.active {
+        background: var(--accent);
     }
+    html.dark .accordion .acc-body { background: #2c3032; }
     html.dark .skeleton { background: #444; }
-    html.dark .separator path { fill: var(--bg-dark); } /* Ensure separators match bg */
-
+    html.dark .separator path { fill: var(--bg-dark); } 
+    
+    html.dark .btn:active, html.dark .btn.secondary:active, html.dark #to-top:active {
+        background-color: var(--bg-dark); 
+        color: var(--text-light);    
+    }
+    html.dark footer#contact { 
+        color: var(--text-light);
+        background-color: var(--bg-dark); 
+    }
+    html.dark footer#contact .footer-text-content a {
+        color: var(--accent); 
+    }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg-light);
-      color: var(--text-dark);
-      line-height: 1.6;
-      transition: background .3s, color .3s;
-      padding-top: 4px; 
-    }
-    #progress-bar {
-      position: fixed; top: 0; left: 0;
-      height: 4px; background: var(--accent);
-      width: 0%; transition: width .1s ease-out;
-      z-index: 9999;
+      font-family: 'Inter', sans-serif; 
+      background: var(--bg-light); color: var(--text-dark);
+      line-height: 1.6; transition: background .3s, color .3s;
+      overflow-x: hidden; 
     }
     header#site-header {
       position: fixed; top: 0; left: 0; width: 100%;
-      background: var(--primary) url('https://www.awakeningsmentalhealth.com/images/hero.jpg') center/cover no-repeat;
-      height: 60vh; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      transition: all .3s ease;
-      z-index: 1000;
-      padding: 0 1rem; 
+      background: var(--primary) url('Wide Awakenings Building Sketch.png') center/cover no-repeat; 
+      /* height is set by JS */
+      display: flex; align-items: center; 
+      /* justify-content is set by body.scrolled or defaults to center for large header */
+      transition: background-color 0.3s ease, background-image 0.3s ease, box-shadow 0.3s ease, justify-content 0.3s ease; 
+      z-index: 1000; padding: 0 1rem; 
     }
-    header#site-header::after {
+    header#site-header::after { /* Overlay for sketch */
       content: ''; position: absolute; inset: 0;
-      background: rgba(47,62,70,0.6);
-      z-index: 0;
+      background: rgba(47,62,70,0.2); z-index: 0;
+      transition: opacity 0.7s ease; 
+      opacity: 1;
     }
-    body.scrolled header#site-header {
-      height: 60px;
-      justify-content: space-between; 
-      align-items: center; 
-      background-image: none; 
-      background-color: var(--primary); 
+    /* Default justify-content for large header */
+    header#site-header:not(.scrolled-header-layout) {
+        justify-content: center;
+    }
+    /* Scrolled state class for layout and background, now toggled by JS */
+    .scrolled-header-layout {
+      /* height: 60px; /* JS will set this target */
+      justify-content: space-between !important; /* Ensure this wins for layout */
+      align-items: center !important; 
+      background-image: none !important; 
+      background-color: var(--theme-blue-static) !important; 
       box-shadow: 0 2px 8px rgba(0,0,0,.2);
     }
+    .scrolled-header-layout::after {
+        opacity: 0; /* Hide overlay when scrolled */
+    }
+
     header#site-header h1 {
       position: relative; 
-      color: white; 
-      font-size: 3rem; 
+      /* color: var(--theme-blue-static); /* Initial color set by JS */
+      font-family: 'Dancing Script', cursive; font-weight: 600;
+      /* font-size: 2.5rem; /* Initial font-size set by JS */
       z-index: 1; 
-      transition: font-size .3s ease;
       margin: 0; 
-    }
-    body.scrolled header#site-header h1 {
-      font-size: 1.3rem; 
-      line-height: 1.2; 
-      margin: 0; 
-    }
-    header#site-header nav { 
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      z-index: 2; 
-      display: flex;
-      align-items: center;
-    }
-    body.scrolled header#site-header nav { 
-      position: static; 
+      /* text-align: center; /* Will be left-aligned by flex parent in scrolled state */
       display: flex; 
       align-items: center; 
     }
-    nav a {
-      color: white; 
-      margin-left: 0.75rem; 
-      text-decoration: none; 
-      font-weight: 600;
-      font-size: 0.85rem; 
-      transition: color .3s;
+    /* Scrolled state target styles (JS animates towards these) */
+    .scrolled-header-layout h1 {
+      font-size: 1.5rem !important; 
+      line-height: 1.2 !important; 
+      color: white !important; 
+      text-align: left; /* Ensure content within h1 aligns left */
+    }
+
+    .header-favicon {
+      display: inline-block; 
+      opacity: 0; 
+      width: 32px;   
+      height: 32px;  
+      margin-right: 10px; 
+      vertical-align: middle; 
+    }
+    header#site-header h1 .title-short { 
+      display: inline-block; 
+      opacity: 0; 
+      vertical-align: middle;
+    }
+    header#site-header h1 .title-full { 
+      display: inline-block;
+      opacity: 1; 
+      vertical-align: middle;
+    }
+
+    header#site-header nav { 
+      position: absolute; top: 1rem; right: 1rem;
+      z-index: 1002; display: flex; align-items: center;
+      gap: 0.75rem; 
+    }
+    .scrolled-header-layout nav { 
+      position: static; gap: 0.6rem; 
+    }
+    nav .nav-link { 
+      /* color: var(--theme-blue-static); /* Initial color set by JS */
+      text-decoration: none; font-family: 'Inter', sans-serif; 
+      font-weight: 600; font-size: 0.85rem; 
       white-space: nowrap;
-      line-height: 1.2; 
-      padding: 0.1em 0; 
+      line-height: 1.2; padding: 0.2em 0.1em; display: inline-block; 
     }
-    nav a:first-child { margin-left: 0; }
-    nav a:hover { color: var(--accent); }
-    nav #theme-toggle {
-      background: var(--accent); border: none; color: white;
-      padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer;
-      font-size: 0.85rem; font-weight: 600; margin-left: 0.75rem; 
-      line-height: 1; white-space: nowrap;
+    .scrolled-header-layout nav .nav-link { /* Scrolled nav links */
+        color: white !important; 
     }
-    nav #theme-toggle:hover { opacity: .9; }
-    #heart-animation { z-index: 1; }
+    nav .nav-link:hover { color: var(--accent); }
+    #heart-animation { z-index: 1; } 
+
+    h2 { 
+      font-family: 'Dancing Script', cursive; font-weight: 600;
+      color: var(--heading-color);
+      text-align: center; 
+      margin-bottom: 2rem; 
+      font-size: 2.2rem; 
+    }
+    #testimonials h2, #location h2, #booking h2, 
+    #services h2, 
+    #insurance h2 { 
+        font-size: 2.2rem; 
+        margin-bottom: 2rem; 
+        text-align: center; 
+    }
+    #location h2 { text-align: center; }
 
     @media (max-width: 480px) {
-      header#site-header { padding: 0 0.5rem; }
-      body.scrolled header#site-header h1 {
-        font-size: 1.1rem; 
-        line-height: 1.2; 
+      header#site-header:not(.scrolled-header-layout) h1 { font-size: 1.8rem; } /* Initial large header title on mobile */
+      
+      .scrolled-header-layout h1 { 
+        font-size: 1rem !important; 
+        line-height: 1.2 !important; 
+        white-space: nowrap;    
+        overflow: hidden;       
+        text-overflow: ellipsis;
+        margin-right: 3px;      
+        min-width: 0; 
+        flex-shrink: 1; 
       }
-      nav a {
-        font-size: 0.7rem; 
-        margin-left: 0.4rem; 
-        line-height: 1.2; 
+      .scrolled-header-layout h1 .header-favicon {
+          width: 24px !important; height: 24px !important;
+          margin-right: 4px !important; 
       }
-      nav #theme-toggle {
-        font-size: 0.7rem;
-        padding: 0.25rem 0.4rem; 
-        margin-left: 0.4rem;
-        line-height: 1; 
+            
+      #services .card header { text-align: center; } 
+      
+      header#site-header:not(.scrolled-header-layout) nav { /* Large header nav on mobile */
+        gap: 0.25rem; 
+        right: 0.5rem; 
       }
-      header#site-header nav { right: 0.5rem; }
-      nav a:first-child { margin-left: 0; }
+      .scrolled-header-layout nav { /* Scrolled header nav on mobile */
+        gap: 0.2rem !important;
+        flex-shrink: 0;
+      }
+      nav .nav-link { /* Base mobile nav link size */
+        font-size: 0.75rem; 
+        padding: 0.2em 0;
+      }
     }
 
     .container { 
-      max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;
-      padding-top: 60vh; /* Initial padding for large header */
+      max-width: 1000px; margin: 0 auto; 
+      padding: 2rem 1rem 100px; 
+      padding-top: 30vh; 
     }
-    body.scrolled .container {
-      padding-top: 70px; /* Padding for scrolled header (60px header + 10px buffer) */
+    body.scrolled .container { /* This class is still useful for general body state if needed */
+      padding-top: 70px; 
     }
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 2rem; align-items: start; margin-bottom: 3rem; }
     .card { background: var(--bg-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
-    .card header { padding: 1rem; background: var(--secondary); color: white; font-weight: 600; font-size: 1.2rem; }
+    .card.no-dark-override {}
+    .card header { 
+      padding: 1rem; 
+      background: var(--theme-blue-static); 
+      color: white; 
+      font-family: 'Dancing Script', cursive; font-weight: 600; font-size: 1.4rem; 
+    }
+    #services .card header { text-align: center; } 
     .card .content { padding: 1rem; }
-    .btn { display: inline-block; background: var(--accent); color: white; padding: 0.75rem 1.5rem; border-radius: 4px; text-decoration: none; font-weight: 600; margin: 0.5rem; transition: background .3s, opacity .3s; }
-    .btn.secondary { background: var(--secondary); }
+    .btn { 
+      display: inline-block; 
+      background: var(--theme-blue-static); 
+      color: white; 
+      padding: 0.75rem 1.5rem; border-radius: 4px; text-decoration: none; 
+      font-weight: 600; margin: 0.5rem; 
+      transition: background-color .2s, color .2s, opacity .3s; 
+    }
+    .btn.secondary { 
+      background: var(--theme-blue-static); 
+    }
     .btn:hover { opacity: .9; }
+    .btn:active, .btn.secondary:active { 
+        background-color: var(--bg-light); 
+        color: var(--theme-blue-static);    
+        opacity: 1;
+    }
+    .booking-button-container { padding: 1rem; }
     .separator { display: block; width: 100%; height: 80px; }
-    .separator path { transition: fill .3s; } /* Smooth transition for separator fill on theme change */
-    .accordion .acc-header { background: var(--secondary); color: white; cursor: pointer; padding: 1rem; border: none; width: 100%; text-align: left; outline: none; font-size: 1rem; transition: background .3s; }
+    .separator path { transition: fill .3s; } 
+    .accordion .acc-header { 
+      background: var(--theme-blue-static); 
+      color: white; cursor: pointer; 
+      padding: 1rem; border: none; width: 100%; text-align: left; 
+      outline: none; font-family: 'Inter', sans-serif; 
+      font-weight: 600; font-size: 1.1rem; 
+      transition: background .3s; 
+    }
     .accordion .acc-header.active { background: var(--accent); }
+    .accordion .acc-header + .acc-body + .acc-header { margin-top: 0.5rem; }
     .accordion .acc-body { max-height: 0; overflow: hidden; transition: max-height .3s ease; background: white; padding: 0 1rem; }
     .accordion .acc-body p { padding: 1rem 0; }
     .skeleton { background: #ddd; position: relative; }
     #testimonials { padding: 2rem 0; }
-    #testimonials h2 { text-align: center; margin-bottom: 2rem; font-size: 1.8rem; color: var(--text-dark); }
     .testimonial-card { background: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); font-style: italic; text-align: center; margin-bottom: 1.5rem; max-width: 650px; margin-left: auto; margin-right: auto; }
     .testimonial-card:last-child { margin-bottom: 0; }
-    #to-top { position: fixed; bottom: 2rem; right: 2rem; background: var(--accent); border: none; color: white; padding: 0.75rem; border-radius: 50%; font-size: 1.2rem; cursor: pointer; opacity: 0; transition: opacity .3s; z-index: 1000; }
-    body.scrolled #to-top { opacity: 1; }
+    #to-top { 
+      position: fixed; bottom: 2rem; right: 2rem; 
+      background: var(--theme-blue-static); 
+      border: none; color: white; 
+      padding: 0.75rem; border-radius: 50%; font-size: 1.2rem; 
+      cursor: pointer; opacity: 0; 
+      transition: background-color .2s, opacity .3s; 
+      z-index: 10001; 
+    }
+    #to-top:active { 
+        background-color: var(--bg-light); 
+        color: var(--theme-blue-static);    
+        opacity: 1;
+    }
+    body.scrolled #to-top { opacity: 1; } /* Still use .scrolled for this */
+    section#location address { text-align: center; margin-top: 0.5rem; }
+    
+    footer#contact {
+        text-align:center; 
+        padding: 2rem 1rem 1rem; 
+        background-color: var(--bg-light); 
+        position: relative;
+        color: var(--text-dark); 
+    }
+    .footer-logo-container { 
+        margin-bottom: 1.5rem; 
+    }
+    .footer-logo-container img {
+        max-width: 250px; 
+        height: auto;
+        display: block; 
+        margin: 0 auto; 
+    }
+    .footer-text-content { 
+        padding: 0; 
+    }
+    html.dark footer#contact { 
+        background-color: var(--bg-dark); 
+        color: var(--text-light); 
+    }
+    
+    footer#contact p {
+        margin-bottom: 0.5rem;
+    }
+    footer#contact p:last-child {
+        margin-bottom: 0;
+    }
+    footer#contact a {
+        color: var(--accent); 
+    }
   </style>
 </head>
 <body>
 
-  <div id="progress-bar"></div>
-
-  <header id="site-header">
-    <h1 data-aos="fade-down">Awakenings Mental Health</h1> 
+  <header id="site-header"> <h1 data-aos="fade-down">
+      <img src="Square Logo.png" alt="Awakenings Logo" class="header-favicon">
+      <span class="title-full">Awakenings Mental Health</span>
+      <span class="title-short">Awakenings</span>
+    </h1> 
     <nav>
-      <a href="#services">Services</a>
-      <a href="#insurance">Insurance</a>
-      <a href="#booking">Book</a>
-      <a href="#contact">Contact</a>
-      <button id="theme-toggle">Toggle Dark</button> 
+      <a href="index.html" class="nav-link" target="_top">Home</a>
+      <a href="our-providers.html" class="nav-link" target="_top">Our Providers</a>
+      <a href="articles.html" class="nav-link" target="_top">Articles</a>
     </nav>
     <div id="heart-animation" style="position:absolute; bottom:1rem; right:1rem; width:60px; height:60px;"></div>
   </header>
 
   <main class="container">
+    <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none" data-aos="fade-up">
+      <path d="M0,0 C300,100 900,0 1200,100 L1200,0 L0,0 Z" fill="var(--bg-light)"/>
+    </svg>
+
     <section id="services" class="grid-2" data-aos="fade-up">
-      <div class="card" data-aos="zoom-in"> <header>Individual Therapy</header> <div class="content"> <p>Personalized support for anxiety, depression, and life transitions.</p> </div> </div>
-      <div class="card" data-aos="zoom-in" data-aos-delay="100"> <header>Medication Management</header> <div class="content"> <p>Expert psychiatric care to optimize your treatment plan.</p> </div> </div>
+      <div class="card" data-aos="zoom-in"> 
+        <header>Individual Therapy</header> 
+        <div class="content"> <p>Personalized support for anxiety, depression, and life transitions.</p> </div> 
+      </div>
+      <div class="card" data-aos="zoom-in" data-aos-delay="100"> 
+        <header>Medication Management</header> 
+        <div class="content"> <p>Expert psychiatric care to optimize your treatment plan.</p> </div> 
+      </div>
     </section>
 
     <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none"> <path d="M0,0 C300,100 900,0 1200,100 L1200,0 L0,0 Z" fill="var(--bg-light)"/> </svg>
@@ -206,15 +353,21 @@
     <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none"> <path d="M0,100 C300,0 900,100 1200,0 L1200,100 L0,100 Z" fill="var(--bg-light)"/> </svg>
 
     <section id="location" class="grid-2" data-aos="fade-right">
-      <div> <h2>Our Location</h2> <address> 6126 W State St #104<br> Boise, ID 83703 </address> </div>
-      <iframe class="skeleton lazy-embed" loading="lazy" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3080.1234567890123!2d-116.253456!3d43.6034567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54aef5e4b2c7f789%3A0x123456789abcdef!2s6126%20W%20State%20St%20%23104%2C%20Boise%2C%20ID%2083703!5e0!3m2!1sen!2sus!4v1650000000000" width="100%" height="250" style="border:0;" allowfullscreen> </iframe>
+      <div> 
+        <h2>Our Location</h2> 
+        <address> 
+          6126 W State St #104<br> 
+          Boise, ID 83703 
+        </address> 
+      </div>
+      <iframe class="skeleton lazy-embed" loading="lazy" src="https://maps.google.com/maps?q=6126%20W%20State%20St%20%23104%2C%20Boise%2C%20ID%2083703&t=&z=17&ie=UTF8&iwloc=&output=embed" width="100%" height="250" style="border:0;" allowfullscreen=""> </iframe>
     </section>
 
     <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none"> <path d="M0,0 C300,100 900,0 1200,100 L1200,0 L0,0 Z" fill="var(--bg-light)"/> </svg>
 
     <section id="insurance" data-aos="fade-left">
       <div class="accordion card">
-        <button class="acc-header">What insurances do you accept?</button> <div class="acc-body"> <p>Blue Cross, Select Health, Aetna, …</p> </div>
+        <button class="acc-header">What insurances do you accept?</button> <div class="acc-body"> <p>Blue Cross, Select Health, Pacific Source, Saint Luke's Health Plan, Anthem Blue Cross. Blue Shield, Regence, Aetna, Cash Pay</p> </div>
         <button class="acc-header">How do I verify coverage?</button> <div class="acc-body"> <p>Contact our office <a href="tel:2082950297" style="color: var(--accent);">(208)295-0297</a></p> </div>
       </div>
     </section>
@@ -223,18 +376,23 @@
 
     <section id="booking" data-aos="zoom-in-up" style="text-align:center; margin-bottom:3rem;">
       <h2>Book an Appointment</h2>
-      <div class="card"> <div class="content">
-          <a href="https://www.therapyportal.com/p/awakenings83703/" class="btn" target="_blank" rel="noopener noreferrer"> Patient Portal </a>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeYABYxDoscWL3jH-SNU51X0hgomcb0bEqshRIUnCRg7aSgA/viewform" class="btn secondary" target="_blank" rel="noopener noreferrer"> Appointment Interest Form </a>
-      </div> </div>
+      <div class="booking-button-container"> 
+          <a href="https://www.therapyportal.com/p/awakenings83703/" class="btn" target="_top" rel="noopener noreferrer"> Patient Portal </a>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeYABYxDoscWL3jH-SNU51X0hgomcb0bEqshRIUnCRg7aSgA/viewform" class="btn secondary" target="_top" rel="noopener noreferrer"> Appointment Interest Form </a>
+      </div>
     </section>
   </main>
 
   <button id="to-top">▲</button>
 
-  <footer id="contact" style="text-align:center; padding:2rem 0;" data-aos="fade-up">
-    <p>© <span id="current-year">2025</span> Awakenings Mental Health</p>
-    <p>Questions? <a href="mailto:admin@awakeningsmentalhealth.com" style="color: var(--accent);">admin@awakeningsmentalhealth.com</a> <a href="tel:2082950297" style="color: var(--accent);">(208)295-0297</a></p>
+  <footer id="contact" data-aos="fade-up">
+    <div class="footer-logo-container">
+        <img src="Rectangle Logo.jpg" alt="Awakenings Mental Health Logo">
+    </div>
+    <div class="footer-text-content"> 
+      <p>© <span id="current-year">2025</span> Awakenings Mental Health</p>
+      <p>Questions? <a href="mailto:admin@awakeningsmentalhealth.com">admin@awakeningsmentalhealth.com</a> <a href="tel:2082950297">(208)295-0297</a></p>
+    </div>
   </footer>
 
   <script src="https://unpkg.com/lottie-web@latest/build/player/lottie.min.js"></script>
@@ -245,79 +403,219 @@
     AOS.init({ duration: 600, once: true });
 
     try {
-        lottie.loadAnimation({
-          container: document.getElementById('heart-animation'),
-          path: 'https://assets7.lottiefiles.com/packages/lf20_heart.json', 
-          renderer: 'svg', loop: true, autoplay: true
-        });
+        const heartAnimContainer = document.getElementById('heart-animation');
+        if(heartAnimContainer && (typeof heartAnimContainer.style.display === 'undefined' || heartAnimContainer.style.display !== 'none')) { 
+            lottie.loadAnimation({
+              container: heartAnimContainer,
+              path: 'https://assets7.lottiefiles.com/packages/lf20_heart.json', 
+              renderer: 'svg', loop: true, autoplay: true
+            });
+        }
     } catch (e) {
         console.error("Lottie animation could not be loaded.", e);
         const heartAnimContainer = document.getElementById('heart-animation');
         if(heartAnimContainer) heartAnimContainer.style.display = 'none';
     }
 
-    // const siteHeader = document.getElementById('site-header'); // Not strictly needed anymore by JS below
-    const progressBar = document.getElementById('progress-bar');
     const toTop = document.getElementById('to-top');
-    // const mainContainer = document.querySelector('main.container'); // No longer needed by JS
+    
+    // --- Scroll-Linked Animation Logic ---
+    const siteHeader = document.getElementById('site-header');
+    const h1Title = siteHeader.querySelector('h1');
+    const titleFull = h1Title.querySelector('.title-full');
+    const titleShort = h1Title.querySelector('.title-short');
+    const headerFavicon = h1Title.querySelector('.header-favicon');
+    const navLinks = Array.from(siteHeader.querySelectorAll('nav .nav-link'));
 
-    // Removed adjustMainContentPadding function and its calls from load and resize
+    const initialHeaderHeightVh = 30;
+    const finalHeaderHeightPx = 60;
+
+    // Get initial font size from CSS for h1 (more robust)
+    let initialH1FontSizeRem = 2.5; // Default if not found
+    if(h1Title) {
+        const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+        initialH1FontSizeRem = parseFloat(getComputedStyle(h1Title).fontSize) / rootFontSize;
+    }
+    
+    const finalH1DesktopFontSizeRem = 1.5;
+    const finalH1MobileFontSizeRem = 1.0; 
+
+    // Hex colors for interpolation
+    const initialH1ColorHex = "#27296d"; // var(--theme-blue-static)
+    const finalH1ColorHex = "#FFFFFF";   // white
+    const initialNavLinkColorHex = "#27296d"; // var(--theme-blue-static)
+    const finalNavLinkColorHex = "#FFFFFF";   // white
+
+    const animationScrollStart = 0;
+    const animationScrollEnd = 200; // Pixels scrolled for animation to complete
+
+    function hexToRgb(hex) {
+        let r = 0, g = 0, b = 0;
+        if (hex.length == 4) { // 3-digit hex
+            r = parseInt(hex[1] + hex[1], 16);
+            g = parseInt(hex[2] + hex[2], 16);
+            b = parseInt(hex[3] + hex[3], 16);
+        } else if (hex.length == 7) { // 6-digit hex
+            r = parseInt(hex[1] + hex[2], 16);
+            g = parseInt(hex[3] + hex[4], 16);
+            b = parseInt(hex[5] + hex[6], 16);
+        }
+        return [r, g, b];
+    }
+    
+    const initialH1ColorRgb = hexToRgb(initialH1ColorHex);
+    const finalH1ColorRgb = hexToRgb(finalH1ColorHex);
+    const initialNavLinkColorRgb = hexToRgb(initialNavLinkColorHex);
+    const finalNavLinkColorRgb = hexToRgb(finalNavLinkColorHex);
+
+
+    function interpolateValue(start, end, progress) {
+        return start + (end - start) * progress;
+    }
+
+    function interpolateRgbColor(colorStartRgb, colorEndRgb, progress) {
+        const r = Math.round(interpolateValue(colorStartRgb[0], colorEndRgb[0], progress));
+        const g = Math.round(interpolateValue(colorStartRgb[1], colorEndRgb[1], progress));
+        const b = Math.round(interpolateValue(colorStartRgb[2], colorEndRgb[2], progress));
+        return `rgb(${r},${g},${b})`;
+    }
+
+    let lastKnownScrollY = 0;
+    let ticking = false;
+
+    function updateHeaderStylesOnScroll(scrollY) {
+      let progress = 0;
+      if (scrollY <= animationScrollStart) {
+        progress = 0;
+      } else if (scrollY >= animationScrollEnd) {
+        progress = 1;
+      } else {
+        progress = (scrollY - animationScrollStart) / (animationScrollEnd - animationScrollStart);
+      }
+      progress = Math.max(0, Math.min(1, progress));
+
+      requestAnimationFrame(() => {
+        const initialHeaderActualHeight = (initialHeaderHeightVh / 100) * window.innerHeight;
+        siteHeader.style.height = `${interpolateValue(initialHeaderActualHeight, finalHeaderHeightPx, progress)}px`;
+
+        let targetFinalH1FontSize = window.innerWidth <= 480 ? finalH1MobileFontSizeRem : finalH1DesktopFontSizeRem;
+        let currentInitialH1Size = (progress === 0 && h1Title.style.fontSize === '') ? initialH1FontSizeRem : parseFloat(h1Title.style.fontSize || initialH1FontSizeRem);
+        if(progress === 0) currentInitialH1Size = initialH1FontSizeRem;
+
+
+        h1Title.style.fontSize = `${interpolateValue(initialH1FontSizeRem, targetFinalH1FontSize, progress)}rem`;
+        
+        if (titleFull) titleFull.style.opacity = 1 - progress;
+        if (titleShort) titleShort.style.opacity = progress;
+        if (headerFavicon) headerFavicon.style.opacity = progress;
+
+        if (progress > 0.9) { 
+            if (titleFull) titleFull.style.display = 'none';
+            if (titleShort) titleShort.style.display = 'inline';
+            if (headerFavicon) headerFavicon.style.display = 'inline-block';
+        } else if (progress < 0.1) {
+            if (titleFull) titleFull.style.display = 'inline';
+            if (titleShort) titleShort.style.display = 'none';
+            if (headerFavicon) headerFavicon.style.display = 'none';
+        } else { 
+            if (titleFull) titleFull.style.display = 'inline';
+            if (titleShort) titleShort.style.display = 'inline';
+            if (headerFavicon) headerFavicon.style.display = 'inline-block';
+        }
+
+        h1Title.style.color = interpolateRgbColor(initialH1ColorRgb, finalH1ColorRgb, progress);
+        // Nav link color will be handled by CSS class .scrolled-header-layout for simplicity
+        // Or, if you want smooth nav link color transition:
+        // navLinks.forEach(link => {
+        //   link.style.color = interpolateRgbColor(initialNavLinkColorRgb, finalNavLinkColorRgb, progress);
+        // });
+
+
+        // Toggle .scrolled-header-layout class for non-interpolated CSS changes
+        if (progress >= 0.95) { 
+          siteHeader.classList.add('scrolled-header-layout');
+        } else {
+          siteHeader.classList.remove('scrolled-header-layout');
+        }
+      });
+    }
 
     window.addEventListener('scroll', () => {
-      const scrolled = window.scrollY > 50;
-      document.body.classList.toggle('scrolled', scrolled);
-      // adjustMainContentPadding(); // REMOVED
-      if (document.body.scrollHeight > window.innerHeight) { 
-        const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-        progressBar.style.width = pct + '%';
-      } else {
-        progressBar.style.width = '0%';
-      }
+        lastKnownScrollY = window.scrollY;
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                updateHeaderStylesOnScroll(lastKnownScrollY);
+                document.body.classList.toggle('scrolled', lastKnownScrollY > 50); // For to-top button and .container padding
+                ticking = false;
+            });
+            ticking = true;
+        }
     });
-    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    window.addEventListener('resize', () => updateHeaderStylesOnScroll(window.scrollY));
+    document.addEventListener('DOMContentLoaded', () => updateHeaderStylesOnScroll(window.scrollY));
+    // --- End of Scroll-Linked Animation Logic ---
 
-    const toggle = document.getElementById('theme-toggle');
-    if (toggle) {
-        toggle.addEventListener('click', () => {
-          document.documentElement.classList.toggle('dark');
-          localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-        });
-        const savedTheme = localStorage.getItem('theme');
-        // Apply theme on load
-        if (savedTheme === 'dark') {
-          document.documentElement.classList.add('dark');
-        } else if (savedTheme === 'light') {
-          document.documentElement.classList.remove('dark'); 
-        }
-        // To reflect theme change on SVG separators instantly
-        if (document.documentElement.classList.contains('dark')) {
-            document.querySelectorAll('.separator path').forEach(p => p.style.fill = 'var(--bg-dark)');
+
+    const applySystemTheme = (isDark) => {
+        if (isDark) {
+            document.documentElement.classList.add('dark');
         } else {
-            document.querySelectorAll('.separator path').forEach(p => p.style.fill = 'var(--bg-light)');
+            document.documentElement.classList.remove('dark');
         }
-        // Add listener for future toggles
-        toggle.addEventListener('click', () => {
-             if (document.documentElement.classList.contains('dark')) {
-                document.querySelectorAll('.separator path').forEach(p => p.style.fill = 'var(--bg-dark)');
-            } else {
-                document.querySelectorAll('.separator path').forEach(p => p.style.fill = 'var(--bg-light)');
-            }
+        if (typeof AOS !== 'undefined') { 
+            AOS.refreshHard(); 
+        }
+        let currentBg;
+        if (document.documentElement.classList.contains('dark')) {
+            currentBg = getComputedStyle(document.documentElement).getPropertyValue('--bg-dark').trim();
+        } else {
+            currentBg = getComputedStyle(document.documentElement).getPropertyValue('--bg-light').trim();
+        }
+        const separators = document.querySelectorAll('.separator path');
+        if (separators.length > 0) {
+            separators.forEach(p => p.style.fill = currentBg);
+        }
+    };
+
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    applySystemTheme(prefersDarkScheme.matches); 
+    prefersDarkScheme.addEventListener('change', (e) => { 
+        applySystemTheme(e.matches);
+    });
+    
+    window.addEventListener('load', function() {
+      if (typeof AOS !== 'undefined') {
+        setTimeout(function() {
+          AOS.refreshHard(); 
+        }, 1200); 
+      }
+      updateHeaderStylesOnScroll(window.scrollY); // Ensure styles are correct after all resources load
+    });
+
+    const accordionHeaders = document.querySelectorAll('.accordion .acc-header');
+    if (accordionHeaders.length > 0) {
+        accordionHeaders.forEach(btn => {
+          btn.addEventListener('click', () => {
+            btn.classList.toggle('active');
+            const body = btn.nextElementSibling;
+            body.style.maxHeight = btn.classList.contains('active') ? body.scrollHeight + 'px' : '0';
+          });
         });
     }
 
-    document.querySelectorAll('.accordion .acc-header').forEach(btn => {
-      btn.addEventListener('click', () => {
-        btn.classList.toggle('active');
-        const body = btn.nextElementSibling;
-        body.style.maxHeight = btn.classList.contains('active') ? body.scrollHeight + 'px' : '0';
-      });
-    });
-
-    document.querySelectorAll('iframe.lazy-embed').forEach(iframe => { 
-      if (iframe.classList.contains('skeleton')) { 
-          iframe.addEventListener('load', () => iframe.classList.remove('skeleton'));
-      }
-    });
+    const lazyIframes = document.querySelectorAll('iframe.lazy-embed');
+    if (lazyIframes.length > 0) {
+        lazyIframes.forEach(iframe => { 
+          if (iframe.classList.contains('skeleton')) { 
+              iframe.addEventListener('load', () => {
+                  iframe.classList.remove('skeleton');
+                  if (typeof AOS !== 'undefined') { 
+                    AOS.refresh(); 
+                  }
+              });
+          }
+        });
+    }
   </script>
 </body>
 </html>
