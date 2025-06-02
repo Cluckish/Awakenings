@@ -69,56 +69,47 @@
     header#site-header {
       position: fixed; top: 0; left: 0; width: 100%;
       background: var(--primary) url('Wide Awakenings Building Sketch.png') center/cover no-repeat; 
-      /* height is set by JS */
       display: flex; align-items: center; 
-      /* justify-content is set by body.scrolled or defaults to center for large header */
       transition: background-color 0.3s ease, background-image 0.3s ease, box-shadow 0.3s ease, justify-content 0.3s ease, height 0.3s ease; 
       z-index: 1000; padding: 0 1rem; 
     }
-    header#site-header::after { /* Overlay for sketch */
+    header#site-header::after { 
       content: ''; position: absolute; inset: 0;
       background: rgba(47,62,70,0.2); z-index: 0;
       transition: opacity 0.7s ease; 
       opacity: 1;
     }
-    /* Default justify-content for large header */
     header#site-header:not(.scrolled-header-layout) {
         justify-content: center;
     }
-    /* Scrolled state class for layout and background, now toggled by JS */
     .scrolled-header-layout {
-      /* height: 60px; /* JS will set this target */
-      justify-content: space-between !important; /* Ensure this wins for layout */
+      justify-content: space-between !important; 
       align-items: center !important; 
       background-image: none !important; 
       background-color: var(--theme-blue-static) !important; 
       box-shadow: 0 2px 8px rgba(0,0,0,.2);
     }
     .scrolled-header-layout::after {
-        opacity: 0; /* Hide overlay when scrolled */
+        opacity: 0;
     }
 
     header#site-header h1 {
       position: relative; 
-      /* color: var(--theme-blue-static); /* Initial color set by JS */
       font-family: 'Dancing Script', cursive; font-weight: 600;
-      /* font-size: 2.5rem; /* Initial font-size set by JS */
       z-index: 1; 
       margin: 0; 
-      /* text-align: center; /* Will be left-aligned by flex parent in scrolled state */
       display: flex; 
       align-items: center; 
     }
-    /* Scrolled state target styles (JS animates towards these) */
     .scrolled-header-layout h1 {
       font-size: 1.5rem !important; 
       line-height: 1.2 !important; 
       color: white !important; 
-      text-align: left; /* Ensure content within h1 aligns left */
+      text-align: left; 
     }
 
     .header-favicon {
-      display: inline-block; /* Changed from none to inline-block for JS opacity animation */
+      display: inline-block; 
       opacity: 0; 
       width: 32px;   
       height: 32px;  
@@ -126,7 +117,7 @@
       vertical-align: middle; 
     }
     header#site-header h1 .title-short { 
-      display: inline-block; /* Changed from none to inline-block for JS opacity animation */
+      display: inline-block; 
       opacity: 0; 
       vertical-align: middle;
     }
@@ -145,17 +136,16 @@
       position: static; gap: 0.6rem; 
     }
     nav .nav-link { 
-      /* color: var(--theme-blue-static); /* Initial color set by JS */
       text-decoration: none; font-family: 'Inter', sans-serif; 
       font-weight: 600; font-size: 0.85rem; 
       white-space: nowrap;
       line-height: 1.2; padding: 0.2em 0.1em; display: inline-block; 
     }
-    .scrolled-header-layout nav .nav-link { /* Scrolled nav links */
+    .scrolled-header-layout nav .nav-link { 
         color: white !important; 
     }
     nav .nav-link:hover { color: var(--accent); }
-    #heart-animation { z-index: 1; display: none !important; } /* Ensure it stays hidden on this page */
+    #heart-animation { z-index: 1; display: none !important; }
 
     h2 { 
       font-family: 'Dancing Script', cursive; font-weight: 600;
@@ -170,10 +160,9 @@
     }
 
     @media (max-width: 480px) {
-      /* header#site-header { padding: 0 0.5rem; } /* This was specific to providers, index.html uses 1rem padding */
-      header#site-header:not(.scrolled-header-layout) h1 { font-size: 1.8rem; } /* Initial large header title on mobile, from index.html */
+      header#site-header:not(.scrolled-header-layout) h1 { font-size: 1.8rem; } 
       
-      .scrolled-header-layout h1 { /* Combined from index.html and providers.html for mobile scrolled */
+      .scrolled-header-layout h1 { 
         font-size: 1rem !important; 
         line-height: 1.2 !important; 
         white-space: nowrap;    
@@ -182,24 +171,21 @@
         margin-right: 3px;      
         min-width: 0; 
         flex-shrink: 1; 
-        /* display: flex; align-items: center; /* Already on base h1 */
       }
       .scrolled-header-layout h1 .header-favicon {
           width: 24px !important; height: 24px !important;
           margin-right: 4px !important; 
       }
-      /* .scrolled-header-layout h1 .title-full { display: none; } /* JS handles this */
-      /* .scrolled-header-layout h1 .title-short { display: inline; } /* JS handles this */
             
-      header#site-header:not(.scrolled-header-layout) nav { /* Large header nav on mobile, from index.html */
+      header#site-header:not(.scrolled-header-layout) nav { 
         gap: 0.25rem; 
         right: 0.5rem; 
       }
-      .scrolled-header-layout nav { /* Scrolled header nav on mobile, from index.html */
+      .scrolled-header-layout nav { 
         gap: 0.2rem !important;
         flex-shrink: 0;
       }
-      nav .nav-link { /* Base mobile nav link size, from index.html */
+      nav .nav-link { 
         font-size: 0.75rem; 
         padding: 0.2em 0;
       }
@@ -208,11 +194,11 @@
     .container { 
       max-width: 1000px; margin: 0 auto; 
       padding: 2rem 1rem 100px; 
-      padding-top: 30vh; /* Changed from 60vh to match index.html for animation */
+      /* padding-top: 30vh; /* Initial padding set by JS */
     }
-    body.scrolled .container { 
-      padding-top: 70px; 
-    }
+    /* body.scrolled .container { 
+      padding-top: 70px; /* Replaced by dynamic JS padding */
+    } */
     .btn { 
       display: inline-block; 
       background: var(--theme-blue-static); 
@@ -461,34 +447,22 @@
     </div>
   </footer>
 
-  <script src="https://unpkg.com/lottie-web@latest/build/player/lottie.min.js"></script>
+  <script src="https://unpkg.com/lottie-web@latest/build/player/lottie.min.js"></script> <!-- This script is not used, can be removed -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
   <script>
     document.getElementById('current-year').textContent = new Date().getFullYear();
     AOS.init({ duration: 600, once: true });
 
-    try {
-        const heartAnimContainer = document.getElementById('heart-animation');
-        if(heartAnimContainer && (typeof heartAnimContainer.style.display === 'undefined' || heartAnimContainer.style.display !== 'none')) { 
-            // Lottie animation is intentionally not loaded on this page as per display:none !important style
-        }
-    } catch (e) {
-        console.error("Lottie animation could not be loaded.", e);
-        const heartAnimContainer = document.getElementById('heart-animation');
-        if(heartAnimContainer) heartAnimContainer.style.display = 'none !important';
-    }
-
     const toTop = document.getElementById('to-top');
     if (toTop) toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-    // --- Scroll-Linked Animation Logic (Copied from index.html) ---
     const siteHeader = document.getElementById('site-header');
-    const h1Title = siteHeader.querySelector('h1');
-    const titleFull = h1Title.querySelector('.title-full');
-    const titleShort = h1Title.querySelector('.title-short');
-    const headerFavicon = h1Title.querySelector('.header-favicon');
-    const navLinks = Array.from(siteHeader.querySelectorAll('nav .nav-link'));
+    const mainContainer = document.querySelector('main.container'); // Get main container
+    const h1Title = siteHeader ? siteHeader.querySelector('h1') : null; 
+    const titleFull = h1Title ? h1Title.querySelector('.title-full') : null;
+    const titleShort = h1Title ? h1Title.querySelector('.title-short') : null;
+    const headerFavicon = h1Title ? h1Title.querySelector('.header-favicon') : null;
 
     const initialHeaderHeightVh = 30;
     const finalHeaderHeightPx = 60;
@@ -507,8 +481,6 @@
 
     const initialH1ColorHex = "#27296d"; 
     const finalH1ColorHex = "#FFFFFF";   
-    const initialNavLinkColorHex = "#27296d"; 
-    const finalNavLinkColorHex = "#FFFFFF";   
 
     const animationScrollStart = 0;
     const animationScrollEnd = 200; 
@@ -529,8 +501,6 @@
     
     const initialH1ColorRgb = hexToRgb(initialH1ColorHex);
     const finalH1ColorRgb = hexToRgb(finalH1ColorHex);
-    const initialNavLinkColorRgb = hexToRgb(initialNavLinkColorHex);
-    const finalNavLinkColorRgb = hexToRgb(finalNavLinkColorHex);
 
     function interpolateValue(start, end, progress) {
         return start + (end - start) * progress;
@@ -547,6 +517,8 @@
     let ticking = false;
 
     function updateHeaderStylesOnScroll(scrollY) {
+      if (!siteHeader || !h1Title || !mainContainer) return; 
+
       let progress = 0;
       if (scrollY <= animationScrollStart) {
         progress = 0;
@@ -559,15 +531,17 @@
 
       requestAnimationFrame(() => {
         const initialHeaderActualHeight = (initialHeaderHeightVh / 100) * window.innerHeight;
-        siteHeader.style.height = `${interpolateValue(initialHeaderActualHeight, finalHeaderHeightPx, progress)}px`;
+        const currentHeaderHeight = interpolateValue(initialHeaderActualHeight, finalHeaderHeightPx, progress);
+        siteHeader.style.height = `${currentHeaderHeight}px`;
+        mainContainer.style.paddingTop = `${currentHeaderHeight}px`; // Dynamically set padding
 
         let targetFinalH1FontSize = window.innerWidth <= 480 ? finalH1MobileFontSizeRem : finalH1DesktopFontSizeRem;
         let currentInitialH1Size = initialH1FontSizeRem;
-        // On initial load (progress 0), if h1Title.style.fontSize is empty, use initialH1FontSizeRem.
-        // Otherwise, use the currently set h1Title.style.fontSize (parsed) for smoother transitions if called multiple times.
-        if (progress === 0 && h1Title.style.fontSize === '') currentInitialH1Size = initialH1FontSizeRem;
-        else if (h1Title.style.fontSize) currentInitialH1Size = parseFloat(h1Title.style.fontSize);
-        else currentInitialH1Size = initialH1FontSizeRem; // Fallback
+        if (progress === 0 && h1Title.style.fontSize === '') {
+             currentInitialH1Size = initialH1FontSizeRem;
+        } else if (h1Title.style.fontSize) {
+            currentInitialH1Size = parseFloat(h1Title.style.fontSize) || initialH1FontSizeRem;
+        } 
 
         h1Title.style.fontSize = `${interpolateValue(currentInitialH1Size, targetFinalH1FontSize, progress)}rem`;
         
@@ -590,10 +564,7 @@
         }
 
         h1Title.style.color = interpolateRgbColor(initialH1ColorRgb, finalH1ColorRgb, progress);
-        // navLinks.forEach(link => { // Kept commented to match index.html behavior
-        //   link.style.color = interpolateRgbColor(initialNavLinkColorRgb, finalNavLinkColorRgb, progress);
-        // });
-
+        
         if (progress >= 0.95) { 
           siteHeader.classList.add('scrolled-header-layout');
         } else {
@@ -602,7 +573,7 @@
       });
     }
     
-    function setInitialH1FontSize() { // Helper to set initialH1FontSizeRem based on computed style
+    function setInitialH1FontSize() { 
         if(h1Title) {
             const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
             const computedFontSize = parseFloat(getComputedStyle(h1Title).fontSize);
@@ -624,30 +595,18 @@
         }
     });
     window.addEventListener('resize', () => { 
-        setInitialH1FontSize(); // Recalculate on resize
+        setInitialH1FontSize();
         updateHeaderStylesOnScroll(window.scrollY); 
     });
     document.addEventListener('DOMContentLoaded', () => { 
-        setInitialH1FontSize(); // Set on DOM ready
+        setInitialH1FontSize();
         updateHeaderStylesOnScroll(window.scrollY); 
     });
-    // --- End of Scroll-Linked Animation Logic ---
 
     const applySystemTheme = (isDark) => {
-        if (isDark) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-        if (typeof AOS !== 'undefined') { 
-            AOS.refreshHard(); 
-        }
-        let currentBg;
-        if (document.documentElement.classList.contains('dark')) {
-            currentBg = getComputedStyle(document.documentElement).getPropertyValue('--bg-dark').trim();
-        } else {
-            currentBg = getComputedStyle(document.documentElement).getPropertyValue('--bg-light').trim();
-        }
+        document.documentElement.classList.toggle('dark', isDark);
+        if (typeof AOS !== 'undefined') AOS.refreshHard(); 
+        let currentBg = getComputedStyle(document.documentElement).getPropertyValue(isDark ? '--bg-dark' : '--bg-light').trim();
         const separators = document.querySelectorAll('.separator path'); 
         if (separators.length > 0) {
             separators.forEach(p => p.style.fill = currentBg);
@@ -666,7 +625,7 @@
           AOS.refreshHard(); 
         }, 1200); 
       }
-      setInitialH1FontSize(); // Ensure correct font size on full load
+      setInitialH1FontSize(); 
       updateHeaderStylesOnScroll(window.scrollY); 
     });
 
