@@ -547,25 +547,17 @@
         h1Title.style.backgroundColor = `rgba(220, 220, 220, ${interpolateValue(0.85, 0, backgroundOpacityProgress)})`;
 
         // Animate padding-right of the h1 text box to shrink its right side
-        // This animation now occurs *after* titleSecondaryWords has faded out.
-        let currentPaddingRightRem;
-        if (progress < secondaryFadeEndProgress) { // secondaryFadeEndProgress is typically 0.6
-            // Before "Mental Health" is fully faded, keep padding-right at its initial value
-            currentPaddingRightRem = 1; // Initial padding-right is 1rem
+        const paddingAnimationStart = 0.1;
+        const paddingAnimationEnd = 0.6; // Sync with secondary words fade
+        let paddingRightProgress = 0;
+        if (progress <= paddingAnimationStart) {
+            paddingRightProgress = 0;
+        } else if (progress >= paddingAnimationEnd) {
+            paddingRightProgress = 1;
         } else {
-            // After "Mental Health" is fully faded, animate padding-right
-            // from its initial value (1rem) to its final value (0.5rem).
-            // This animation occurs between secondaryFadeEndProgress (e.g., 0.6) and 1.0.
-
-            const stageDuration = 1.0 - secondaryFadeEndProgress;
-            let stageProgress = 0;
-            if (stageDuration > 0) {
-                stageProgress = (progress - secondaryFadeEndProgress) / stageDuration;
-            }
-            stageProgress = Math.max(0, Math.min(1, stageProgress)); // Clamp
-
-            currentPaddingRightRem = interpolateValue(1, 0.5, stageProgress); // Animate from 1rem to 0.5rem
+            paddingRightProgress = (progress - paddingAnimationStart) / (paddingAnimationEnd - paddingAnimationStart);
         }
+        const currentPaddingRightRem = interpolateValue(1, 0.5, paddingRightProgress); // Target 0.5rem padding-right
         h1Title.style.paddingRight = `${currentPaddingRightRem}rem`;
         // padding-left, top, bottom remain as set in CSS (0.5rem top/bottom, 1rem left)
 
