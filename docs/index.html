@@ -540,15 +540,50 @@
         siteHeader.style.height = `${currentHeaderHeight}px`;
         mainContainer.style.paddingTop = `${currentHeaderHeight}px`; // Dynamically set padding
 
-        let targetFinalH1FontSize = window.innerWidth <= 480 ? finalH1MobileFontSizeRem : finalH1DesktopFontSizeRem;
-        let currentInitialH1Size = initialH1FontSizeRem;
-        if (progress === 0 && h1Title.style.fontSize === '') {
-             currentInitialH1Size = initialH1FontSizeRem;
-        } else if (h1Title.style.fontSize) {
-            currentInitialH1Size = parseFloat(h1Title.style.fontSize) || initialH1FontSizeRem;
-        } 
+        // Determine the actual initial H1 font size based on CSS for unscrolled state
+        let actualUnscrolledH1FontSizeRem;
+        if (window.innerWidth <= 480) {
+            actualUnscrolledH1FontSizeRem = 1.8; // As per CSS: @media (max-width: 480px) header#site-header:not(.scrolled-header-layout) h1
+        } else {
+            actualUnscrolledH1FontSizeRem = initialH1FontSizeRem; // This is 3.2rem, from JS vars, matches CSS for desktop
+        }
 
-        h1Title.style.fontSize = `${interpolateValue(currentInitialH1Size, targetFinalH1FontSize, progress)}rem`;
+        let targetFinalH1FontSize = window.innerWidth <= 480 ? finalH1MobileFontSizeRem : finalH1DesktopFontSizeRem;
+        let currentH1FontSize;
+
+        if (window.innerWidth <= 480) {
+            const shrinkStartProgress = 0.1;
+            const shrinkEndProgress = 0.6;
+            const shrinkAmountRem = 0.2;
+
+            // Font size that the general interpolation (actualUnscrolled to targetFinal) would achieve at shrinkStartProgress
+            const baseSizeAtShrinkStart = interpolateValue(actualUnscrolledH1FontSizeRem, targetFinalH1FontSize, shrinkStartProgress);
+            
+            if (progress < shrinkStartProgress) {
+                // Interpolate from actual unscrolled size towards the size it's supposed to be just before the special shrink phase begins.
+                // The progress here is normalized for this segment (0 to shrinkStartProgress).
+                currentH1FontSize = interpolateValue(actualUnscrolledH1FontSizeRem, baseSizeAtShrinkStart, progress / shrinkStartProgress);
+            } else if (progress >= shrinkStartProgress && progress <= shrinkEndProgress) {
+                // During the special shrink phase
+                // The font size starts at baseSizeAtShrinkStart and ends at baseSizeAtShrinkStart - shrinkAmountRem.
+                const targetSizeAtShrinkEnd = baseSizeAtShrinkStart - shrinkAmountRem;
+                // Progress normalized for this segment (shrinkStartProgress to shrinkEndProgress).
+                const phaseProgress = (progress - shrinkStartProgress) / (shrinkEndProgress - shrinkStartProgress);
+                currentH1FontSize = interpolateValue(baseSizeAtShrinkStart, targetSizeAtShrinkEnd, phaseProgress);
+            } else { // progress > shrinkEndProgress
+                // After the special shrink phase
+                // The font size at the end of the shrink phase was baseSizeAtShrinkStart - shrinkAmountRem.
+                const fontSizeAfterShrink = baseSizeAtShrinkStart - shrinkAmountRem;
+                // Interpolate from this shrunken size towards the overall targetFinalH1FontSize.
+                // Progress normalized for this segment (shrinkEndProgress to 1.0).
+                const phaseProgress = (1.0 - shrinkEndProgress === 0) ? 1 : (progress - shrinkEndProgress) / (1.0 - shrinkEndProgress); // Avoid division by zero if shrinkEndProgress is 1
+                currentH1FontSize = interpolateValue(fontSizeAfterShrink, targetFinalH1FontSize, phaseProgress);
+            }
+        } else {
+            // Desktop behavior: simple interpolation from its unscrolled size to its final scrolled size.
+            currentH1FontSize = interpolateValue(actualUnscrolledH1FontSizeRem, targetFinalH1FontSize, progress);
+        }
+        h1Title.style.fontSize = `${currentH1FontSize}rem`;
         
         // Text box background opacity: fades 15% faster
         const backgroundOpacityProgress = Math.min(1, progress / 0.85);
