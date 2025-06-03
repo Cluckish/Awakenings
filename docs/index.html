@@ -547,23 +547,17 @@
         h1Title.style.backgroundColor = `rgba(220, 220, 220, ${interpolateValue(0.85, 0, backgroundOpacityProgress)})`;
 
         // Animate padding-right of the h1 text box to shrink its right side
-        // This animation now starts AFTER "Mental Health" has faded out.
-        let currentPaddingRightRem;
-        const newPaddingAnimationStart = secondaryFadeEndProgress; // Starts when "Mental Health" is gone (around 0.6)
-        const newPaddingAnimationEnd = 1.0;                       // Ends with the overall scroll animation
-
-        if (progress < newPaddingAnimationStart) {
-            // Stage 1: "Mental Health" is fading or visible. Padding-right is at its initial, wider state.
-            currentPaddingRightRem = 1; // Initial padding-right (1rem)
-        } else if (progress >= newPaddingAnimationEnd) {
-            // Animation complete: Padding-right is at its final, narrower state.
-            currentPaddingRightRem = 0.5; // Final padding-right (0.5rem)
+        const paddingAnimationStart = 0.1;
+        const paddingAnimationEnd = 0.6; // Sync with secondary words fade
+        let paddingRightProgress = 0;
+        if (progress <= paddingAnimationStart) {
+            paddingRightProgress = 0;
+        } else if (progress >= paddingAnimationEnd) {
+            paddingRightProgress = 1;
         } else {
-            // Stage 2: "Mental Health" is gone. Animate padding-right from wide to narrow.
-            // Calculate progress specifically for this stage (from newPaddingAnimationStart to newPaddingAnimationEnd)
-            const stage2Progress = (progress - newPaddingAnimationStart) / (newPaddingAnimationEnd - newPaddingAnimationStart);
-            currentPaddingRightRem = interpolateValue(1, 0.5, stage2Progress);
+            paddingRightProgress = (progress - paddingAnimationStart) / (paddingAnimationEnd - paddingAnimationStart);
         }
+        const currentPaddingRightRem = interpolateValue(1, 0.5, paddingRightProgress); // Target 0.5rem padding-right
         h1Title.style.paddingRight = `${currentPaddingRightRem}rem`;
         // padding-left, top, bottom remain as set in CSS (0.5rem top/bottom, 1rem left)
 
