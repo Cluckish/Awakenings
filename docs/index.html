@@ -4,26 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Awakenings Mental Health</title>
-
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
-
+  <!-- original styles and any inline CSS below -->
   <style>
     :root {
-      --primary: #2F3E46; 
-      --accent: #E07A5F;    
-      --bg-light: #f1f1f2;    
-      --text-dark: #1c1c1c;   
-      --heading-color: #27296d; 
-      --theme-blue-static: #27296d; 
+      --primary: #2F3E46;
+      --accent: #E07A5F;
+      --bg-light: #f1f1f2;
+      --text-dark: #1c1c1c;
+      --heading-color: #27296d;
+      --theme-blue-static: #27296d;
       --bg-dark: #1D2021;
       --text-light: #F0F3F4;
     }
-    html.dark { 
+
+    html.dark {
       --bg-light: var(--bg-dark);
       --text-dark: var(--text-light);
-      --heading-color: var(--text-light); 
+      --heading-color: var(--text-light);
     }
+
     html.dark .testimonial-card { background: #2c3032; }
     html.dark .card:not(.no-dark-override){ 
         background: #272b2c; 
@@ -214,43 +215,6 @@
         text-align: center; 
     }
     #location h2 { text-align: center; }
-
-    @media (max-width: 480px) {
-      header#site-header:not(.scrolled-header-layout) h1 { font-size: 1.8rem; } 
-      
-      .scrolled-header-layout h1 { 
-        font-size: 3.2rem; 
-        line-height: 1.2; 
-        white-space: nowrap;    
-        overflow: hidden;       
-        text-overflow: ellipsis;
-        margin-right: 3px;      
-        min-width: 0; 
-        flex-shrink: 1; 
-      }
-      .scrolled-header-layout h1 .header-favicon {
-          margin-right: 4px !important; 
-      }
-            
-      #services .card header { text-align: center; } 
-      
-      header#site-header:not(.scrolled-header-layout) nav { 
-        gap: 0.25rem; 
-        right: 0.5rem; /* Closer to edge for unscrolled mobile */
-        /* top: 1rem; is inherited */
-      }
-      .scrolled-header-layout nav { 
-        gap: 0.2rem !important; /* Keep specific mobile scrolled gap */
-        flex-shrink: 0; /* Keep if it was important for mobile layout */
-        /* Scrolled mobile nav top is calculated like desktop, right is 1rem like desktop */
-        /* If header padding is different on mobile, right might need adjustment here */
-      }
-      /* All specific nav-link font sizes for mobile are removed, base 1.6rem applies */
-      nav .nav-link {
-        font-size: 1.2rem; /* Adjusted for mobile */
-        padding: 0.3em 0.6em; /* Adjusted padding for smaller font */
-      }
-    }
 
     /* All specific nav-link font sizes for desktop scrolled are removed, base 1.6rem applies */
 
@@ -455,94 +419,36 @@
     </section>
   </main>
 
-  <button id="to-top">▲</button>
-
+  <!-- Footer -->
   <footer id="contact" data-aos="fade-up">
     <div class="footer-logo-container">
-        <img src="Rectangle Logo.jpg" alt="Awakenings Mental Health Logo">
+      <img src="Rectangle Logo.jpg" alt="Awakenings Mental Health Logo">
     </div>
-    <div class="footer-text-content"> 
-      <p>© <span id="current-year">2025</span> Awakenings Mental Health</p>
-      <p>Questions? <a href="mailto:admin@awakeningsmentalhealth.com">admin@awakeningsmentalhealth.com</a> <a href="tel:2082950297">(208)295-0297</a></p>
+    <div class="footer-text-content">
+      <p>© <span id="current-year"></span> Awakenings Mental Health</p>
+      <p>Questions? <a href="mailto:admin@awakeningsmentalhealth.com">admin@awakeningsmentalhealth.com</a> <a href="tel:2082950297">(208) 295-0297</a></p>
     </div>
   </footer>
+
+  <button id="to-top">▲</button>
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
   <script>
+    // Init AOS & current year
     document.getElementById('current-year').textContent = new Date().getFullYear();
     AOS.init({ duration: 600, once: true });
 
-    const toTop = document.getElementById('to-top');
-    if (toTop) toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    
-    const siteHeader = document.getElementById('site-header');
-    const mainContainer = document.querySelector('main.container'); // Get main container
-    const h1Title = siteHeader ? siteHeader.querySelector('h1') : null; 
-    const titleMainWord = h1Title ? h1Title.querySelector('.title-main-word') : null;
-    const titleSecondaryWords = h1Title ? h1Title.querySelector('.title-secondary-words') : null;
-    const headerFavicon = h1Title ? h1Title.querySelector('.header-favicon') : null;
-    const navElement = siteHeader ? siteHeader.querySelector('nav') : null;
+    // Smooth scroll to top
+    document.getElementById('to-top').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 
-    let initialHeaderHeightVh = 30; // Default for desktop, changed from const to let
-    const finalHeaderHeightPx = 90; /* Increased header height for larger scrolled title */
-
-    let initialH1FontSizeRem = 3.2; /* Default to 3.2rem as per unscrolled CSS */
-    if(h1Title) {
-        const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
-        const computedFontSize = parseFloat(getComputedStyle(h1Title).fontSize);
-        if (rootFontSize > 0 && computedFontSize > 0) { 
-            initialH1FontSizeRem = computedFontSize / rootFontSize;
-        }
-    }
-    
-    const finalH1DesktopFontSizeRem = 3.2; /* Title Short will be same size as Title Full */
-    const finalH1MobileFontSizeRem = 1.6;  /* Adjusted: Title Short will be smaller on mobile */
-
-    const initialFaviconSizePx = 0; // Favicon will grow from this size
-    const finalFaviconSizePx = 64;  // Increased target favicon size in scrolled state
-
-    const initialH1ColorHex = "#27296d"; 
-    const finalH1ColorHex = "#FFFFFF";   
-
-    const animationScrollStart = 0;
-    const animationScrollEnd = 200; 
-
-    function hexToRgb(hex) {
-        let r = 0, g = 0, b = 0;
-        if (hex.length == 4) { 
-            r = parseInt(hex[1] + hex[1], 16);
-            g = parseInt(hex[2] + hex[2], 16);
-            b = parseInt(hex[3] + hex[3], 16);
-        } else if (hex.length == 7) { 
-            r = parseInt(hex[1] + hex[2], 16);
-            g = parseInt(hex[3] + hex[4], 16);
-            b = parseInt(hex[5] + hex[6], 16);
-        }
-        return [r, g, b];
-    }
-    
-    const initialH1ColorRgb = hexToRgb(initialH1ColorHex);
-    const finalH1ColorRgb = hexToRgb(finalH1ColorHex);
-
-    function interpolateValue(start, end, progress) {
-        return start + (end - start) * progress;
-    }
-
-    function interpolateRgbColor(colorStartRgb, colorEndRgb, progress) {
-        const r = Math.round(interpolateValue(colorStartRgb[0], colorEndRgb[0], progress));
-        const g = Math.round(interpolateValue(colorStartRgb[1], colorEndRgb[1], progress));
-        const b = Math.round(interpolateValue(colorStartRgb[2], colorEndRgb[2], progress));
-        return `rgb(${r},${g},${b})`;
-    }
-
-    let lastKnownScrollY = 0;
-    let ticking = false;
-    let lastKnownSecondaryWordsWidth = 0; // To store the width of the secondary words
-
+    // Early exit for mobile in the heavy scroll animation
     function updateHeaderStylesOnScroll(scrollY) {
       if (window.matchMedia('(max-width: 600px)').matches) return;
-      if (!siteH_header || !h1Title || !mainContainer) return;
+      
+      if (!siteHeader || !h1Title || !mainContainer) return;
 
       let progress = 0;
       if (scrollY <= animationScrollStart) {
@@ -734,35 +640,122 @@
       });
     }
 
-    // Removed setInitialH1FontSize function
+    let lastKnownScrollY = 0;
+    let ticking = false;
+    
+    // Constants from the old script that are needed by the merged updateHeaderStylesOnScroll
+    const siteHeader = document.getElementById('site-header');
+    const mainContainer = document.querySelector('main.container');
+    const h1Title = siteHeader ? siteHeader.querySelector('h1') : null;
+    const titleMainWord = h1Title ? h1Title.querySelector('.title-main-word') : null;
+    const titleSecondaryWords = h1Title ? h1Title.querySelector('.title-secondary-words') : null;
+    const headerFavicon = h1Title ? h1Title.querySelector('.header-favicon') : null;
+    const navElement = siteHeader ? siteHeader.querySelector('nav') : null;
+
+    let initialHeaderHeightVh = 30; 
+    const finalHeaderHeightPx = 90; 
+
+    let initialH1FontSizeRem = 3.2; 
+    if(h1Title) {
+        const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+        const computedFontSize = parseFloat(getComputedStyle(h1Title).fontSize);
+        if (rootFontSize > 0 && computedFontSize > 0) { 
+            initialH1FontSizeRem = computedFontSize / rootFontSize;
+        }
+    }
+    
+    const finalH1DesktopFontSizeRem = 3.2; 
+    const finalH1MobileFontSizeRem = 1.6;  
+
+    const initialFaviconSizePx = 0; 
+    const finalFaviconSizePx = 64;  
+
+    const initialH1ColorHex = "#27296d"; 
+    const finalH1ColorHex = "#FFFFFF";   
+
+    const animationScrollStart = 0;
+    const animationScrollEnd = 200; 
+
+    let lastKnownSecondaryWordsWidth = 0; 
+
+    function hexToRgb(hex) {
+        let r = 0, g = 0, b = 0;
+        if (hex.length == 4) { 
+            r = parseInt(hex[1] + hex[1], 16);
+            g = parseInt(hex[2] + hex[2], 16);
+            b = parseInt(hex[3] + hex[3], 16);
+        } else if (hex.length == 7) { 
+            r = parseInt(hex[1] + hex[2], 16);
+            g = parseInt(hex[3] + hex[4], 16);
+            b = parseInt(hex[5] + hex[6], 16);
+        }
+        return [r, g, b];
+    }
+    
+    const initialH1ColorRgb = hexToRgb(initialH1ColorHex);
+    const finalH1ColorRgb = hexToRgb(finalH1ColorHex);
+
+    function interpolateValue(start, end, progress) {
+        return start + (end - start) * progress;
+    }
+
+    function interpolateRgbColor(colorStartRgb, colorEndRgb, progress) {
+        const r = Math.round(interpolateValue(colorStartRgb[0], colorEndRgb[0], progress));
+        const g = Math.round(interpolateValue(colorStartRgb[1], colorEndRgb[1], progress));
+        const b = Math.round(interpolateValue(colorStartRgb[2], colorEndRgb[2], progress));
+        return `rgb(${r},${g},${b})`;
+    }
+    // End of constants needed by merged function
 
     window.addEventListener('scroll', () => {
-        lastKnownScrollY = window.scrollY;
-        if (!ticking) {
-            window.requestAnimationFrame(() => {
-                updateHeaderStylesOnScroll(lastKnownScrollY);
-                document.body.classList.toggle('scrolled', lastKnownScrollY > 50); 
-                ticking = false;
-            });
-            ticking = true;
-        }
+      lastKnownScrollY = window.scrollY;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateHeaderStylesOnScroll(lastKnownScrollY);
+          document.body.classList.toggle('scrolled', lastKnownScrollY > 50);
+          ticking = false;
+        });
+        ticking = true;
+      }
     });
-    window.addEventListener('resize', () => { 
-        // setInitialH1FontSize(); // Removed call
-        updateHeaderStylesOnScroll(window.scrollY); 
-    });
-    document.addEventListener('DOMContentLoaded', () => { 
-        // setInitialH1FontSize(); // Removed call
-        updateHeaderStylesOnScroll(window.scrollY); 
-    });
-
-    // Mobile helper class
+    
+    // Mobile helper class & other event listeners from new script
     document.addEventListener('DOMContentLoaded', () => {
       if (window.matchMedia('(max-width: 600px)').matches) {
         document.body.classList.add('mobile-header-enabled');
       }
+      // Call updateHeaderStylesOnScroll on DOMContentLoaded like in old script
+      updateHeaderStylesOnScroll(window.scrollY); 
+
+      // Accordion logic from old script
+      const accordionHeaders = document.querySelectorAll('.accordion .acc-header');
+      if (accordionHeaders.length > 0) {
+          accordionHeaders.forEach(btn => {
+            btn.addEventListener('click', () => {
+              btn.classList.toggle('active');
+              const body = btn.nextElementSibling;
+              body.style.maxHeight = btn.classList.contains('active') ? body.scrollHeight + 'px' : '0';
+            });
+          });
+      }
+
+      // Lazy iframe logic from old script
+      const lazyIframes = document.querySelectorAll('iframe.lazy-embed');
+      if (lazyIframes.length > 0) {
+          lazyIframes.forEach(iframe => { 
+            if (iframe.classList.contains('skeleton')) { 
+                iframe.addEventListener('load', () => {
+                    iframe.classList.remove('skeleton');
+                    if (typeof AOS !== 'undefined') { 
+                      AOS.refresh(); 
+                    }
+                });
+            }
+          });
+      }
     });
 
+    // Theme switcher logic from old script
     const applySystemTheme = (isDark) => {
         document.documentElement.classList.toggle('dark', isDark);
         if (typeof AOS !== 'undefined') AOS.refreshHard(); 
@@ -774,36 +767,19 @@
     applySystemTheme(prefersDarkScheme.matches); 
     prefersDarkScheme.addEventListener('change', (e) => applySystemTheme(e.matches));
     
+    // Resize listener from old script
+    window.addEventListener('resize', () => { 
+        updateHeaderStylesOnScroll(window.scrollY); 
+    });
+
+    // Load listener from old script
     window.addEventListener('load', function() {
       if (typeof AOS !== 'undefined') setTimeout(() => AOS.refreshHard(), 1200); 
-      // setInitialH1FontSize(); // Removed call
       updateHeaderStylesOnScroll(window.scrollY); 
     });
 
-    const accordionHeaders = document.querySelectorAll('.accordion .acc-header');
-    if (accordionHeaders.length > 0) {
-        accordionHeaders.forEach(btn => {
-          btn.addEventListener('click', () => {
-            btn.classList.toggle('active');
-            const body = btn.nextElementSibling;
-            body.style.maxHeight = btn.classList.contains('active') ? body.scrollHeight + 'px' : '0';
-          });
-        });
-    }
-
-    const lazyIframes = document.querySelectorAll('iframe.lazy-embed');
-    if (lazyIframes.length > 0) {
-        lazyIframes.forEach(iframe => { 
-          if (iframe.classList.contains('skeleton')) { 
-              iframe.addEventListener('load', () => {
-                  iframe.classList.remove('skeleton');
-                  if (typeof AOS !== 'undefined') { 
-                    AOS.refresh(); 
-                  }
-              });
-          }
-        });
-    }
   </script>
+
+  <!-- Any other existing JS scripts remain untouched below -->
 </body>
 </html>
