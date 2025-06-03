@@ -355,14 +355,41 @@
     footer#contact a {
         color: var(--accent); 
     }
+
+    /* ======================== MOBILE OPTIMISATIONS (<600px) ======================== */
+    @media (max-width: 600px) {
+      header#site-header {
+        position: sticky;
+        top: 0;
+        height: 64px;
+        backdrop-filter: blur(8px);
+        background: rgba(39, 41, 109, 0.92);
+        box-shadow: 0 2px 6px rgba(0,0,0,.16);
+        padding: 0 0.75rem;
+        z-index: 2000;
+      }
+      header#site-header h1 {
+        font-size: 1.6rem;
+        background: transparent;
+        color: #fff;
+        box-shadow: none;
+        padding: 0;
+      }
+      .title-secondary-words { display: none; }
+      .header-favicon { width: 40px; height: 40px; margin-right: 6px; opacity: 1 !important; }
+      nav { right: 0.5rem !important; top: 50%; transform: translateY(-50%); }
+      nav .nav-link { font-size: 1rem; padding: .55rem .8rem; }
+      main.container { padding-top: 80px; }
+    }
   </style>
 </head>
 <body>
-
-  <header id="site-header"> <h1 data-aos="fade-down">
+  <header id="site-header" class="banner">
+    <h1 data-aos="fade-down">
       <img src="Square Logo.png" alt="Awakenings Logo" class="header-favicon">
-      <span class="title-main-word">Awakenings</span> <span class="title-secondary-words">Mental Health</span>
-    </h1> 
+      <span class="title-main-word">Awakenings</span>
+      <span class="title-secondary-words">Mental&nbsp;Health</span>
+    </h1>
     <nav>
       <a href="index.html" class="nav-link" target="_top">Home</a>
       <a href="our-providers.html" class="nav-link" target="_top">Our Providers</a>
@@ -514,7 +541,8 @@
     let lastKnownSecondaryWordsWidth = 0; // To store the width of the secondary words
 
     function updateHeaderStylesOnScroll(scrollY) {
-      if (!siteHeader || !h1Title || !mainContainer) return;
+      if (window.matchMedia('(max-width: 600px)').matches) return;
+      if (!siteH_header || !h1Title || !mainContainer) return;
 
       let progress = 0;
       if (scrollY <= animationScrollStart) {
@@ -726,6 +754,13 @@
     document.addEventListener('DOMContentLoaded', () => { 
         // setInitialH1FontSize(); // Removed call
         updateHeaderStylesOnScroll(window.scrollY); 
+    });
+
+    // Mobile helper class
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.matchMedia('(max-width: 600px)').matches) {
+        document.body.classList.add('mobile-header-enabled');
+      }
     });
 
     const applySystemTheme = (isDark) => {
