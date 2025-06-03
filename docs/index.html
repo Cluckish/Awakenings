@@ -705,16 +705,8 @@
         }
       });
     }
-    
-    function setInitialH1FontSize() { 
-        if(h1Title) {
-            const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
-            const computedFontSize = parseFloat(getComputedStyle(h1Title).fontSize);
-            if (rootFontSize > 0 && computedFontSize > 0) { 
-                initialH1FontSizeRem = computedFontSize / rootFontSize;
-            }
-        }
-    }
+
+    // Removed setInitialH1FontSize function
 
     window.addEventListener('scroll', () => {
         lastKnownScrollY = window.scrollY;
@@ -728,11 +720,11 @@
         }
     });
     window.addEventListener('resize', () => { 
-        setInitialH1FontSize();
+        // setInitialH1FontSize(); // Removed call
         updateHeaderStylesOnScroll(window.scrollY); 
     });
     document.addEventListener('DOMContentLoaded', () => { 
-        setInitialH1FontSize();
+        // setInitialH1FontSize(); // Removed call
         updateHeaderStylesOnScroll(window.scrollY); 
     });
 
@@ -749,7 +741,7 @@
     
     window.addEventListener('load', function() {
       if (typeof AOS !== 'undefined') setTimeout(() => AOS.refreshHard(), 1200); 
-      setInitialH1FontSize();
+      // setInitialH1FontSize(); // Removed call
       updateHeaderStylesOnScroll(window.scrollY); 
     });
 
