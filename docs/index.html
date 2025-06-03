@@ -474,7 +474,7 @@
     const finalH1ColorHex = "#FFFFFF";   
 
     const animationScrollStart = 0;
-    const animationScrollEnd = 100; 
+    const animationScrollEnd = 250; 
 
     function hexToRgb(hex) {
         let r = 0, g = 0, b = 0;
@@ -536,20 +536,20 @@
 
         h1Title.style.fontSize = `${interpolateValue(currentInitialH1Size, targetFinalH1FontSize, progress)}rem`;
         
-        // Title Full and its associated block (padding/background on h1) - REVERTED TO INSTANT CHANGE
+        // Title Full and its associated block (padding/background on h1) - SMOOTH FADE
         if (titleFull) {
-            if (progress > 0.05) { // Threshold for instant fade/disappear
-                titleFull.style.opacity = 0;
+            const titleFullOpacity = interpolateValue(1, 0, progress);
+            titleFull.style.opacity = titleFullOpacity;
+
+            // Smoothly transition background and padding for the h1 block
+            h1Title.style.backgroundColor = `rgba(220, 220, 220, ${interpolateValue(0.85, 0, progress)})`;
+            h1Title.style.padding = `${interpolateValue(0.5, 0, progress)}rem ${interpolateValue(1, 0, progress)}rem`;
+
+            // Adjust display property to prevent occupying space when fully transparent
+            if (titleFullOpacity <= 0.01) { // Threshold for considering it fully transparent
                 titleFull.style.display = 'none';
-                // Remove block styles when titleFull is hidden
-                h1Title.style.padding = '0rem';
-                h1Title.style.backgroundColor = 'transparent';
             } else {
-                titleFull.style.opacity = 1;
                 titleFull.style.display = 'inline-block';
-                // Apply block styles when titleFull is visible
-                h1Title.style.padding = '0.5rem 1rem'; 
-                h1Title.style.backgroundColor = 'rgba(220, 220, 220, 0.85)'; 
             }
         }
         
