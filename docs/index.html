@@ -246,6 +246,10 @@
         /* If header padding is different on mobile, right might need adjustment here */
       }
       /* All specific nav-link font sizes for mobile are removed, base 1.6rem applies */
+      nav .nav-link {
+        font-size: 1.2rem; /* Adjusted for mobile */
+        padding: 0.3em 0.6em; /* Adjusted padding for smaller font */
+      }
     }
 
     /* All specific nav-link font sizes for desktop scrolled are removed, base 1.6rem applies */
@@ -453,7 +457,7 @@
     const headerFavicon = h1Title ? h1Title.querySelector('.header-favicon') : null;
     const navElement = siteHeader ? siteHeader.querySelector('nav') : null;
 
-    const initialHeaderHeightVh = 30;
+    let initialHeaderHeightVh = 30; // Default for desktop, changed from const to let
     const finalHeaderHeightPx = 90; /* Increased header height for larger scrolled title */
 
     let initialH1FontSizeRem = 3.2; /* Default to 3.2rem as per unscrolled CSS */
@@ -466,7 +470,7 @@
     }
     
     const finalH1DesktopFontSizeRem = 3.2; /* Title Short will be same size as Title Full */
-    const finalH1MobileFontSizeRem = 3.2;  /* Title Short will be same size as Title Full on mobile */
+    const finalH1MobileFontSizeRem = 2.2;  /* Adjusted: Title Short will be smaller on mobile */
 
     const initialFaviconSizePx = 0; // Favicon will grow from this size
     const finalFaviconSizePx = 64;  // Increased target favicon size in scrolled state
@@ -528,7 +532,10 @@
         const h1InitialOffsetWidth = h1Title.offsetWidth; 
         const siteHeaderWidth = siteHeader.offsetWidth;
 
-        const initialHeaderActualHeight = (initialHeaderHeightVh / 100) * window.innerHeight;
+        // Adjust initialHeaderHeightVh for mobile
+        const currentInitialHeaderHeightVh = window.innerWidth <= 480 ? 20 : initialHeaderHeightVh; // Use 20vh for mobile
+
+        const initialHeaderActualHeight = (currentInitialHeaderHeightVh / 100) * window.innerHeight;
         const currentHeaderHeight = interpolateValue(initialHeaderActualHeight, finalHeaderHeightPx, progress);
         siteHeader.style.height = `${currentHeaderHeight}px`;
         mainContainer.style.paddingTop = `${currentHeaderHeight}px`; // Dynamically set padding
