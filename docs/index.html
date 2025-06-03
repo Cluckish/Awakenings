@@ -542,9 +542,24 @@
 
         h1Title.style.fontSize = `${interpolateValue(currentInitialH1Size, targetFinalH1FontSize, progress)}rem`;
         
-        // Smoothly transition background opacity for the h1 block (silverish background)
-        // Padding is now constant via CSS and not animated here.
-        h1Title.style.backgroundColor = `rgba(220, 220, 220, ${interpolateValue(0.85, 0, progress)})`;
+        // Text box background opacity: fades 15% faster
+        const backgroundOpacityProgress = Math.min(1, progress / 0.85);
+        h1Title.style.backgroundColor = `rgba(220, 220, 220, ${interpolateValue(0.85, 0, backgroundOpacityProgress)})`;
+
+        // Animate padding-right of the h1 text box to shrink its right side
+        const paddingAnimationStart = 0.1;
+        const paddingAnimationEnd = 0.6; // Sync with secondary words fade
+        let paddingRightProgress = 0;
+        if (progress <= paddingAnimationStart) {
+            paddingRightProgress = 0;
+        } else if (progress >= paddingAnimationEnd) {
+            paddingRightProgress = 1;
+        } else {
+            paddingRightProgress = (progress - paddingAnimationStart) / (paddingAnimationEnd - paddingAnimationStart);
+        }
+        const currentPaddingRightRem = interpolateValue(1, 0.5, paddingRightProgress); // Target 0.5rem padding-right
+        h1Title.style.paddingRight = `${currentPaddingRightRem}rem`;
+        // padding-left, top, bottom remain as set in CSS (0.5rem top/bottom, 1rem left)
 
         // Animation for titleSecondaryWords ("Mental Health")
         const secondaryFadeStartProgress = 0.1; // Start fading "Mental Health" a bit after scroll starts
