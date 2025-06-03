@@ -608,8 +608,9 @@
         // H1 text color transitions from initial (blue) to final (white)
         h1Title.style.color = interpolateRgbColor(initialH1ColorRgb, finalH1ColorRgb, progress);
         
-        // Apply scrolled-header-layout class earlier for alignment and shadow
-        if (progress > 0.1) { 
+        // Apply scrolled-header-layout class for alignment and shadow
+        // Changed threshold from 0.1 to 0.5 for a smoother horizontal transition
+        if (progress > 0.5) { 
           siteHeader.classList.add('scrolled-header-layout');
           if (navElement) {
             navElement.style.top = '1.3rem'; // Raised slightly: JS controlled top for scrolled
