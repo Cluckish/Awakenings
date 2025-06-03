@@ -69,8 +69,9 @@
       display: flex; align-items: center; 
       /* background-image transition removed, handled by ::before opacity */
       /* background-color transition removed, will be handled by JS */
-      transition: box-shadow 0.15s ease, justify-content 0.15s ease, height 0.05s ease; 
+      transition: box-shadow 0.15s ease, height 0.05s ease; /* Removed justify-content from transition */
       z-index: 1000; padding: 0 1rem; 
+      justify-content: flex-start; /* Default to flex-start for h1 positioning */
     }
 
     /* New pseudo-element for the sketch image background */
@@ -91,11 +92,10 @@
       transition: opacity 0.3s ease; 
       opacity: var(--header-bg-overlay-opacity, 1); /* Use CSS variable */
     }
-    header#site-header:not(.scrolled-header-layout) {
-        justify-content: center;
-    }
+    /* :not(.scrolled-header-layout) no longer needed for justify-content */
+    
     .scrolled-header-layout {
-      justify-content: space-between !important; 
+      /* justify-content: space-between !important; -- No longer needed here for h1, nav is absolute */
       align-items: center !important; 
       /* background-image: none; -- No longer needed, ::before opacity handles this */
       /* background-color: var(--theme-blue-static); -- Removed, JS will handle background color animation */
@@ -119,24 +119,26 @@
       transition: font-size 0.3s ease, color 0.3s ease;
     }
 
-    /* Unscrolled state specific styles for H1 */
-    header#site-header:not(.scrolled-header-layout) h1 {
-      font-size: 3.2rem; /* Increased font size for unscrolled state */
-      background-color: rgba(220, 220, 220, 0.85); /* Silverish background block */
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      color: var(--theme-blue-static); /* Ensure text color contrasts with new background */
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    /* Base styles for H1, including the rounded box properties */
+    header#site-header h1 {
+      font-size: 3.2rem; /* Initial font size */
+      background-color: rgba(220, 220, 220, 0.85); /* Initial silverish background */
+      padding: 0.5rem 1rem; /* Constant padding for the box */
+      border-radius: 8px; /* Constant border-radius */
+      color: var(--theme-blue-static); /* Initial text color */
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Initial shadow for the box */
+      /* position: relative; font-family, z-index etc. are already set above */
     }
 
+    /* Styles for H1 when header is scrolled (mostly handled by JS now) */
     .scrolled-header-layout h1 {
-      font-size: 1.5rem; 
-      line-height: 1.2; 
-      color: white; 
-      text-align: left; 
-      background-color: transparent; /* Ensure background is gone when scrolled */
-      padding: 0; /* Reset padding */
-      box-shadow: none; /* Reset shadow */
+      /* font-size will be interpolated by JS */
+      /* line-height: 1.2; */ /* Can be kept or removed if JS handles size well */
+      /* color will be interpolated by JS to white */
+      text-align: left; /* Keep this for final state */
+      /* background-color will be interpolated to transparent by JS */
+      /* padding is now constant */
+      box-shadow: none; /* Remove box shadow in scrolled state */
     }
 
     .header-favicon {
@@ -540,13 +542,9 @@
 
         h1Title.style.fontSize = `${interpolateValue(currentInitialH1Size, targetFinalH1FontSize, progress)}rem`;
         
-        // Smoothly transition background and padding for the h1 block (silverish background)
+        // Smoothly transition background opacity for the h1 block (silverish background)
+        // Padding is now constant via CSS and not animated here.
         h1Title.style.backgroundColor = `rgba(220, 220, 220, ${interpolateValue(0.85, 0, progress)})`;
-        // Ensure padding reduces to a point where it doesn't affect layout when background is transparent
-        const currentPaddingVertical = interpolateValue(0.5, 0, progress);
-        const currentPaddingHorizontal = interpolateValue(1, 0, progress);
-        h1Title.style.padding = `${currentPaddingVertical}rem ${currentPaddingHorizontal}rem`;
-
 
         // Animation for titleSecondaryWords ("Mental Health")
         const secondaryFadeStartProgress = 0.1; // Start fading "Mental Health" a bit after scroll starts
@@ -613,19 +611,19 @@
         // H1 text color transitions from initial (blue) to final (white)
         h1Title.style.color = interpolateRgbColor(initialH1ColorRgb, finalH1ColorRgb, progress);
 
-        // Animate H1 horizontal position
-        const initialH1X = (siteHeaderWidth / 2) - (h1InitialOffsetWidth / 2); // Centered position
-        const finalH1X = parseFloat(getComputedStyle(siteHeader).paddingLeft); // Align with left padding
-        
-        // Only apply translateX if h1Title is not null and siteHeaderWidth is available
-        if (h1Title && siteHeaderWidth > 0) {
-            const currentH1X = interpolateValue(initialH1X, finalH1X, progress);
-            h1Title.style.transform = `translateX(${currentH1X - initialH1X}px)`; // Translate from its natural centered flow
+        // Animate H1 horizontal position using translateX, from centered to flex-start position
+        if (h1Title && siteHeaderWidth > 0 && h1InitialOffsetWidth > 0) {
+            const siteHeaderPaddingLeft = parseFloat(getComputedStyle(siteHeader).paddingLeft) || 0;
+            // Calculate the offset needed to center h1 from its natural flex-start position
+            const translateXForCentering = (siteHeaderWidth / 2) - (h1InitialOffsetWidth / 2) - siteHeaderPaddingLeft;
+            
+            // Interpolate translateX from this centering offset down to 0 (natural flex-start position)
+            const currentTranslateX = interpolateValue(translateXForCentering, 0, progress);
+            h1Title.style.transform = `translateX(${currentTranslateX}px)`;
         }
         
-        // Apply scrolled-header-layout class for alignment and shadow
-        // Threshold can remain at 0.5 or be adjusted; main movement is now translateX
-        if (progress > 0.5) { 
+        // Apply scrolled-header-layout class for box-shadow on header (and potentially nav if it wasn't absolute)
+        if (progress > 0.5) { // Threshold for applying scrolled class (e.g., for box-shadow)
           siteHeader.classList.add('scrolled-header-layout');
           if (navElement) {
             navElement.style.top = '1.3rem'; // Raised slightly: JS controlled top for scrolled
