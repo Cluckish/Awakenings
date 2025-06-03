@@ -507,6 +507,7 @@
 
     let lastKnownScrollY = 0;
     let ticking = false;
+    let lastKnownSecondaryWordsWidth = 0; // To store the width of the secondary words
 
     function updateHeaderStylesOnScroll(scrollY) {
       if (!siteHeader || !h1Title || !mainContainer) return;
@@ -547,19 +548,27 @@
         h1Title.style.backgroundColor = `rgba(220, 220, 220, ${interpolateValue(0.85, 0, backgroundOpacityProgress)})`;
 
         // Animate padding-right of the h1 text box to shrink its right side
-        const paddingAnimationStart = 0.6;
-        const paddingAnimationEnd = 0.9; // Sync with secondary words fade
-        let paddingRightProgress = 0;
-        if (progress <= paddingAnimationStart) {
-            paddingRightProgress = 0;
-        } else if (progress >= paddingAnimationEnd) {
-            paddingRightProgress = 1;
+        const paddingAnimationStartProgress = 0.6;
+        const paddingAnimationEndProgress = 0.9;
+        let currentPaddingRightRem;
+        const rootFontSizePx = parseFloat(getComputedStyle(document.documentElement).fontSize);
+
+        if (progress < paddingAnimationStartProgress) {
+            currentPaddingRightRem = 1; // Default right padding (from initial 0.5rem 1rem)
+        } else if (progress >= paddingAnimationEndProgress) {
+            currentPaddingRightRem = 0.5; // Target final right padding
         } else {
-            paddingRightProgress = (progress - paddingAnimationStart) / (paddingAnimationEnd - paddingAnimationStart);
+            // Calculate progress specifically for this padding animation phase
+            const paddingSpecificProgress = (progress - paddingAnimationStartProgress) / (paddingAnimationEndProgress - paddingAnimationStartProgress);
+            // Initial padding for this animation phase includes the width of secondary words
+            let initialPaddingForAnimationRem = 1; // Base right padding
+            if (rootFontSizePx > 0 && lastKnownSecondaryWordsWidth > 0) {
+                initialPaddingForAnimationRem += (lastKnownSecondaryWordsWidth / rootFontSizePx);
+            }
+            currentPaddingRightRem = interpolateValue(initialPaddingForAnimationRem, 0.5, paddingSpecificProgress);
         }
-        const currentPaddingRightRem = interpolateValue(1, 0.5, paddingRightProgress); // Target 0.5rem padding-right
         h1Title.style.paddingRight = `${currentPaddingRightRem}rem`;
-        // padding-left, top, bottom remain as set in CSS (0.5rem top/bottom, 1rem left)
+        // padding-left, top, bottom remain as set in CSS (0.5rem top/bottom, 1rem left initially, then padding-right changes)
 
         // Animation for titleSecondaryWords ("Mental Health")
         const secondaryFadeStartProgress = 0.1; // Start fading "Mental Health" a bit after scroll starts
@@ -580,6 +589,7 @@
                 titleSecondaryWords.style.display = 'none';
             } else {
                 titleSecondaryWords.style.display = 'inline-block';
+                lastKnownSecondaryWordsWidth = titleSecondaryWords.offsetWidth; // Capture width when visible
             }
         }
 
@@ -728,29 +738,3 @@
   </script>
 </body>
 </html>
-</final_file_content>
-
-IMPORTANT: For any future changes to this file, use the final_file_content shown above as your reference. This content reflects the current state of the file, including any auto-formatting (e.g., if you used single quotes but the formatter converted them to double quotes). Always base your SEARCH/REPLACE operations on this final version to ensure accuracy.<environment_details>
-# VSCode Visible Files
-../../Users/fourw/Downloads/Bussy Cline/index.html
-
-# VSCode Open Tabs
-../../Users/fourw/Downloads/Bussy Cline/article-exercise-nutrition.html
-../../Users/fourw/Downloads/Bussy Cline/index.html
-../../Users/fourw/Downloads/Bussy Cline/article-reducing-meds.html
-../../Users/fourw/Downloads/Bussy Cline/articles.html
-../../Users/fourw/Downloads/Bussy Cline/our-providers.html
-
-# Recently Modified Files
-These files have been modified since you last accessed them (file was just edited so you may need to re-read it before editing):
-../../Users/fourw/Downloads/Bussy Cline/index.html
-
-# Current Time
-6/2/2025, 3:47:30 PM (America/Denver, UTC-6:00)
-
-# Context Window Usage
-524,445 / 1,048.576K tokens used (50%)
-
-# Current Mode
-ACT MODE
-</environment_details>
