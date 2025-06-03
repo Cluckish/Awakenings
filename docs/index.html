@@ -325,7 +325,7 @@
       header#site-header {
         position: sticky;
         top: 0;
-        height: 64px;
+        height: 80px;
         backdrop-filter: blur(8px);
         background: rgba(39, 41, 109, 0.92);
         box-shadow: 0 2px 6px rgba(0,0,0,.16);
@@ -437,7 +437,7 @@
   <script>
     // Init AOS & current year
     document.getElementById('current-year').textContent = new Date().getFullYear();
-    AOS.init({ duration: 600, once: true });
+    AOS.init({ duration: 600, once: true, disable: () => window.matchMedia('(max-width: 600px)').matches });
 
     // Smooth scroll to top
     document.getElementById('to-top').addEventListener('click', () => {
@@ -780,6 +780,5 @@
 
   </script>
 
-  <!-- Any other existing JS scripts remain untouched below -->
 </body>
 </html>
