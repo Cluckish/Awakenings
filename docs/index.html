@@ -320,6 +320,18 @@
         color: var(--accent); 
     }
 
+    .mobile-menu-button {
+      display: none; /* Hidden by default, shown in media query */
+      background-color: transparent;
+      border: none;
+      color: #fff;
+      font-size: 28px; 
+      padding: 0.25rem 0.5rem; 
+      cursor: pointer;
+      line-height: 1; /* Ensure consistent height */
+      align-self: center; /* Align with h1 if header is flex container */
+    }
+
     /* ======================== MOBILE OPTIMISATIONS (<600px) ======================== */
     @media (max-width: 600px) {
       header#site-header {
@@ -331,18 +343,59 @@
         box-shadow: 0 2px 6px rgba(0,0,0,.16);
         padding: 0 0.75rem;
         z-index: 2000;
+        display: flex; /* Added for layout */
+        justify-content: space-between; /* Added for layout */
+        align-items: center; /* Added for layout */
       }
       header#site-header h1 {
         font-size: 1.6rem;
-        background: transparent;
+        background: var(--theme-blue-static); /* Changed background */
         color: #fff;
         box-shadow: none;
-        padding: 0;
+        padding: 0.4rem 0.8rem; /* Added padding for box effect */
+        border-radius: 6px; /* Added border-radius */
+        /* margin-right: auto; /* Pushes button to the right, or remove if space-between on header works better */
       }
       .title-secondary-words { display: none; }
       .header-favicon { width: 40px; height: 40px; margin-right: 6px; opacity: 1 !important; }
-      nav { right: 0.5rem !important; top: 50%; transform: translateY(-50%); }
-      nav .nav-link { font-size: 1rem; padding: .55rem .8rem; }
+      
+      .mobile-menu-button {
+        display: block; /* Show on mobile */
+      }
+
+      nav#main-nav { /* Target by ID now */
+        display: flex; /* Use flex for vertical stacking */
+        flex-direction: column;
+        position: absolute;
+        top: 80px; /* Height of the header */
+        left: 0;
+        right: 0;
+        background-color: var(--theme-blue-static);
+        box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+        z-index: 1999;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s ease-in-out;
+      }
+      nav#main-nav.mobile-nav-open {
+        max-height: 500px; /* Adjust as needed to fit all links */
+      }
+      nav#main-nav .nav-link {
+        display: block;
+        font-size: 1.1rem; 
+        padding: 1rem 1.5rem; 
+        text-align: center;
+        color: #fff;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(255,255,255,0.15);
+        width: 100%;
+      }
+      nav#main-nav .nav-link:last-child {
+        border-bottom: none;
+      }
+      nav#main-nav .nav-link:hover {
+        background-color: rgba(255,255,255,0.1);
+      }
       main.container { padding-top: 80px; }
     }
   </style>
@@ -354,7 +407,8 @@
       <span class="title-main-word">Awakenings</span>
       <span class="title-secondary-words">Mental&nbsp;Health</span>
     </h1>
-    <nav>
+    <button id="mobile-menu-toggle" class="mobile-menu-button">☰</button>
+    <nav id="main-nav">
       <a href="index.html" class="nav-link" target="_top">Home</a>
       <a href="our-providers.html" class="nav-link" target="_top">Our Providers</a>
       <a href="articles.html" class="nav-link" target="_top">Articles</a>
@@ -725,7 +779,39 @@
         document.body.classList.add('mobile-header-enabled');
       }
       // Call updateHeaderStylesOnScroll on DOMContentLoaded like in old script
-      updateHeaderStylesOnScroll(window.scrollY); 
+      updateHeaderStylesOnScroll(window.scrollY);
+
+      const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+      const mainNav = document.getElementById('main-nav');
+
+      if (mobileMenuToggle && mainNav) {
+        mobileMenuToggle.addEventListener('click', () => {
+          mainNav.classList.toggle('mobile-nav-open');
+          if (mainNav.classList.contains('mobile-nav-open')) {
+            mobileMenuToggle.innerHTML = '&times;'; // Change to 'X' icon
+          } else {
+            mobileMenuToggle.innerHTML = '☰'; // Change back to hamburger
+          }
+        });
+
+        mainNav.querySelectorAll('.nav-link').forEach(link => {
+          link.addEventListener('click', () => {
+            if (mainNav.classList.contains('mobile-nav-open')) {
+              mainNav.classList.remove('mobile-nav-open');
+              mobileMenuToggle.innerHTML = '☰';
+            }
+          });
+        });
+
+        document.addEventListener('click', (event) => {
+          if (mainNav.classList.contains('mobile-nav-open') && 
+              !mainNav.contains(event.target) && 
+              !mobileMenuToggle.contains(event.target)) {
+            mainNav.classList.remove('mobile-nav-open');
+            mobileMenuToggle.innerHTML = '☰';
+          }
+        });
+      }
 
       // Accordion logic from old script
       const accordionHeaders = document.querySelectorAll('.accordion .acc-header');
@@ -780,5 +866,6 @@
 
   </script>
 
+  <!-- Any other existing JS scripts remain untouched below -->
 </body>
 </html>
