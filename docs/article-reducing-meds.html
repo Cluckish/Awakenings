@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Our Providers - Awakenings Mental Health</title>
+  <title>Can Psychiatry Really Help You Take Less Medication? - Awakenings Mental Health</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
-  <link rel="stylesheet" href="css/output.css">
 
-<main>
   <style>
     :root {
       --primary: #2F3E46; 
@@ -26,26 +24,12 @@
       --text-dark: var(--text-light);
       --heading-color: var(--text-light); 
     }
-    html.dark .testimonial-card { background: #2c3032; }
-    html.dark .card:not(.no-dark-override),
-    html.dark .provider-profile { 
-        background: #272b2c; 
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
-    }
-    html.dark .card header,
-    html.dark .accordion .acc-header,
     html.dark .btn, html.dark .btn.secondary, 
     html.dark #to-top {
         background: var(--theme-blue-static); 
         color: white; 
     }
-    html.dark .accordion .acc-header.active {
-        background: var(--accent);
-    }
-    html.dark .accordion .acc-body { background: #2c3032; }
-    html.dark .skeleton { background: #444; }
     html.dark .separator path { fill: var(--bg-dark); } 
-    
     html.dark .btn:active, html.dark .btn.secondary:active, html.dark #to-top:active {
         background-color: var(--bg-dark); 
         color: var(--text-light);    
@@ -57,9 +41,9 @@
     html.dark footer#contact .footer-text-content a {
         color: var(--accent); 
     }
-    html.dark .provider-contact strong {
-        color: var(--text-light);
-    }
+    html.dark .article-page-content { color: var(--text-light); }
+    html.dark .article-blockquote { border-left-color: var(--accent); background-color: #2c3032; }
+    html.dark .article-page-content h3 { color: var(--accent); }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -70,16 +54,13 @@
     }
     header#site-header {
       position: fixed; top: 0; left: 0; width: 100%;
-      /* Sketch image moved to ::before pseudo-element */
       background-color: transparent; /* Ensure initial background is transparent */
       display: flex; align-items: center; 
-      /* background-image transition removed, handled by ::before opacity */
       /* background-color transition removed, will be handled by JS */
       transition: box-shadow 0.15s ease, justify-content 0.15s ease, height 0.05s ease; 
       z-index: 1000; padding: 0 1rem; 
     }
 
-    /* New pseudo-element for the sketch image background */
     header#site-header::before {
       content: '';
       position: absolute;
@@ -87,13 +68,13 @@
       background: url('Wide Awakenings Building Sketch.png') center/cover no-repeat;
       opacity: var(--header-bg-image-opacity, 1); /* Use CSS variable */
       transition: opacity 0.3s ease;
-      z-index: -2; /* Behind the ::after overlay and content */
+      z-index: -2; 
     }
 
     header#site-header::after { 
       content: ''; position: absolute; inset: 0;
-      background: rgba(47,62,70,0.2); /* Overlay for the sketch */
-      z-index: -1; /* Above ::before, below content */
+      background: rgba(47,62,70,0.2); 
+      z-index: -1; 
       transition: opacity 0.3s ease; 
       opacity: var(--header-bg-overlay-opacity, 1); /* Use CSS variable */
     }
@@ -103,12 +84,11 @@
     .scrolled-header-layout {
       justify-content: space-between !important; 
       align-items: center !important; 
-      /* background-image: none; -- No longer needed, ::before opacity handles this */
       /* background-color: var(--theme-blue-static); -- Removed, JS will handle background color animation */
       box-shadow: 0 2px 8px rgba(0,0,0,.2);
     }
 
-    /* When scrolled, fade out the sketch image and its overlay */
+    /* Remove opacity change from CSS for scrolled state, JS will handle it */
     /* .scrolled-header-layout::before,
     .scrolled-header-layout::after {
         opacity: 0; 
@@ -172,12 +152,8 @@
       font-family: 'Dancing Script', cursive; font-weight: 600;
       color: var(--heading-color);
       text-align: center; 
-      margin-bottom: 2rem; 
-      font-size: 2.2rem; 
-    }
-    .provider-section-title { 
-        font-size: 2.5rem; 
-        margin-top: 2rem; 
+      margin-bottom: 1rem; 
+      font-size: 2.5rem; 
     }
 
     @media (max-width: 480px) {
@@ -197,7 +173,7 @@
           width: 24px !important; height: 24px !important;
           margin-right: 4px !important; 
       }
-            
+      
       header#site-header:not(.scrolled-header-layout) nav { 
         gap: 0.25rem; 
         right: 0.5rem; 
@@ -210,10 +186,12 @@
         font-size: 0.75rem; 
         padding: 0.2em 0;
       }
+      h2 { font-size: 2rem; } 
     }
 
     .container { 
-      max-width: 1000px; margin: 0 auto; 
+      max-width: 800px; 
+      margin: 0 auto; 
       padding: 2rem 1rem 100px; 
     }
     .btn { 
@@ -221,19 +199,18 @@
       background: var(--theme-blue-static); 
       color: white; 
       padding: 0.75rem 1.5rem; border-radius: 4px; text-decoration: none; 
-      font-weight: 600; margin: 0.5rem; 
+      font-weight: 600; margin-top: 1rem; 
       transition: background-color .2s, color .2s, opacity .3s; 
     }
-    .btn.secondary { 
-      background: var(--theme-blue-static); 
-    }
     .btn:hover { opacity: .9; }
-    .btn:active, .btn.secondary:active { 
+    .btn:active { 
         background-color: var(--bg-light); 
         color: var(--theme-blue-static);    
         opacity: 1;
     }
-    .skeleton { background: #ddd; position: relative; }
+    .separator { display: block; width: 100%; height: 80px; }
+    .separator path { transition: fill .3s; } 
+    
     #to-top { 
       position: fixed; bottom: 2rem; right: 2rem; 
       background: var(--theme-blue-static); 
@@ -248,119 +225,147 @@
         color: var(--theme-blue-static);    
         opacity: 1;
     }
-    body.scrolled #to-top { opacity: 1; }
-        
-    .page-intro {
-        text-align: center;
-        margin-bottom: 3rem;
-        font-size: 1.1rem;
-        max-width: 800px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .provider-profile {
-        background: var(--bg-light); 
-        border-radius: 8px;
-        box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-        padding: 2rem;
-        margin-bottom: 3rem;
-        display: flex;
-        gap: 2rem;
-        align-items: flex-start; 
-    }
-    .provider-photo-container {
-        flex-shrink: 0;
-        text-align: center; 
-    }
-    .provider-profile img.provider-photo {
-        width: 180px; 
-        height: 180px; 
-        object-fit: cover;
-        border-radius: 50%; 
-        border: 3px solid white;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .provider-info {
-        flex-grow: 1;
-    }
-    .provider-info h3 { 
-        font-family: 'Dancing Script', cursive; 
-        font-weight: 600;
-        color: var(--heading-color);
-        font-size: 1.9rem; 
-        margin-top: 0;
-        margin-bottom: 0.25rem;
-        text-align: left; 
-    }
-    .provider-info .credentials {
-        font-family: 'Inter', sans-serif;
-        font-size: 0.9rem;
-        color: var(--accent); 
-        margin-bottom: 1rem;
-        font-style: italic;
-    }
-    .provider-contact { 
-        font-size: 0.9rem;
-        margin-bottom: 1.5rem; 
-        font-family: 'Inter', sans-serif;
-    }
-    .provider-contact p {
-        margin-bottom: 0.35rem;
-        line-height: 1.5;
-    }
-    .provider-contact strong {
-        font-weight: 600;
-        color: var(--text-dark);
-    }
-    .provider-contact a {
-        color: var(--accent);
-        text-decoration: none;
-    }
-    .provider-contact a:hover {
-        text-decoration: underline;
-    }
-    .provider-info p:not(.credentials) { 
-        margin-bottom: 1rem;
-        line-height: 1.7;
-        font-size: 0.95rem;
-        font-family: 'Inter', sans-serif;
-    }
-    .provider-info p:last-child {
-        margin-bottom: 0;
-    }
-    .psychology-today-embed-wrapper { 
-        margin-top: 1.5rem;
-    }
+    body.scrolled #to-top { opacity: 1; } 
 
-    @media (max-width: 768px) { 
-        .provider-profile {
-            flex-direction: column;
-            align-items: center; 
-        }
-        .provider-photo-container {
+    /* Standard Blog Article Styles */
+    .blog-article {
+      padding: 2rem 0;
+    }
+    .blog-article-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .blog-article-title {
+      font-family: 'Dancing Script', cursive;
+      font-weight: 600;
+      color: var(--heading-color);
+      font-size: 2.8rem; 
+      margin-bottom: 0.75rem;
+    }
+    html.dark .blog-article-title {
+      color: var(--text-light);
+    }
+    .blog-article-subtitle { 
+      font-style: italic;
+      color: var(--accent);
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .blog-article-meta { 
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 2rem;
+    }
+    html.dark .blog-article-meta {
+        color: #aaa;
+    }
+    .blog-article-content { 
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+    .blog-article-content h3 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      color: var(--heading-color);
+      font-size: 1.6rem; 
+      margin-top: 2.5rem;
+      margin-bottom: 1.25rem;
+      text-align: left;
+    }
+    html.dark .blog-article-content h3 {
+      color: var(--accent);
+    }
+    .blog-article-content p, .blog-article-content ul li {
+      margin-bottom: 1.5rem; 
+    }
+    .blog-article-content img { 
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 2rem auto; 
+      display: block;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+    .blog-article-blockquote { 
+      margin: 2.5rem 0;
+      padding: 1.5rem 2rem;
+      border-left: 5px solid var(--accent);
+      background-color: #e9e9ea; 
+      font-style: italic;
+      font-size: 1.15rem; 
+      color: #333;
+    }
+    html.dark .blog-article-blockquote {
+      background-color: #2c3032;
+      border-left-color: var(--accent);
+      color: var(--text-light);
+    }
+    .blog-article-cta { 
+      text-align: center;
+      margin-top: 0; /* Adjusted to be part of the wrapper */
+      padding: 2rem;
+      /* background-color: #e9e9ea; No separate background, inherits from wrapper */
+      border-radius: 0 0 8px 8px; /* Rounded bottom corners if wrapper has top rounded */
+    }
+    html.dark .blog-article-cta {
+      /* background-color: #2c3032; No separate background */
+    }
+    .blog-article-cta p {
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+    }
+    .blog-article-main-content-wrapper {
+        background-color: var(--bg-light);
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        margin-top: 2rem; 
+        display: flow-root; /* To contain floated elements */
+    }
+    html.dark .blog-article-main-content-wrapper {
+        background-color: #2c3032; 
+    }
+    .image-text-container { 
+        overflow: auto; /* Clearfix for floated children */
+        margin-bottom: 1.5rem;
+    }
+    .image-container {
+        max-width: 35%; 
+        margin-bottom: 0.5rem; 
+    }
+    .image-container.float-left {
+        float: left;
+        margin-right: 1rem; 
+    }
+    .image-container.float-right {
+        float: right;
+        margin-left: 1rem; 
+    }
+    .image-container img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    @media (max-width: 768px) {
+        .image-container.float-left,
+        .image-container.float-right {
+            float: none;
+            max-width: 80%; 
+            margin-left: auto;
+            margin-right: auto;
             margin-bottom: 1rem;
         }
-        .provider-info h3, .provider-info .credentials, .provider-contact { 
-            text-align: center; 
-        }
-        .provider-info p:not(.credentials) { 
-            text-align: left; 
-        }
-        .psychology-today-embed-wrapper { 
-            text-align: center;
-        }
     }
-
+    /* End Single Article Page Styles */
+    
     footer#contact {
         text-align:center; 
         padding: 2rem 1rem 1rem; 
         background-color: var(--bg-light); 
         position: relative;
         color: var(--text-dark); 
-    }
-    html.dark footer#contact { 
-        background-color: var(--bg-dark); 
-        color: var(--text-light); 
     }
     .footer-logo-container { 
         margin-bottom: 1.5rem; 
@@ -374,6 +379,11 @@
     .footer-text-content { 
         padding: 0; 
     }
+    html.dark footer#contact { 
+        background-color: var(--bg-dark); 
+        color: var(--text-light); 
+    }
+    
     footer#contact p {
         margin-bottom: 0.5rem;
     }
@@ -384,12 +394,10 @@
         color: var(--accent); 
     }
   </style>
-</main>
 </head>
 <body>
 
-  <header id="site-header">
-    <h1 data-aos="fade-down">
+  <header id="site-header"> <h1 data-aos="fade-down">
       <img src="Square Logo.png" alt="Awakenings Logo" class="header-favicon">
       <span class="title-full">Awakenings Mental Health</span>
       <span class="title-short">Awakenings</span>
@@ -403,54 +411,57 @@
   </header>
 
   <main class="container">
-    <h2 class="provider-section-title" data-aos="fade-up">Meet Our Providers</h2>
-    <p class="page-intro" data-aos="fade-up" data-aos-delay="100">
-      At Awakenings Mental Health, our dedicated team of psychiatric mental health nurse practitioners is committed to providing compassionate and comprehensive care. We believe in a collaborative approach, working closely with you to understand your unique needs and develop a personalized treatment plan. Get to know our skilled providers below.
-    </p>
+    <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none" data-aos="fade-up">
+      <path d="M0,0 C300,100 900,0 1200,100 L1200,0 L0,0 Z" fill="var(--bg-light)"/>
+    </svg>
+    <article class="blog-article">
+      <header class="blog-article-header" data-aos="fade-up">
+        <h1 class="blog-article-title">Can Psychiatry Really Help You Take Less Medication?</h1>
+        <p class="blog-article-subtitle" data-aos-delay="100">
+          “Our goal is to untangle the mess of medications so people aren’t treating side‑effects with more meds.” -- Heidi and Talia, Providers at Awakenings
+        </p>
+      </header>
+      
+      <div class="blog-article-main-content-wrapper">
+        <section class="blog-article-content" data-aos="fade-up" data-aos-delay="200">
+          <p>When people picture psychiatry, they often imagine prescription pads flying. A pill for anxiety, another for sleep, another to cancel out the side effects of the first two, and finally yet another pill for the side effects of the third. Every week, we meet someone completely overwhelmed by medications. Some patients come in taking over a dozen different medications. To be clear, there are situations where people do need to take multiple medications and those medications may have side effects that can be treated properly with other medications. Nobody should ever feel ashamed of their treatment, but oftentimes it can be easy to rely too heavily on medication, especially for psychiatrists.</p>
 
-    <section class="provider-profile" data-aos="fade-up" data-aos-delay="200">
-      <div class="provider-photo-container">
-        <img src="Talia Mugshot.png" alt="Talia Sierra, PA-C, DMSc" class="provider-photo">
-      </div>
-      <div class="provider-info">
-        <h3>Talia Sierra</h3>
-        <p class="credentials">PA-C, DMSc</p>
-        <div class="provider-contact">
-            <p><strong>Call or Text:</strong> <a href="tel:2082950297">(208) 295-0297</a></p>
-            <p><strong>Email:</strong> <a href="mailto:talia@awakeningsmentalhealth.com">talia@awakeningsmentalhealth.com</a></p>
-            <p><strong>More About Me:</strong> <a href="https://www.psychologytoday.com/us/psychiatrists/talia-sierra-boise-id/1226261" target="_blank" rel="noopener noreferrer">Psychology Today</a></p>
-        </div>
-        <p>Welcome! Are you ready to embark on your journey to well-being? I provide compassionate, personalized care tailored to meet your unique needs. Mental health can profoundly impact your well-being and I want to help you develop your individual path to healing.</p>
-        <p>As a doctorally trained PA I specialize in understanding the unique nuances of each individual's mental health journey and address concerns such as depression, anxiety, ADHD, bipolar disorder, PTSD, and more. I fully understand the impact mental health disorders can have on all aspects of your life, so reach out and let’s start a conversation!</p>
-        
-        <div class="psychology-today-embed-wrapper">
-            <a href="https://www.psychologytoday.com/profile/1226261" class="sx-verified-seal"></a>
-            <script type="text/javascript" src="https://member.psychologytoday.com/verified-seal.js" data-badge="13" data-id="1226261" data-code="aHR0cHM6Ly93d3cucHN5Y2hvbG9neXRvZGF5LmNvbS9hcGkvdmVyaWZpZWQtc2VhbC9zZWFscy8xMy9wcm9maWxlLzEyMjYyNjE/Y2FsbGJhY2s9c3hjYWxsYmFjaw==" async defer></script>
-        </div>
-      </div>
-    </section>
+          <h3>Why So Many Meds?</h3>
+          <div class="image-text-container">
+            <div class="image-container float-right">
+              <img src="Pills Stock Photo.png" alt="Assortment of pills">
+            </div>
+            <p>Over usage of poly-pharmacy is shockingly common in mental health, and not always for the right reasons. Symptoms snowball, Providers rotate, and side effects get medicated. The result? Plans that are more complicated than the problems they aimed to treat in the first place. We see over-complicated med plans constantly, sometimes providers and patients don’t even know what’s helping and what’s hurting anymore. This leads a lot of people to become distrusting of pharmacology in psychiatry, and rightfully so. That being said, the question then becomes, “what can we do about it?”</p>
+          </div>
+          
+          <h3>The Truth About De-prescribing</h3>
+          <p class="blog-article-blockquote">“How do you know when it’s time to reduce or remove a medication?”</p>
+          <p>The answer is: it depends. There’s no universal formula. We look at clinical data like the PHQ-9 or GAD-7, but they’re just tools. The real indicators come from stability, usually six to twelve months of consistent function, plus the patient’s own awareness of their warning signs and support system.</p>
+          <p>We also have to consider timing. For example, we rarely initiate a major change between Halloween and Valentine’s Day unless someone has a strong support network and loves winter (most people don’t unless they ski or snowboard). Even if symptoms improve quickly, we often recommend staying on a medication for six to nine months before making changes, just to allow the changes to solidify as oftentimes quick results can be deceptive to the lasting effects of changes.</p>
+          <p>It is worth noting that sometimes reducing medication can be scary for patients, especially if they associate them with feeling better. That’s valid. Our job isn’t to force anything—it’s to walk through the options, make sure the risks are managed, and collaborate on what’s next. Like we mentioned in the intro, it isn't uncommon for people to have legitimate needs for a higher number of medications, and taking those medications away too quickly can also cause a lot of harm.</p>
 
-    <section class="provider-profile" data-aos="fade-up" data-aos-delay="100">
-      <div class="provider-photo-container">
-        <img src="Heidi Mugshot.png" alt="Heidi Posey, PA-C" class="provider-photo">
-      </div>
-      <div class="provider-info">
-        <h3>Heidi Posey</h3>
-        <p class="credentials">PA-C</p>
-        <div class="provider-contact">
-            <p><strong>Call or Text:</strong> <a href="tel:2082950297">(208) 295-0297</a></p>
-            <p><strong>Email:</strong> <a href="mailto:heidi@awakeningsmentalhealth.com">heidi@awakeningsmentalhealth.com</a></p>
-            <p><strong>More About Me:</strong> <a href="https://www.psychologytoday.com/us/psychiatrists/heidi-posey-boise-id/1233174" target="_blank" rel="noopener noreferrer">Psychology Today</a></p>
-        </div>
-        <p>Need to be heard? That is what I am here for. To listen and to explore what hasn't worked, and what has. Regardless of diagnosis, I want to help you with whatever symptoms are affecting you the most, and are your priority to address.</p>
-        <p>I am well versed in psychopharmacology and want my patients to understand and feel comfortable with all our options, from prescription medications, supplements to brief psychotherapy; your situation is unique and your needs are too. Whether it's your first time reaching out, or if you want someone new to explore diagnosis and medications, it can be intimidating. Lets take those next steps together today.</p>
-        <div class="psychology-today-embed-wrapper">
-            <a href="https://www.psychologytoday.com/profile/1233174" class="sx-verified-seal"></a>
-            <script type="text/javascript" src="https://member.psychologytoday.com/verified-seal.js" data-badge="13" data-id="1233174" data-code="aHR0cHM6Ly93d3cucHN5Y2hvbG9neXRvZGF5LmNvbS9hcGkvdmVyaWZpZWQtc2VhbC9zZWFscy8xMy9wcm9maWxlLzEyMzMxNzQ/Y2FsbGJhY2s9c3hjYWxsYmFjaw==" async defer></script>
-        </div>
-      </div>
-    </section>
+          <h3>What Else Can I Do?</h3>
+          <div class="image-text-container reverse">
+            <div class="image-container float-right">
+              <img src="Sleep Stock Photo.png" alt="Person sleeping peacefully">
+            </div>
+            <p>Sleep is one of the first things we ask about in every visit. Without good sleep, it’s almost impossible to make progress. We coach patients on behavioral sleep hygiene, and we’ll sometimes recommend Magnesium, L-theanine, or even Light Therapy if seasonal depression is at play (which is common here in Idaho).</p>
+            <p>Exercise is another powerful tool—at least 30 minutes, three times a week, has shown to match or exceed medication benefits for certain types of depression. Nutrition plays a role too. Depending on a patient's situation, we often suggest Fish oil with a high EPA:DHA ratio, Vitamin D supplementation, L-methylfolate for those with MTHFR variants, and again Magnesium for sleep and anxiety management.</p>
+          </div>
+          <p>These supplements aren’t replacements for medication—they’re just a part of the toolbox that makes tapering realistic.</p>
 
+          <h3>What We Want Every Patient (And Therapist) To Know</h3>
+          <p>Medication is just one piece of the picture. Without consistent therapy or some kind of mental health support, medication often falls short. With a heavy respect placed on the patient’s wishes and HIPAA compliance, we occasionally use input from therapists, family members, and anyone else who sees the patient regularly—because as psychiatrists, our time is limited. Even a quick message or observation from a therapist, parent, or loved one can make a huge difference when tapering or adjusting a medication. When collaboration happens, outcomes are better.</p>
+          <p>Every patient is different, that’s why feedback matters so much. If a change in medication doesn’t sit right, or a symptom is more disruptive than we realized, tell us. Our job in psychiatry isn’t just to medicate symptoms—it’s to manage what matters most to the patient; that takes communication, trust, and a shared goal.</p>
+        </section>
+
+        <section class="blog-article-cta" data-aos="fade-up">
+          <p>Medications can be complicated. If you're in need of an experienced psychiatrist, click the button below to fill out our appointment interest form below!</p>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeYABYxDoscWL3jH-SNU51X0hgomcb0bEqshRIUnCRg7aSgA/viewform" class="btn secondary" target="_blank" rel="noopener noreferrer"> Appointment Interest Form </a>
+        </section>
+      </div>
+    </article>
+    <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none"> <path d="M0,100 C300,0 900,100 1200,0 L1200,100 L0,100 Z" fill="var(--bg-light)"/> </svg>
   </main>
 
   <button id="to-top">▲</button>
@@ -465,9 +476,7 @@
     </div>
   </footer>
 
-  <script src="https://unpkg.com/lottie-web@latest/build/player/lottie.min.js"></script> <!-- This script is not used, can be removed -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<main>
 
   <script>
     document.getElementById('current-year').textContent = new Date().getFullYear();
@@ -475,34 +484,25 @@
 
     const toTop = document.getElementById('to-top');
     if (toTop) toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
+    
     const siteHeader = document.getElementById('site-header');
-    const mainContainer = document.querySelector('main.container'); // Get main container
-    const h1Title = siteHeader ? siteHeader.querySelector('h1') : null; 
+    const mainContainer = document.querySelector('main.container');
+    const h1Title = siteHeader ? siteHeader.querySelector('h1') : null;
     const titleFull = h1Title ? h1Title.querySelector('.title-full') : null;
     const titleShort = h1Title ? h1Title.querySelector('.title-short') : null;
     const headerFavicon = h1Title ? h1Title.querySelector('.header-favicon') : null;
 
     const initialHeaderHeightVh = 30;
     const finalHeaderHeightPx = 60;
-
     let initialH1FontSizeRem = 2.5; 
-    if(h1Title) {
-        const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
-        const computedFontSize = parseFloat(getComputedStyle(h1Title).fontSize);
-        if (rootFontSize > 0 && computedFontSize > 0) { 
-            initialH1FontSizeRem = computedFontSize / rootFontSize;
-        }
-    }
-    
     const finalH1DesktopFontSizeRem = 1.5;
     const finalH1MobileFontSizeRem = 1.0; 
-
-    const initialH1ColorHex = "#27296d"; 
-    const finalH1ColorHex = "#FFFFFF";   
-
+    const initialH1ColorHex = "#27296d";
+    const finalH1ColorHex = "#FFFFFF";
     const animationScrollStart = 0;
-    const animationScrollEnd = 100; 
+    const animationScrollEnd = 100;
+    const initialH1ColorRgb = hexToRgb(initialH1ColorHex);
+    const finalH1ColorRgb = hexToRgb(finalH1ColorHex);
 
     function hexToRgb(hex) {
         let r = 0, g = 0, b = 0;
@@ -517,9 +517,6 @@
         }
         return [r, g, b];
     }
-    
-    const initialH1ColorRgb = hexToRgb(initialH1ColorHex);
-    const finalH1ColorRgb = hexToRgb(finalH1ColorHex);
 
     function interpolateValue(start, end, progress) {
         return start + (end - start) * progress;
@@ -536,33 +533,23 @@
     let ticking = false;
 
     function updateHeaderStylesOnScroll(scrollY) {
-      if (!siteHeader || !h1Title || !mainContainer) return; 
-
-      let progress = 0;
-      if (scrollY <= animationScrollStart) {
-        progress = 0;
-      } else if (scrollY >= animationScrollEnd) {
-        progress = 1;
-      } else {
-        progress = (scrollY - animationScrollStart) / (animationScrollEnd - animationScrollStart);
-      }
-      progress = Math.max(0, Math.min(1, progress));
+      if (!siteHeader || !h1Title || !mainContainer) return;
+      let progress = Math.max(0, Math.min(1, (scrollY - animationScrollStart) / (animationScrollEnd - animationScrollStart)));
 
       requestAnimationFrame(() => {
         const initialHeaderActualHeight = (initialHeaderHeightVh / 100) * window.innerHeight;
         const currentHeaderHeight = interpolateValue(initialHeaderActualHeight, finalHeaderHeightPx, progress);
         siteHeader.style.height = `${currentHeaderHeight}px`;
-        mainContainer.style.paddingTop = `${currentHeaderHeight}px`; // Dynamically set padding
+        mainContainer.style.paddingTop = `${currentHeaderHeight}px`;
 
         let targetFinalH1FontSize = window.innerWidth <= 480 ? finalH1MobileFontSizeRem : finalH1DesktopFontSizeRem;
-        let currentInitialH1Size = initialH1FontSizeRem;
-        if (progress === 0 && h1Title.style.fontSize === '') {
-             currentInitialH1Size = initialH1FontSizeRem;
-        } else if (h1Title.style.fontSize) {
-            currentInitialH1Size = parseFloat(h1Title.style.fontSize) || initialH1FontSizeRem;
-        } 
-
-        h1Title.style.fontSize = `${interpolateValue(currentInitialH1Size, targetFinalH1FontSize, progress)}rem`;
+        let currentInitialH1SizeRem = initialH1FontSizeRem;
+        if (progress === 0) {
+            const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+            const h1ComputedSize = parseFloat(getComputedStyle(h1Title).fontSize);
+            if (rootFontSize > 0 && h1ComputedSize > 0) currentInitialH1SizeRem = h1ComputedSize / rootFontSize;
+        }
+        h1Title.style.fontSize = `${interpolateValue(currentInitialH1SizeRem, targetFinalH1FontSize, progress)}rem`;
         
         if (titleFull) titleFull.style.opacity = 1 - progress;
         if (titleShort) titleShort.style.opacity = progress;
@@ -589,7 +576,6 @@
             if (titleShort) titleShort.style.display = 'inline-block';
             if (headerFavicon) headerFavicon.style.display = 'inline-block';
         }
-
         h1Title.style.color = interpolateRgbColor(initialH1ColorRgb, finalH1ColorRgb, progress);
         
         // Apply scrolled-header-layout class earlier for alignment and shadow
@@ -601,13 +587,11 @@
       });
     }
     
-    function setInitialH1FontSize() { 
-        if(h1Title) {
+    function setInitialH1FontSize() {
+        if (h1Title) {
             const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
-            const computedFontSize = parseFloat(getComputedStyle(h1Title).fontSize);
-            if (rootFontSize > 0 && computedFontSize > 0) { 
-                initialH1FontSizeRem = computedFontSize / rootFontSize;
-            }
+            const h1ComputedSize = parseFloat(getComputedStyle(h1Title).fontSize);
+            if (rootFontSize > 0 && h1ComputedSize > 0) initialH1FontSizeRem = h1ComputedSize / rootFontSize;
         }
     }
 
@@ -622,11 +606,11 @@
             ticking = true;
         }
     });
-    window.addEventListener('resize', () => { 
+    window.addEventListener('resize', () => {
         setInitialH1FontSize();
-        updateHeaderStylesOnScroll(window.scrollY); 
+        updateHeaderStylesOnScroll(window.scrollY);
     });
-    document.addEventListener('DOMContentLoaded', () => { 
+    document.addEventListener('DOMContentLoaded', () => {
         setInitialH1FontSize();
         updateHeaderStylesOnScroll(window.scrollY); 
     });
@@ -635,54 +619,18 @@
         document.documentElement.classList.toggle('dark', isDark);
         if (typeof AOS !== 'undefined') AOS.refreshHard(); 
         let currentBg = getComputedStyle(document.documentElement).getPropertyValue(isDark ? '--bg-dark' : '--bg-light').trim();
-        const separators = document.querySelectorAll('.separator path'); 
-        if (separators.length > 0) {
-            separators.forEach(p => p.style.fill = currentBg);
-        }
+        document.querySelectorAll('.separator path').forEach(p => p.style.fill = currentBg);
     };
 
     const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
     applySystemTheme(prefersDarkScheme.matches); 
-    prefersDarkScheme.addEventListener('change', (e) => { 
-        applySystemTheme(e.matches);
-    });
+    prefersDarkScheme.addEventListener('change', (e) => applySystemTheme(e.matches));
     
     window.addEventListener('load', function() {
-      if (typeof AOS !== 'undefined') {
-        setTimeout(function() {
-          AOS.refreshHard(); 
-        }, 1200); 
-      }
-      setInitialH1FontSize(); 
+      if (typeof AOS !== 'undefined') setTimeout(() => AOS.refreshHard(), 1200); 
+      setInitialH1FontSize();
       updateHeaderStylesOnScroll(window.scrollY); 
     });
-
-    const accordionHeaders = document.querySelectorAll('.accordion .acc-header');
-    if (accordionHeaders.length > 0) {
-        accordionHeaders.forEach(btn => {
-          btn.addEventListener('click', () => {
-            btn.classList.toggle('active');
-            const body = btn.nextElementSibling;
-            body.style.maxHeight = btn.classList.contains('active') ? body.scrollHeight + 'px' : '0';
-          });
-        });
-    }
-
-    const lazyIframes = document.querySelectorAll('iframe.lazy-embed');
-    if (lazyIframes.length > 0) {
-        lazyIframes.forEach(iframe => { 
-          if (iframe.classList.contains('skeleton')) { 
-              iframe.addEventListener('load', () => {
-                  iframe.classList.remove('skeleton');
-                  if (typeof AOS !== 'undefined') { 
-                    AOS.refresh(); 
-                  }
-              });
-          }
-        });
-    }
   </script>
-  <script src="js/main.js" defer></script>
-</main>
 </body>
 </html>
