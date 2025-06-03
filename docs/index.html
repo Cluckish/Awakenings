@@ -520,6 +520,11 @@
       progress = Math.max(0, Math.min(1, progress));
 
       requestAnimationFrame(() => {
+        // Get initial h1 width when progress is 0 for accurate centering calculation later
+        // This assumes h1 content doesn't drastically change width before this animation starts
+        const h1InitialOffsetWidth = h1Title.offsetWidth; 
+        const siteHeaderWidth = siteHeader.offsetWidth;
+
         const initialHeaderActualHeight = (initialHeaderHeightVh / 100) * window.innerHeight;
         const currentHeaderHeight = interpolateValue(initialHeaderActualHeight, finalHeaderHeightPx, progress);
         siteHeader.style.height = `${currentHeaderHeight}px`;
@@ -607,9 +612,19 @@
 
         // H1 text color transitions from initial (blue) to final (white)
         h1Title.style.color = interpolateRgbColor(initialH1ColorRgb, finalH1ColorRgb, progress);
+
+        // Animate H1 horizontal position
+        const initialH1X = (siteHeaderWidth / 2) - (h1InitialOffsetWidth / 2); // Centered position
+        const finalH1X = parseFloat(getComputedStyle(siteHeader).paddingLeft); // Align with left padding
+        
+        // Only apply translateX if h1Title is not null and siteHeaderWidth is available
+        if (h1Title && siteHeaderWidth > 0) {
+            const currentH1X = interpolateValue(initialH1X, finalH1X, progress);
+            h1Title.style.transform = `translateX(${currentH1X - initialH1X}px)`; // Translate from its natural centered flow
+        }
         
         // Apply scrolled-header-layout class for alignment and shadow
-        // Changed threshold from 0.1 to 0.5 for a smoother horizontal transition
+        // Threshold can remain at 0.5 or be adjusted; main movement is now translateX
         if (progress > 0.5) { 
           siteHeader.classList.add('scrolled-header-layout');
           if (navElement) {
