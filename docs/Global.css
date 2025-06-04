@@ -190,13 +190,28 @@
       box-shadow: 0 3px 6px rgba(0,0,0,0.15);
     }
 
-    h2 { 
-      font-family: 'Dancing Script', cursive; font-weight: 600;
-      color: var(--theme-blue-static);
-      text-align: center; 
-      margin-bottom: 2rem; 
-      font-size: 2.2rem; 
-    }
+h2 {
+  font-family: 'Dancing Script', cursive; font-weight: 600;
+  color: var(--theme-blue-static);
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2.2rem;
+}
+
+h3 {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 600;
+  font-size: 1.8rem; /* A bit smaller than h2 */
+  color: var(--text-light); /* Light text for dark background */
+  background-color: var(--primary); /* Dark background */
+  padding: 0.75rem 1.25rem;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Drop shadow */
+  border-bottom: 3px solid var(--theme-blue-static); /* Line matching h1 text color */
+  margin-top: 2rem; /* Space above */
+  margin-bottom: 1.5rem; /* Space below (after border) */
+  text-align: center; /* Consistent with h2 */
+}
     #testimonials h2, #location h2, #booking h2, 
     #services h2, 
     #insurance h2 { 
