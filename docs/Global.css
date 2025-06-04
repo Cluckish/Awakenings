@@ -8,7 +8,7 @@
       --bg-dark: #1D2021;
       --text-light: #F0F3F4;
       --text-bg-light: #386dc9;
-      --text-bg-dark: #2c3032;
+      --text-bg-dark: #000000;
     }
 
     html.dark {
@@ -200,6 +200,10 @@ h2 {
   text-align: center;
   margin-bottom: 2rem;
   font-size: 2.2rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 6px;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 h3 {
