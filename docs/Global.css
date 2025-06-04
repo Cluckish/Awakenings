@@ -278,7 +278,8 @@ h3 {
         background-color: var(--theme-blue-static);
     }
     #services .card .content p,
-    #services .card .content { /* Ensure text within content div is also white */
+    #services .card .content { 
+      background-color: var(--primary);/* Ensure text within content div is also white */
         color: white;
     }
 
@@ -287,6 +288,7 @@ h3 {
     }
     html.dark #services .card .content p,
     html.dark #services .card .content {
+        background-color: var(--primary);
         color: white; /* Ensure text is readable in dark mode */
     }
     .card .content { padding: 1rem; }
