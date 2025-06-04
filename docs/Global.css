@@ -279,8 +279,9 @@ h3 {
     }
     #services .card .content p,
     #services .card .content { 
-      background-color: var(--text-bg-light);/* Ensure text within content div is also white */
+       background-color: var(--text-bg-light);/* Ensure text within content div is also white */
        color: white;
+       border-radius: 8px;
     }
 
     html.dark #services .card {
@@ -289,7 +290,8 @@ h3 {
     html.dark #services .card .content p,
     html.dark #services .card .content {
         background-color: var(--text-bg-dark);
-        color: white; /* Ensure text is readable in dark mode */
+        color: white; 
+        border-radius: 8px;/* Ensure text is readable in dark mode */
     }
     .card .content { padding: 1rem; }
     /* Buttons */
