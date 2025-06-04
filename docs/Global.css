@@ -7,12 +7,15 @@
       --theme-blue-static: #27296d;
       --bg-dark: #1D2021;
       --text-light: #F0F3F4;
+      --text-bg-light: #386dc9;
+      --text-bg-dark: #2c3032;
     }
 
     html.dark {
       --bg-light: var(--bg-dark);
       --text-dark: var(--text-light);
       --heading-color: var(--text-light);
+      --text-bg-light: var(--text-bg-dark)
     }
 
     html.dark .testimonial-card { background: #2c3032; }
@@ -192,8 +195,8 @@
 
 h2 {
   font-family: 'Dancing Script', cursive; font-weight: 600;
-  color: var(--theme-blue-static);
-  background-color: var(--bg-light);
+  color: var(--text-light);
+  background-color: var(--text-bg-light);
   text-align: center;
   margin-bottom: 2rem;
   font-size: 2.2rem;
@@ -203,7 +206,7 @@ h3 {
   font-family: 'Dancing Script', cursive;
   font-weight: 600;
   font-size: 1.8rem; /* A bit smaller than h2 */
-  color: var(--text-light); /* Light text for dark background */
+  color: var(--text-dark); /* Light text for dark background */
   background-color: var(--bg-light); /* Dark background */
   padding: 0.75rem 1.25rem;
   border-radius: 6px;
