@@ -141,6 +141,7 @@
       text-align: left; /* Keep this for final state */
       /* background-color will be interpolated to transparent by JS */
       /* padding is now constant */
+      border: none;
       box-shadow: none; /* Remove box shadow in scrolled state */
     }
 
@@ -273,6 +274,21 @@ h3 {
       border-radius: var(--radius) var(--radius) 0 0;
     }
     #services .card header { text-align: center; } 
+    #services .card {
+        background-color: var(--theme-blue-static);
+    }
+    #services .card .content p,
+    #services .card .content { /* Ensure text within content div is also white */
+        color: white;
+    }
+
+    html.dark #services .card {
+        background-color: var(--theme-blue-static); /* Override general dark mode card background */
+    }
+    html.dark #services .card .content p,
+    html.dark #services .card .content {
+        color: white; /* Ensure text is readable in dark mode */
+    }
     .card .content { padding: 1rem; }
     /* Buttons */
     .btn,
