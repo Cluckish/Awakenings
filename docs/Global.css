@@ -1,21 +1,30 @@
 :root {
       --primary: #2F3E46;
-      --accent: #E07A5F;
+      --accent: #d96b4c;          /* darker for AA contrast              */
       --bg-light: #f1f1f2;
       --text-dark: #1c1c1c;
       --heading-color: #27296d;
       --theme-blue-static: #27296d;
+
       --bg-dark: #1D2021;
       --text-light: #F0F3F4;
       --text-bg-light: #386dc9;
       --text-bg-dark: #000000;
+
+      /* new design-token additions */
+      --radius: 0.75rem;
+      --shadow-elevated: 0 4px 12px rgba(0,0,0,.05);
+
+      /* smooth theme switching */
+      transition: background .25s,color .25s;
     }
 
     html.dark {
       --bg-light: var(--bg-dark);
       --text-dark: var(--text-light);
       --heading-color: var(--text-light);
-      --text-bg-light: var(--text-bg-dark)
+      --text-bg-light: var(--text-bg-dark);
+      transition: background .25s,color .25s;
     }
 
     html.dark .testimonial-card { background: #2c3032; }
@@ -179,13 +188,13 @@
       border-radius: 25px; /* Rounded bubbles */
       background-color: rgba(220, 220, 220, 0.9); /* Light bubble background for unscrolled - increased opacity */
       color: var(--theme-blue-static); /* Text color for unscrolled */
-      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
       transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
     }
     .scrolled-header-layout nav .nav-link { 
         color: white !important;
         background-color: rgba(255, 255, 255, 0.45); /* Slightly different bubble for scrolled - increased opacity */
-        box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     nav .nav-link:hover { 
       color: var(--accent); 
@@ -198,7 +207,7 @@ h2 {
   color: var(--text-light);
   background-color: var(--text-bg-light);
   margin-bottom: 2rem;
-  font-size: 2.2rem;
+  font-size: clamp(1.75rem, 3vw + 1rem, 2.4rem);
   padding: 0.75rem 1.25rem;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
@@ -210,7 +219,7 @@ h2 {
 h3 {
   font-family: 'Dancing Script', cursive;
   font-weight: 600;
-  font-size: 1.8rem; /* A bit smaller than h2 */
+  font-size: clamp(1.4rem,  2vw + 1rem, 1.8rem);
   color: var(--text-dark); /* Light text for dark background */
   background-color: var(--bg-light); /* Dark background */
   padding: 0.75rem 1.25rem;
@@ -237,29 +246,48 @@ h3 {
       padding: 2rem 1rem 100px; 
     }
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 2rem; align-items: start; margin-bottom: 3rem; }
-    .card { background: var(--bg-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
+    /* Card component */
+    .card {
+        background: white;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-elevated);
+        padding: 2rem;
+    }
     .card.no-dark-override {}
     .card header { 
       padding: 1rem; 
       background: var(--theme-blue-static); 
       color: white; 
       font-family: 'Dancing Script', cursive; font-weight: 600; font-size: 1.4rem; 
+      border-radius: var(--radius) var(--radius) 0 0;
     }
     #services .card header { text-align: center; } 
     .card .content { padding: 1rem; }
-    .btn { 
-      display: inline-block; 
-      background: var(--theme-blue-static); 
-      color: white; 
-      padding: 0.75rem 1.5rem; border-radius: 4px; text-decoration: none; 
-      font-weight: 600; margin: 0.5rem; 
-      transition: background-color .2s, color .2s, opacity .3s; 
+    /* Buttons */
+    .btn,
+    .btn.secondary {
+        display: inline-block;
+        border-radius: var(--radius);
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        /* Existing styles to merge/adapt */
+        background: var(--theme-blue-static); 
+        color: white; 
+        text-decoration: none; 
+        margin: 0.5rem; 
+        transition: background-color .2s, color .2s, opacity .3s, transform .2s; /* Added transform */
     }
-    .btn.secondary { 
-      background: var(--theme-blue-static); 
+    .btn:hover { opacity: .9; } /* Keep existing hover or adapt if new one is provided */
+    .btn:active {
+        transform: scale(.98);          /* tactile feedback */
+        /* Merge existing active styles */
+        background-color: var(--bg-light); 
+        color: var(--theme-blue-static);    
+        opacity: 1;
     }
-    .btn:hover { opacity: .9; }
-    .btn:active, .btn.secondary:active { 
+    /* Ensure .btn.secondary:active also gets the tactile feedback if desired, or specific styles */
+    .btn.secondary:active {
+        transform: scale(.98);
         background-color: var(--bg-light); 
         color: var(--theme-blue-static);    
         opacity: 1;
@@ -499,6 +527,86 @@ h3 {
       align-self: center; 
     }
     */
+
+    /* …——— EXISTING RESET / BASE / LAYOUT RULES REMAIN UNCHANGED ——… */
+
+    /* Navigation */
+    /* Note: Existing nav .nav-link and .scrolled-header-layout nav .nav-link are more specific for header context.
+       These new .nav-link styles might be for other navigation elements or a general fallback. */
+    .nav-link {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        text-decoration: none;
+    }
+    .nav-link:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+    }
+    .nav-link.scrolled { /* This seems specific to a non-header nav that can be scrolled */
+        background: rgba(255,255,255,.35);
+        backdrop-filter: blur(6px);
+    }
+
+    /* Typography — fluid with clamp() */
+    /* Note: h2 and h3 were updated previously. This h1 is a general one. */
+    h1 { font-size: clamp(2.2rem, 4vw + 1rem, 3.2rem); }
+    /* h2 and h3 are already defined with clamp elsewhere */
+
+    /* Natural vertical rhythm helper */
+    .flow > * + * { margin-top: var(--flow-space, 1.5rem); }
+
+    /* Aspect-ratio utility */
+    .ratio-16x9 { aspect-ratio: 16/9; width: 100%; }
+
+    /* Elevated shadows consolidated */
+    /* Note: Some of these might already have shadows, this standardizes them or adds to new elements */
+    .testimonial-card, /* Already has shadow, this might update it or be redundant if var(--shadow-elevated) is same as old */
+    #to-top, /* Already has shadow */
+    .accordion .acc-header, /* Already has background, this adds/standardizes shadow */
+    html.dark .card:not(.no-dark-override){ /* This selector is already defined for dark mode background, this adds shadow var */
+        box-shadow: var(--shadow-elevated);
+    }
+
+    /* Subtle card hover */
+    .card:hover {
+        transform: scale(1.02);
+        transition: transform .2s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* Header shrink animation with Scroll-Timeline */
+    @keyframes shrink {
+      0%   { --logo-scale: 1;   --nav-alpha: 0; }
+      100% { --logo-scale: .55; --nav-alpha: 1; }
+    }
+    header#site-header { /* Applying animation to existing header */
+      animation: shrink auto linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 200px;
+      /* Ensure this doesn't conflict with existing transitions on header#site-header */
+      /* Existing: transition: box-shadow 0.15s ease, height 0.05s ease; */
+      /* It's generally okay for animations and transitions to co-exist but be mindful of property conflicts */
+    }
+
+
+    /* Reduced-motion preferences respected */
+    @media (prefers-reduced-motion: reduce) {
+      .animated { transition: none !important; }
+      /* Also consider disabling animations if .animated is not the only class used for animations */
+      header#site-header {
+        animation: none !important;
+      }
+      .card:hover {
+        transform: none !important;
+        transition: none !important;
+      }
+       /* Add other elements with transitions/animations here if needed */
+    }
+
+    /* Dark-mode accent tint refinement */
+    html.dark {
+      --accent: #c05e3d;
+    }
 
     /* ======================== MOBILE OPTIMISATIONS (<600px) ======================== */
     @media (max-width: 600px) {
