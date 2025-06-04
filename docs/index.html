@@ -6,6 +6,7 @@
   <title>Awakenings Mental Health</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- original styles and any inline CSS below -->
   <style>
     :root {
@@ -320,83 +321,128 @@
         color: var(--accent); 
     }
 
+    /* .mobile-menu-button class is no longer used by the new icon link. 
+       Keeping it commented out or removing it. For now, let's effectively remove it by commenting.
     .mobile-menu-button {
-      display: none; /* Hidden by default, shown in media query */
+      display: none; 
       background-color: transparent;
       border: none;
       color: #fff;
       font-size: 28px; 
       padding: 0.25rem 0.5rem; 
       cursor: pointer;
-      line-height: 1; /* Ensure consistent height */
-      align-self: center; /* Align with h1 if header is flex container */
+      line-height: 1; 
+      align-self: center; 
     }
+    */
 
     /* ======================== MOBILE OPTIMISATIONS (<600px) ======================== */
     @media (max-width: 600px) {
       header#site-header {
-        position: sticky;
+        position: sticky; /* Retain sticky behavior */
         top: 0;
-        height: 80px;
-        backdrop-filter: blur(8px);
-        background: rgba(39, 41, 109, 0.92);
+        /* height: 80px; Let content define height with padding */
+        background-color: var(--theme-blue-static); /* Header bar background */
         box-shadow: 0 2px 6px rgba(0,0,0,.16);
-        padding: 0 0.75rem;
+        padding: 0.5rem 0.75rem; /* Consistent padding */
         z-index: 2000;
-        display: flex; /* Added for layout */
-        justify-content: space-between; /* Added for layout */
-        align-items: center; /* Added for layout */
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        position: relative; /* For absolute positioning of icon and dropdown */
       }
-      header#site-header h1 {
+      header#site-header h1 { /* This is the "logo" part */
         font-size: 1.6rem;
-        background: var(--theme-blue-static); /* Changed background */
+        background: transparent; /* h1 itself is transparent, header bar has color */
         color: #fff;
         box-shadow: none;
-        padding: 0.4rem 0.8rem; /* Added padding for box effect */
-        border-radius: 6px; /* Added border-radius */
-        /* margin-right: auto; /* Pushes button to the right, or remove if space-between on header works better */
+        padding: 0.4rem 0; /* Vertical padding, no horizontal as header has it */
+        border-radius: 0;
+        margin: 0; /* Remove default margin */
+        display: flex; /* Align icon and text within h1 */
+        align-items: center;
+        flex-grow: 1; /* Allow it to take space */
       }
       .title-secondary-words { display: none; }
-      .header-favicon { width: 40px; height: 40px; margin-right: 6px; opacity: 1 !important; }
+      .header-favicon { 
+        width: 36px; 
+        height: 36px; 
+        margin-right: 8px; 
+        opacity: 1 !important; 
+      }
       
-      .mobile-menu-button {
-        display: block; /* Show on mobile */
+      /* Hide the old mobile-menu-button if it was ever displayed by other rules */
+      .mobile-menu-button { /* This was the old button, ensure it's hidden */
+        display: none !important;
       }
 
-      nav#main-nav { /* Target by ID now */
-        display: flex; /* Use flex for vertical stacking */
-        flex-direction: column;
+      /* Styling for the new Font Awesome icon link */
+      .mobile-menu-icon {
+        display: block; /* Make it visible on mobile */
+        background: transparent; /* Or a subtle background like var(--accent) if preferred */
+        color: white;
+        padding: 10px 12px; /* Clickable area */
+        text-decoration: none;
+        font-size: 22px; /* Size of the fa-bars icon */
         position: absolute;
-        top: 80px; /* Height of the header */
+        right: 0.75rem; /* Align with header padding */
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+      }
+      .mobile-menu-icon:hover {
+        background-color: var(--accent); /* Hover effect */
+        color: white;
+      }
+      
+      /* Container for the dropdown links */
+      #mobile-nav-links {
+        display: none; /* Hidden by default, toggled by JS */
+        position: absolute;
+        top: 100%; /* Position it right below the header */
         left: 0;
         right: 0;
-        background-color: var(--theme-blue-static);
-        box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-        z-index: 1999;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.35s ease-in-out;
+        background-color: var(--theme-blue-static); /* Dropdown background */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        z-index: 1990; /* Below header, above main content */
       }
-      nav#main-nav.mobile-nav-open {
-        max-height: 500px; /* Adjust as needed to fit all links */
-      }
-      nav#main-nav .nav-link {
+
+      #mobile-nav-links .nav-link {
         display: block;
-        font-size: 1.1rem; 
-        padding: 1rem 1.5rem; 
-        text-align: center;
-        color: #fff;
+        color: white;
+        padding: 14px 16px;
         text-decoration: none;
-        border-bottom: 1px solid rgba(255,255,255,0.15);
-        width: 100%;
+        font-size: 17px;
+        text-align: left; /* As per example, or center */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separator */
       }
-      nav#main-nav .nav-link:last-child {
+      #mobile-nav-links .nav-link:last-child {
         border-bottom: none;
       }
-      nav#main-nav .nav-link:hover {
-        background-color: rgba(255,255,255,0.1);
+      #mobile-nav-links .nav-link:hover {
+        background-color: var(--accent); /* Use accent for hover */
+        color: white;
       }
-      main.container { padding-top: 80px; }
+
+      /* Remove old nav#main-nav specific styles for mobile as it's now just a container */
+      nav#main-nav { 
+        /* display: flex; */ /* No longer needed here */
+        /* flex-direction: column; */
+        /* position: absolute; */
+        /* top: 80px; */
+        /* left: 0; */
+        /* right: 0; */
+        /* background-color: var(--theme-blue-static); */
+        /* box-shadow: 0 3px 6px rgba(0,0,0,0.2); */
+        /* z-index: 1999; */
+        /* max-height: 0; */
+        /* overflow: hidden; */
+        /* transition: max-height 0.35s ease-in-out; */
+        /* These styles are now on #mobile-nav-links or not needed */
+      }
+      /* nav#main-nav.mobile-nav-open { max-height: 500px; } */ /* Class will be on #mobile-nav-links if needed, or just display:block */
+      
+      main.container { padding-top: 70px; } /* Adjust if header height changed */
     }
   </style>
 </head>
@@ -407,11 +453,13 @@
       <span class="title-main-word">Awakenings</span>
       <span class="title-secondary-words">Mental&nbsp;Health</span>
     </h1>
-    <button id="mobile-menu-toggle" class="mobile-menu-button">☰</button>
+    <a href="javascript:void(0);" class="icon mobile-menu-icon" onclick="toggleMobileMenu()"><i class="fa fa-bars"></i></a>
     <nav id="main-nav">
-      <a href="index.html" class="nav-link" target="_top">Home</a>
+      <div id="mobile-nav-links">
+        <a href="index.html" class="nav-link" target="_top">Home</a>
       <a href="our-providers.html" class="nav-link" target="_top">Our Providers</a>
       <a href="articles.html" class="nav-link" target="_top">Articles</a>
+      </div>
     </nav>
   </header>
 
@@ -761,6 +809,19 @@
     }
     // End of constants needed by merged function
 
+    // New JavaScript function for mobile menu toggle
+    function toggleMobileMenu() {
+      var linksContainer = document.getElementById("mobile-nav-links");
+      var iconElement = document.querySelector(".mobile-menu-icon .fa");
+      if (linksContainer.style.display === "block") {
+        linksContainer.style.display = "none";
+        if(iconElement) iconElement.className = "fa fa-bars"; // Change back to bars
+      } else {
+        linksContainer.style.display = "block";
+        if(iconElement) iconElement.className = "fa fa-times"; // Change to X
+      }
+    }
+
     window.addEventListener('scroll', () => {
       lastKnownScrollY = window.scrollY;
       if (!ticking) {
@@ -781,37 +842,45 @@
       // Call updateHeaderStylesOnScroll on DOMContentLoaded like in old script
       updateHeaderStylesOnScroll(window.scrollY);
 
-      const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-      const mainNav = document.getElementById('main-nav');
+      // Remove old JavaScript for mobileMenuToggle and mainNav.classList.toggle
+      // const mobileMenuToggle = document.getElementById('mobile-menu-toggle'); // This ID is gone
+      // const mainNav = document.getElementById('main-nav'); // mainNav is still there, but #mobile-nav-links is toggled
 
-      if (mobileMenuToggle && mainNav) {
-        mobileMenuToggle.addEventListener('click', () => {
-          mainNav.classList.toggle('mobile-nav-open');
-          if (mainNav.classList.contains('mobile-nav-open')) {
-            mobileMenuToggle.innerHTML = '&times;'; // Change to 'X' icon
-          } else {
-            mobileMenuToggle.innerHTML = '☰'; // Change back to hamburger
-          }
-        });
+      // if (mobileMenuToggle && mainNav) { ... } // Old logic removed
 
-        mainNav.querySelectorAll('.nav-link').forEach(link => {
+      // New: Close menu if a link inside is clicked (for the new structure)
+      const mobileNavLinksContainer = document.getElementById('mobile-nav-links');
+      if (mobileNavLinksContainer) {
+        mobileNavLinksContainer.querySelectorAll('.nav-link').forEach(link => {
           link.addEventListener('click', () => {
-            if (mainNav.classList.contains('mobile-nav-open')) {
-              mainNav.classList.remove('mobile-nav-open');
-              mobileMenuToggle.innerHTML = '☰';
+            if (mobileNavLinksContainer.style.display === "block") {
+              // Check if the icon exists before trying to change it
+              const iconElement = document.querySelector(".mobile-menu-icon .fa");
+              if (iconElement) {
+                 iconElement.className = "fa fa-bars"; // Change back to bars
+              }
+              mobileNavLinksContainer.style.display = "none";
             }
           });
         });
-
-        document.addEventListener('click', (event) => {
-          if (mainNav.classList.contains('mobile-nav-open') && 
-              !mainNav.contains(event.target) && 
-              !mobileMenuToggle.contains(event.target)) {
-            mainNav.classList.remove('mobile-nav-open');
-            mobileMenuToggle.innerHTML = '☰';
-          }
-        });
       }
+      
+      // New: Close menu if clicked outside (for the new structure)
+      // Note: The icon itself has an onclick, so it handles its own toggle.
+      // This listener is for clicks *outside* the menu and *not* on the icon.
+      document.addEventListener('click', (event) => {
+        const mobileMenuIcon = document.querySelector('.mobile-menu-icon');
+        if (mobileNavLinksContainer && mobileNavLinksContainer.style.display === 'block') {
+          if (!mobileNavLinksContainer.contains(event.target) && !(mobileMenuIcon && mobileMenuIcon.contains(event.target))) {
+            mobileNavLinksContainer.style.display = 'none';
+            const iconElement = document.querySelector(".mobile-menu-icon .fa");
+            if (iconElement) {
+              iconElement.className = "fa fa-bars"; // Change back to bars
+            }
+          }
+        }
+      });
+
 
       // Accordion logic from old script
       const accordionHeaders = document.querySelectorAll('.accordion .acc-header');
