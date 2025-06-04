@@ -193,7 +193,7 @@
 h2 {
   font-family: 'Dancing Script', cursive; font-weight: 600;
   color: var(--theme-blue-static);
-  background-color: var(--accent);
+  background-color: var(--bg-light);
   text-align: center;
   margin-bottom: 2rem;
   font-size: 2.2rem;
@@ -204,7 +204,7 @@ h3 {
   font-weight: 600;
   font-size: 1.8rem; /* A bit smaller than h2 */
   color: var(--text-light); /* Light text for dark background */
-  background-color: var(--primary); /* Dark background */
+  background-color: var(--bg-light); /* Dark background */
   padding: 0.75rem 1.25rem;
   border-radius: 6px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Drop shadow */
