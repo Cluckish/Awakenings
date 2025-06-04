@@ -310,6 +310,90 @@
         color: var(--accent); 
     }
 
+    /* Styles for Provider Page Enhancements */
+    .provider-specialties {
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .provider-specialties h4 {
+      font-family: 'Inter', sans-serif; /* Match other subheadings */
+      font-size: 1.2rem; /* Slightly larger for emphasis */
+      color: var(--heading-color);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .provider-specialties ul {
+      list-style: none;
+      padding-left: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem; /* Spacing between tags */
+    }
+
+    .provider-specialties li {
+      background-color: var(--accent);
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 15px; /* Pill shape */
+      font-size: 0.9rem;
+      font-weight: 500;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    html.dark .provider-specialties h4 {
+      color: var(--text-light);
+    }
+
+    html.dark .provider-specialties li {
+      background-color: var(--primary); /* Dark mode tag color */
+      /* color: var(--text-light); /* Ensure text is readable - white is fine */
+      box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
+
+    .btn-provider-action {
+      display: inline-block;
+      background: var(--accent);
+      color: white !important; /* Ensure text color overrides any link styles */
+      padding: 0.8rem 1.6rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      margin-top: 1rem;
+      text-align: center;
+      transition: background-color .2s, opacity .3s, transform .2s;
+      border: none; /* Ensure it looks like a button */
+      cursor: pointer;
+    }
+
+    .btn-provider-action:hover {
+      opacity: .85;
+      background-color: #D46A4F; /* Slightly darker accent */
+      transform: translateY(-2px); /* Subtle lift effect */
+    }
+
+    .btn-provider-action:active {
+      background-color: var(--bg-light);
+      color: var(--accent) !important;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    html.dark .btn-provider-action {
+      background: var(--accent);
+    }
+
+    html.dark .btn-provider-action:hover {
+      background-color: #C05F3E;
+    }
+
+    html.dark .btn-provider-action:active {
+      background-color: var(--bg-dark);
+      color: var(--accent) !important;
+    }
+    /* End of Styles for Provider Page Enhancements */
+
     /* .mobile-menu-button class is no longer used by the new icon link. 
        Keeping it commented out or removing it. For now, let's effectively remove it by commenting.
     .mobile-menu-button {
