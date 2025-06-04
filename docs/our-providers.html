@@ -8,438 +8,87 @@
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <!-- original styles and any inline CSS below -->
+  <!-- Link to global stylesheet -->
+  <link rel="stylesheet" href="GlobalCss.txt">
+  <!-- Page-specific styles for Our Providers -->
   <style>
-    :root {
-      --primary: #2F3E46;
-      --accent: #E07A5F;
-      --bg-light: #f1f1f2;
-      --text-dark: #1c1c1c;
-      --heading-color: #27296d;
-      --theme-blue-static: #27296d;
-      --bg-dark: #1D2021;
-      --text-light: #F0F3F4;
+    .page-intro {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
     }
-
-    html.dark {
-      --bg-light: var(--bg-dark);
-      --text-dark: var(--text-light);
-      --heading-color: var(--text-light);
-    }
-
-    html.dark .testimonial-card { background: #2c3032; }
-    html.dark .card:not(.no-dark-override){ 
-        background: #272b2c; 
-        box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
-    }
-    html.dark .card header,
-    html.dark .accordion .acc-header,
-    html.dark .btn, html.dark .btn.secondary, 
-    html.dark #to-top {
-        background: var(--theme-blue-static); 
-        color: white; 
-    }
-    html.dark .accordion .acc-header.active {
-        background: var(--accent);
-    }
-    html.dark .accordion .acc-body { background: #2c3032; }
-    html.dark .skeleton { background: #444; }
-    html.dark .separator path { fill: var(--bg-dark); } 
-    
-    html.dark .btn:active, html.dark .btn.secondary:active, html.dark #to-top:active {
-        background-color: var(--bg-dark); 
-        color: var(--text-light);    
-    }
-    html.dark footer#contact { 
+    html.dark .page-intro {
         color: var(--text-light);
-        background-color: var(--bg-dark); 
     }
-    html.dark footer#contact .footer-text-content a {
-        color: var(--accent); 
+    .provider-profile {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+      padding: 1.5rem;
+      background-color: var(--bg-light);
+      border-radius: 8px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+      transition: background-color 0.3s, box-shadow 0.3s;
     }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Inter', sans-serif; 
-      background: var(--bg-light); color: var(--text-dark);
-      line-height: 1.6; transition: background .3s, color .3s;
-      overflow-x: hidden; 
+    html.dark .provider-profile {
+        background-color: var(--bg-dark);
+        box-shadow: 0 3px 10px rgba(0,0,0,0.2);
     }
-    header#site-header {
-      position: fixed; top: 0; left: 0; width: 100%;
-      /* Sketch image moved to ::before pseudo-element */
-      background-color: transparent; /* Ensure initial background is transparent */
-      display: flex; align-items: center; 
-      /* background-image transition removed, handled by ::before opacity */
-      /* background-color transition removed, will be handled by JS */
-      transition: box-shadow 0.15s ease, height 0.05s ease; /* Removed justify-content from transition */
-      z-index: 1000; padding: 0 1rem; 
-      justify-content: flex-start; /* Default to flex-start for h1 positioning */
+    .provider-photo-container {
+      flex-shrink: 0;
+      text-align: center;
     }
-
-    /* New pseudo-element for the sketch image background */
-    header#site-header::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: url('Wide Awakenings Building Sketch.png') center/cover no-repeat;
-      opacity: var(--header-bg-image-opacity, 1); /* Use CSS variable */
-      transition: opacity 0.3s ease;
-      z-index: -2; /* Behind the ::after overlay and content */
+    .provider-photo {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--theme-blue-static);
     }
-
-    header#site-header::after { 
-      content: ''; position: absolute; inset: 0;
-      background: rgba(47,62,70,0.2); /* Overlay for the sketch */
-      z-index: -1; /* Above ::before, below content */
-      transition: opacity 0.3s ease; 
-      opacity: var(--header-bg-overlay-opacity, 1); /* Use CSS variable */
+    .provider-info {
+      flex-grow: 1;
     }
-    /* :not(.scrolled-header-layout) no longer needed for justify-content */
-    
-    .scrolled-header-layout {
-      /* justify-content: space-between !important; -- No longer needed here for h1, nav is absolute */
-      align-items: center !important; 
-      /* background-image: none; -- No longer needed, ::before opacity handles this */
-      /* background-color: var(--theme-blue-static); -- Removed, JS will handle background color animation */
-      box-shadow: 0 2px 8px rgba(0,0,0,.2);
-    }
-
-    /* When scrolled, fade out the sketch image and its overlay */
-    /* .scrolled-header-layout::before,
-    .scrolled-header-layout::after {
-        opacity: 0; 
-    } */
-
-    header#site-header h1 {
-      position: relative; 
-      font-family: 'Dancing Script', cursive; font-weight: 600;
-      z-index: 1; 
-      margin: 0; 
-      display: flex; 
-      align-items: center; 
-      /* transition for properties changed by JS/scroll - background-color and padding removed as JS will handle them */
-      transition: font-size 0.3s ease, color 0.3s ease;
-    }
-
-    /* Base styles for H1, including the rounded box properties */
-    header#site-header h1 {
-      font-size: 3.2rem; /* Initial font size */
-      background-color: rgba(220, 220, 220, 0.85); /* Initial silverish background */
-      padding: 0.5rem 1rem; /* Constant padding for the box */
-      border-radius: 8px; /* Constant border-radius */
-      color: var(--theme-blue-static); /* Initial text color */
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Initial shadow for the box */
-      /* position: relative; font-family, z-index etc. are already set above */
-    }
-
-    /* Styles for H1 when header is scrolled (mostly handled by JS now) */
-    .scrolled-header-layout h1 {
-      /* font-size will be interpolated by JS */
-      /* line-height: 1.2; */ /* Can be kept or removed if JS handles size well */
-      /* color will be interpolated by JS to white */
-      text-align: left; /* Keep this for final state */
-      /* background-color will be interpolated to transparent by JS */
-      /* padding is now constant */
-      box-shadow: none; /* Remove box shadow in scrolled state */
-    }
-
-    .header-favicon {
-      display: inline-block; 
-      opacity: 0; 
-      /* width and height will be controlled by JS */
-      margin-right: 10px; 
-      vertical-align: middle; 
-    }
-    header#site-header h1 .title-short { 
-      display: inline-block; 
-      opacity: 0; 
-      vertical-align: middle;
-    }
-    header#site-header h1 .title-full { 
-      display: inline-block;
-      opacity: 1; 
-      vertical-align: middle;
-    }
-
-    header#site-header nav { 
-      position: absolute; 
-      top: 1rem; /* Default unscrolled top */
-      right: 1rem; /* Default unscrolled right */
-      z-index: 1002; 
-      display: flex; 
-      align-items: center; /* Vertically center links within the nav block */
-      gap: 0.6rem; /* Consistent gap */
-      transition: top 0.3s ease, right 0.3s ease, opacity 0.3s ease; /* For smooth movement */
-    }
-    .scrolled-header-layout nav { 
-      /* position: absolute; is inherited */
-      /* display: flex; align-items: center; gap: 0.6rem; are inherited */
-      /* top and right will be controlled by JavaScript for scrolled state */
-      /* height: 100%; removed as it's not needed with absolute positioning and calculated top */
-    }
-    nav .nav-link { 
-      text-decoration: none; font-family: 'Inter', sans-serif; 
-      font-weight: 600; font-size: 1.6rem; /* 50% of 3.2rem title */
-      white-space: nowrap;
-      line-height: 1.2; 
-      padding: 0.4em 0.8em; /* Padding for bubble effect */
-      display: inline-block; 
-      border-radius: 25px; /* Rounded bubbles */
-      background-color: rgba(220, 220, 220, 0.3); /* Light bubble background for unscrolled */
-      color: var(--theme-blue-static); /* Text color for unscrolled */
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-      transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-    }
-    .scrolled-header-layout nav .nav-link { 
-        color: white !important;
-        background-color: rgba(255, 255, 255, 0.25); /* Slightly different bubble for scrolled */
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    nav .nav-link:hover { 
-      color: var(--accent); 
-      background-color: rgba(255, 255, 255, 0.4);
-      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-    }
-
-    h2 { 
-      font-family: 'Dancing Script', cursive; font-weight: 600;
+    .provider-info h3 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2rem;
       color: var(--heading-color);
-      text-align: center; 
-      margin-bottom: 2rem; 
-      font-size: 2.2rem; 
+      margin-bottom: 0.25rem;
     }
-    #testimonials h2, #location h2, #booking h2, 
-    #services h2, 
-    #insurance h2 { 
-        font-size: 2.2rem; 
-        margin-bottom: 2rem; 
-        text-align: center; 
+    .provider-info .credentials {
+      font-style: italic;
+      color: var(--accent);
+      margin-bottom: 1rem;
     }
-    #location h2 { text-align: center; }
-
-    /* All specific nav-link font sizes for desktop scrolled are removed, base 1.6rem applies */
-
-    .container { 
-      max-width: 1000px; margin: 0 auto; 
-      padding: 2rem 1rem 100px; 
+    .provider-contact p {
+        margin-bottom: 0.3rem;
+        font-size: 0.95rem;
     }
-    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 2rem; align-items: start; margin-bottom: 3rem; }
-    .card { background: var(--bg-light); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; }
-    .card.no-dark-override {}
-    .card header { 
-      padding: 1rem; 
-      background: var(--theme-blue-static); 
-      color: white; 
-      font-family: 'Dancing Script', cursive; font-weight: 600; font-size: 1.4rem; 
-    }
-    #services .card header { text-align: center; } 
-    .card .content { padding: 1rem; }
-    .btn { 
-      display: inline-block; 
-      background: var(--theme-blue-static); 
-      color: white; 
-      padding: 0.75rem 1.5rem; border-radius: 4px; text-decoration: none; 
-      font-weight: 600; margin: 0.5rem; 
-      transition: background-color .2s, color .2s, opacity .3s; 
-    }
-    .btn.secondary { 
-      background: var(--theme-blue-static); 
-    }
-    .btn:hover { opacity: .9; }
-    .btn:active, .btn.secondary:active { 
-        background-color: var(--bg-light); 
-        color: var(--theme-blue-static);    
-        opacity: 1;
-    }
-    .booking-button-container { padding: 1rem; }
-    .separator { display: block; width: 100%; height: 80px; }
-    .separator path { transition: fill .3s; } 
-    .accordion .acc-header { 
-      background: var(--theme-blue-static); 
-      color: white; cursor: pointer; 
-      padding: 1rem; border: none; width: 100%; text-align: left; 
-      outline: none; font-family: 'Inter', sans-serif; 
-      font-weight: 600; font-size: 1.1rem; 
-      transition: background .3s; 
-    }
-    .accordion .acc-header.active { background: var(--accent); }
-    .accordion .acc-header + .acc-body + .acc-header { margin-top: 0.5rem; }
-    .accordion .acc-body { max-height: 0; overflow: hidden; transition: max-height .3s ease; background: white; padding: 0 1rem; }
-    .accordion .acc-body p { padding: 1rem 0; }
-    .skeleton { background: #ddd; position: relative; }
-    #testimonials { padding: 2rem 0; }
-    .testimonial-card { background: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); font-style: italic; text-align: center; margin-bottom: 1.5rem; max-width: 650px; margin-left: auto; margin-right: auto; }
-    .testimonial-card:last-child { margin-bottom: 0; }
-    #to-top { 
-      position: fixed; bottom: 2rem; right: 2rem; 
-      background: var(--theme-blue-static); 
-      border: none; color: white; 
-      padding: 0.75rem; border-radius: 50%; font-size: 1.2rem; 
-      cursor: pointer; opacity: 0; 
-      transition: background-color .2s, opacity .3s; 
-      z-index: 10001; 
-    }
-    #to-top:active { 
-        background-color: var(--bg-light); 
-        color: var(--theme-blue-static);    
-        opacity: 1;
-    }
-    body.scrolled #to-top { opacity: 1; } 
-    section#location address { text-align: center; margin-top: 0.5rem; }
-    
-    footer#contact {
-        text-align:center; 
-        padding: 2rem 1rem 1rem; 
-        background-color: var(--bg-light); 
-        position: relative;
-        color: var(--text-dark); 
-    }
-    .footer-logo-container { 
-        margin-bottom: 1.5rem; 
-    }
-    .footer-logo-container img {
-        max-width: 250px; 
-        height: auto;
-        display: block; 
-        margin: 0 auto; 
-    }
-    .footer-text-content { 
-        padding: 0; 
-    }
-    html.dark footer#contact { 
-        background-color: var(--bg-dark); 
-        color: var(--text-light); 
-    }
-    
-    footer#contact p {
-        margin-bottom: 0.5rem;
-    }
-    footer#contact p:last-child {
-        margin-bottom: 0;
-    }
-    footer#contact a {
-        color: var(--accent); 
-    }
-
-    /* .mobile-menu-button class is no longer used by the new icon link. 
-       Keeping it commented out or removing it. For now, let's effectively remove it by commenting.
-    .mobile-menu-button {
-      display: none; 
-      background-color: transparent;
-      border: none;
-      color: #fff;
-      font-size: 28px; 
-      padding: 0.25rem 0.5rem; 
-      cursor: pointer;
-      line-height: 1; 
-      align-self: center; 
-    }
-    */
-
-    /* ======================== MOBILE OPTIMISATIONS (<600px) ======================== */
-    @media (max-width: 600px) {
-      header#site-header nav#main-nav { /* Target main-nav specifically for mobile override */
-        position: static; /* Remove absolute positioning from desktop rules */
-        display: block;   /* Change from flex to block, simplifies layout */
-        width: 100%;      /* Ensure it can contain a full-width child if needed */
-        height: auto;     /* Let content define height, or 0 if purely pass-through */
-        top: auto;        /* Reset desktop positioning */
-        right: auto;      /* Reset desktop positioning */
-        z-index: auto;    /* Reset desktop z-index */
-        gap: 0;           /* Reset desktop gap */
-        /* Clear any transitions that might be inherited from desktop */
-        transition: none; 
-      }
-
-      header#site-header {
-        position: sticky; /* Retain sticky behavior */
-        top: 0;
-        /* height: 80px; Let content define height with padding */
-        background-color: var(--theme-blue-static); /* Header bar background */
-        box-shadow: 0 2px 6px rgba(0,0,0,.16);
-        padding: 0.5rem 0.75rem; /* Consistent padding */
-        z-index: 2000;
-        display: flex; 
-        justify-content: space-between; 
-        align-items: center; 
-        position: relative; /* For absolute positioning of icon and dropdown */
-      }
-      header#site-header h1 { /* This is the "logo" part */
-        font-size: 1.6rem;
-        background: transparent; /* h1 itself is transparent, header bar has color */
-        color: #fff;
-        box-shadow: none;
-        padding: 0.4rem 0; /* Vertical padding, no horizontal as header has it */
-        border-radius: 0;
-        margin: 0; /* Remove default margin */
-        display: flex; /* Align icon and text within h1 */
-        align-items: center;
-        flex-grow: 1; /* Allow it to take space */
-      }
-      .title-secondary-words { display: none; }
-      .header-favicon { 
-        width: 36px; 
-        height: 36px; 
-        margin-right: 8px; 
-        opacity: 1 !important; 
-      }
-      
-      /* Hide the old mobile-menu-button if it was ever displayed by other rules */
-      .mobile-menu-button { /* This was the old button, ensure it's hidden */
-        display: none !important;
-      }
-
-      /* Styling for the new Font Awesome icon link */
-      .mobile-menu-icon {
-        display: block; /* Make it visible on mobile */
-        background: transparent; /* Or a subtle background like var(--accent) if preferred */
-        color: white;
-        padding: 10px 12px; /* Clickable area */
+    .provider-contact a {
+        color: var(--accent);
         text-decoration: none;
-        font-size: 22px; /* Size of the fa-bars icon */
-        position: absolute;
-        right: 0.75rem; /* Align with header padding */
-        top: 50%;
-        transform: translateY(-50%);
-        cursor: pointer;
+    }
+    .provider-contact a:hover {
+        text-decoration: underline;
+    }
+    .psychology-today-embed-wrapper {
+        margin-top: 1.5rem;
+        text-align: center;
+    }
+    @media (min-width: 768px) {
+      .provider-profile {
+        flex-direction: row;
+        align-items: flex-start;
       }
-      .mobile-menu-icon:hover {
-        background-color: var(--accent); /* Hover effect */
-        color: white;
+      .provider-photo-container {
+        text-align: left;
       }
-      
-      /* Container for the dropdown links */
-      #mobile-nav-links {
-        display: none; /* Hidden by default, toggled by JS */
-        position: absolute;
-        top: 100%; /* Position it right below the header */
-        left: 0;
-        right: 0;
-        background-color: var(--theme-blue-static); /* Dropdown background */
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        z-index: 1990; /* Below header, above main content */
+      .psychology-today-embed-wrapper {
+        text-align: left;
       }
-
-      #mobile-nav-links .nav-link {
-        display: block;
-        color: white;
-        padding: 14px 16px;
-        text-decoration: none;
-        font-size: 17px;
-        text-align: left; /* As per example, or center */
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separator */
-        background-color: transparent; /* Remove individual link background */
-      }
-      #mobile-nav-links .nav-link:last-child {
-        border-bottom: none;
-      }
-      #mobile-nav-links .nav-link:hover {
-        background-color: var(--accent); /* Use accent for hover */
-        color: white;
-      }
-
-      main.container { padding-top: 70px; } /* Adjust if header height changed */
     }
   </style>
 </head>
