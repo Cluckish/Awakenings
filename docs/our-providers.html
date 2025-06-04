@@ -67,13 +67,7 @@
         margin-bottom: 0.3rem;
         font-size: 0.95rem;
     }
-    .provider-contact a {
-        color: var(--accent);
-        text-decoration: none;
-    }
-    .provider-contact a:hover {
-        text-decoration: underline;
-    }
+    /* Styles for .provider-contact a are now in Global.css */
     .psychology-today-embed-wrapper {
         margin-top: 1.5rem;
         text-align: center;
@@ -95,16 +89,14 @@
 <body>
   <header id="site-header" class="banner">
     <h1 data-aos="fade-down">
-      <a href="index.html" class="header-title-link">
       <img src="Square Logo.png" alt="Awakenings Logo" class="header-favicon">
       <span class="title-main-word">Awakenings</span>
       <span class="title-secondary-words">Mental&nbsp;Health</span>
-      </a>
     </h1>
     <a href="javascript:void(0);" class="icon mobile-menu-icon" onclick="toggleMobileMenu()"><i class="fa fa-bars"></i></a>
     <nav id="main-nav">
       <div id="mobile-nav-links">
-     
+        <a href="index.html" class="nav-link" target="_top">Home</a>
       <a href="our-providers.html" class="nav-link" target="_top">Our Providers</a>
       <a href="articles.html" class="nav-link" target="_top">Articles</a>
       </div>
