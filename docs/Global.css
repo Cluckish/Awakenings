@@ -7,9 +7,9 @@
   --theme-blue-static: #27296d;
 
   --bg-dark: #1D2021;
-  --text-light: #F0F3F4;
+  --text-light: #bababe;
   --text-bg-light: #386dc9;
-  --text-bg-dark: #000000;
+  --text-bg-dark: #27296d;
 
   /* new design-token additions */
   --radius: 0.75rem;
