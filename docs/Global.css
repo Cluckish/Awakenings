@@ -238,9 +238,10 @@ a.provider-contact:hover,
 a.provider-contact:focus,
 button.provider-contact:hover,
 button.provider-contact:focus {
-  background-color: #C05F3E; /* Example: darker accent for hover/focus */
+  background-color: #C05F3E; /* Darker than light mode --accent */
   color: white !important;
   text-decoration: none;
+  transform: translateY(-2px);
 }
 
 /* For links INSIDE a DIV that has class .provider-contact (e.g., on our-providers.html) */
@@ -255,6 +256,16 @@ div.provider-contact a:hover,
 div.provider-contact a:focus {
   color: var(--primary); /* Darker color on hover/focus */
   text-decoration: underline;
+}
+
+html.dark a.provider-contact:hover,
+html.dark a.provider-contact:focus,
+html.dark button.provider-contact:hover,
+html.dark button.provider-contact:focus {
+  background-color: #a04d2c; /* Darker than dark mode --accent #c05e3d */
+  color: white !important;
+  text-decoration: none;
+  /* transform: translateY(-2px); is inherited */
 }
 
 h3 {
@@ -337,7 +348,12 @@ html.dark #services .card .content {
     margin: 0.5rem; 
     transition: background-color .2s, color .2s, opacity .3s, transform .2s; /* Added transform */
 }
-.btn:hover { opacity: .9; } /* Keep existing hover or adapt if new one is provided */
+.btn:hover,
+.btn.secondary:hover {
+    background-color: #1e2157; /* Darker shade of --theme-blue-static */
+    transform: translateY(-2px);
+    /* opacity: .9; -- Replaced by color change */
+}
 .btn:active {
     transform: scale(.98);          /* tactile feedback */
     /* Merge existing active styles */
@@ -376,8 +392,9 @@ html.dark #services .card .content {
 }
 
 .btn-social:hover {
-  opacity: .9;
+  /* opacity: .9; -- Replaced by more specific hover */
   background-color: #1e2157; /* Slightly darker blue for hover */
+  transform: translateY(-2px);
 }
 
 .btn-social:active {
@@ -429,8 +446,14 @@ html.dark .btn-social:active {
   border: none; color: white; 
   padding: 0.75rem; border-radius: 50%; font-size: 1.2rem; 
   cursor: pointer; opacity: 0; 
-  transition: background-color .2s, opacity .3s; 
+  transition: background-color .2s, opacity .3s, transform .2s; 
   z-index: 10001; 
+}
+
+#to-top:hover {
+  background-color: #1e2157; /* Darker shade of --theme-blue-static */
+  transform: translateY(-2px);
+  opacity: 1; /* Ensure visible on hover */
 }
 #to-top:active { 
     background-color: var(--bg-light); 
@@ -614,8 +637,8 @@ html.dark .provider-specialties li {
 }
 
 .btn-provider-action:hover {
-  opacity: .85;
-  background-color: #D46A4F; /* Slightly darker accent */
+  /* opacity: .85; -- Removed for clearer color change */
+  background-color: #D46A4F; /* Darker than light --accent */
   transform: translateY(-2px); /* Subtle lift effect */
 }
 
@@ -631,7 +654,8 @@ html.dark .btn-provider-action {
 }
 
 html.dark .btn-provider-action:hover {
-  background-color: #C05F3E;
+  background-color: #a04d2c; /* Darker than dark mode --accent #c05e3d */
+  /* transform is inherited */
 }
 
 html.dark .btn-provider-action:active {
