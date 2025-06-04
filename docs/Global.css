@@ -457,6 +457,10 @@
     }
     /* End of Styles for Provider Page Enhancements */
 
+    .mobile-menu-icon {
+      display: none; /* Hidden by default (desktop) */
+    }
+
     /* .mobile-menu-button class is no longer used by the new icon link. 
        Keeping it commented out or removing it. For now, let's effectively remove it by commenting.
     .mobile-menu-button {
