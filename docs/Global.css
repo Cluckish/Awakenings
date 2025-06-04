@@ -177,15 +177,15 @@
       padding: 0.4em 0.8em; /* Padding for bubble effect */
       display: inline-block; 
       border-radius: 25px; /* Rounded bubbles */
-      background-color: rgba(220, 220, 220, 0.6); /* Light bubble background for unscrolled - increased opacity */
+      background-color: rgba(220, 220, 220, 0.9); /* Light bubble background for unscrolled - increased opacity */
       color: var(--theme-blue-static); /* Text color for unscrolled */
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
       transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
     }
     .scrolled-header-layout nav .nav-link { 
         color: white !important;
         background-color: rgba(255, 255, 255, 0.45); /* Slightly different bubble for scrolled - increased opacity */
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
     nav .nav-link:hover { 
       color: var(--accent); 
@@ -201,7 +201,7 @@ h2 {
   font-size: 2.2rem;
   padding: 0.75rem 1.25rem;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   margin-top: 2rem;
   margin-bottom: 1.5rem;
   text-align: center;
