@@ -201,6 +201,18 @@
       background-color: rgba(255, 255, 255, 0.4);
       box-shadow: 0 3px 6px rgba(0,0,0,0.15);
     }
+.provider-contact{ /* Button for Provider Contact element class */
+  display: inline-block;
+  background-color: var(--accent);
+  color: white !important; /* Ensure text is white */
+  padding: 0.6em 1.2em;
+  border-radius: 20px; /* Pill shape */
+  text-decoration: none;
+  font-weight: 500;
+  margin: 0.3rem 0.5rem; /* Spacing around buttons */
+  transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
 
 h2 {
   font-family: 'Dancing Script', cursive; font-weight: 600;
@@ -607,7 +619,75 @@ h3 {
     html.dark {
       --accent: #c05e3d;
     }
+.social-cta {
+  /* layout */
+  display: inline-flex;                 /* shrink-wraps around its text */
+  align-items: center;
+  gap: 0.5rem;                          /* space between text & icon */
+  justify-content: center;
+  text-align: center;
 
+  /* spacing & shape */
+  margin-block: 1rem 2rem;
+  padding: 1rem 1.75rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-elevated);
+
+  /* background adapts to theme */
+  background: var(--bg-light);
+  color: var(--text-dark);
+  font-size: clamp(1rem, 1vw + 0.9rem, 1.125rem);
+}
+
+/* 2. Text link ------------------------------------------------------- */
+.social-cta a:first-of-type {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration-thickness: 0.12em;
+  text-underline-offset: 0.18em;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.social-cta a:first-of-type:hover,
+.social-cta a:first-of-type:focus-visible {
+  color: var(--theme-blue-static);
+  transform: translateY(-2px);
+}
+
+/* 3. Icon link ------------------------------------------------------- */
+.social-cta a.icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;                     /* larger tap target */
+  border-radius: 50%;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.social-cta a.icon-link:hover,
+.social-cta a.icon-link:focus-visible {
+  background: rgba(0, 0, 0, 0.07);
+  transform: scale(1.08);
+}
+
+.social-cta svg {
+  inline-size: 1.5rem;                  /* replaces width / height */
+  block-size: 1.5rem;
+  fill: currentColor;                   /* inherits from link */
+  transition: transform 0.2s ease;
+}
+
+.social-cta a.icon-link:hover svg {
+  transform: rotate(8deg);
+}
+
+/* 4. Respect “Reduce Motion” preference ----------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .social-cta a,
+  .social-cta svg {
+    transition: none !important;
+  }
+}
     /* ======================== MOBILE OPTIMISATIONS (<600px) ======================== */
     @media (max-width: 600px) {
       header#site-header nav#main-nav { /* Target main-nav specifically for mobile override */
