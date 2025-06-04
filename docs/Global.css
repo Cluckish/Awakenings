@@ -174,14 +174,14 @@
       padding: 0.4em 0.8em; /* Padding for bubble effect */
       display: inline-block; 
       border-radius: 25px; /* Rounded bubbles */
-      background-color: rgba(220, 220, 220, 0.3); /* Light bubble background for unscrolled */
+      background-color: rgba(220, 220, 220, 0.6); /* Light bubble background for unscrolled - increased opacity */
       color: var(--theme-blue-static); /* Text color for unscrolled */
       box-shadow: 0 1px 3px rgba(0,0,0,0.05);
       transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
     }
     .scrolled-header-layout nav .nav-link { 
         color: white !important;
-        background-color: rgba(255, 255, 255, 0.25); /* Slightly different bubble for scrolled */
+        background-color: rgba(255, 255, 255, 0.45); /* Slightly different bubble for scrolled - increased opacity */
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     nav .nav-link:hover { 
