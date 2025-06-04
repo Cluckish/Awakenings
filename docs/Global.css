@@ -216,10 +216,15 @@ margin-top: 2rem;
 margin-bottom: 1.5rem;
 text-align: center;
 }
-.provider-contact { /* Can be a div or an anchor acting as a button */
+
+/* Styles for provider contact elements */
+
+/* For an ANCHOR or BUTTON element that IS a provider-contact button */
+a.provider-contact,
+button.provider-contact {
   display: inline-block;
   background-color: var(--accent);
-  color: var(--text-light); /* Default text color for the button/container itself */
+  color: white !important; /* Button text is white */
   padding: 0.6em 1.2em;
   border-radius: 20px; /* Pill shape */
   text-decoration: none;
@@ -229,30 +234,28 @@ text-align: center;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* If a link is INSIDE a .provider-contact div, style it with accent color */
-.provider-contact a, 
-.provider-contact a:visited {
-  color: var(--text-light); /* Or a different link color if preferred, e.g., var(--theme-blue-static) */
-  text-decoration: underline; /* Or none, depending on desired style */
+a.provider-contact:hover,
+a.provider-contact:focus,
+button.provider-contact:hover,
+button.provider-contact:focus {
+  background-color: #C05F3E; /* Example: darker accent for hover/focus */
+  color: white !important;
+  text-decoration: none;
 }
-.provider-contact a:hover,
-.provider-contact a:focus {
-  color: var(--primary); /* Darker color on hover/focus */
+
+/* For links INSIDE a DIV that has class .provider-contact (e.g., on our-providers.html) */
+/* The div.provider-contact container itself will NOT get the button styling from above. */
+div.provider-contact a,
+div.provider-contact a:visited {
+  color: var(--accent);
   text-decoration: underline;
 }
 
-/* If the .provider-contact IS an anchor itself, ensure its text is white */
-a.provider-contact,
-a.provider-contact:visited {
-  color: white !important; /* Keep this important for anchor buttons */
-  text-decoration: none;
+div.provider-contact a:hover,
+div.provider-contact a:focus {
+  color: var(--primary); /* Darker color on hover/focus */
+  text-decoration: underline;
 }
-a.provider-contact:hover,
-a.provider-contact:focus {
-  color: white !important; 
-  text-decoration: none;
-}
-
 
 h3 {
 font-family: 'Dancing Script', cursive;
