@@ -338,6 +338,19 @@
 
     /* ======================== MOBILE OPTIMISATIONS (<600px) ======================== */
     @media (max-width: 600px) {
+      header#site-header nav#main-nav { /* Target main-nav specifically for mobile override */
+        position: static; /* Remove absolute positioning from desktop rules */
+        display: block;   /* Change from flex to block, simplifies layout */
+        width: 100%;      /* Ensure it can contain a full-width child if needed */
+        height: auto;     /* Let content define height, or 0 if purely pass-through */
+        top: auto;        /* Reset desktop positioning */
+        right: auto;      /* Reset desktop positioning */
+        z-index: auto;    /* Reset desktop z-index */
+        gap: 0;           /* Reset desktop gap */
+        /* Clear any transitions that might be inherited from desktop */
+        transition: none; 
+      }
+
       header#site-header {
         position: sticky; /* Retain sticky behavior */
         top: 0;
@@ -424,24 +437,6 @@
         color: white;
       }
 
-      /* Remove old nav#main-nav specific styles for mobile as it's now just a container */
-      nav#main-nav { 
-        /* display: flex; */ /* No longer needed here */
-        /* flex-direction: column; */
-        /* position: absolute; */
-        /* top: 80px; */
-        /* left: 0; */
-        /* right: 0; */
-        /* background-color: var(--theme-blue-static); */
-        /* box-shadow: 0 3px 6px rgba(0,0,0,0.2); */
-        /* z-index: 1999; */
-        /* max-height: 0; */
-        /* overflow: hidden; */
-        /* transition: max-height 0.35s ease-in-out; */
-        /* These styles are now on #mobile-nav-links or not needed */
-      }
-      /* nav#main-nav.mobile-nav-open { max-height: 500px; } */ /* Class will be on #mobile-nav-links if needed, or just display:block */
-      
       main.container { padding-top: 70px; } /* Adjust if header height changed */
     }
   </style>
