@@ -795,3 +795,16 @@ h3 {
 
       main.container { padding-top: 70px; } /* Adjust if header height changed */
     }
+
+/* Ensure the H1 link inherits text color and has no underline */
+.header-title-link {
+  color: inherit; /* Inherit color from the parent h1 */
+  text-decoration: none; /* Remove underline */
+}
+
+.header-title-link:hover,
+.header-title-link:focus,
+.header-title-link:active {
+  color: inherit; /* Keep inherited color on hover/focus/active */
+  text-decoration: none; /* Keep no underline on hover/focus/active */
+}
