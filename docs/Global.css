@@ -219,7 +219,7 @@ text-align: center;
 .provider-contact { /* Can be a div or an anchor acting as a button */
   display: inline-block;
   background-color: var(--accent);
-  color: white; /* Default text color for the button/container itself */
+  color: var(--text-light); /* Default text color for the button/container itself */
   padding: 0.6em 1.2em;
   border-radius: 20px; /* Pill shape */
   text-decoration: none;
@@ -232,7 +232,7 @@ text-align: center;
 /* If a link is INSIDE a .provider-contact div, style it with accent color */
 .provider-contact a, 
 .provider-contact a:visited {
-  color: var(--accent); /* Or a different link color if preferred, e.g., var(--theme-blue-static) */
+  color: var(--text-light); /* Or a different link color if preferred, e.g., var(--theme-blue-static) */
   text-decoration: underline; /* Or none, depending on desired style */
 }
 .provider-contact a:hover,
