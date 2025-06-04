@@ -216,18 +216,44 @@ margin-top: 2rem;
 margin-bottom: 1.5rem;
 text-align: center;
 }
-.provider-contact{ /* Button for Provider Contact element class */
-display: inline-block;
-background-color: var(--accent);
-color: white !important; /* Ensure text is white */
-padding: 0.6em 1.2em;
-border-radius: 20px; /* Pill shape */
-text-decoration: none;
-font-weight: 500;
-margin: 0.3rem 0.5rem; /* Spacing around buttons */
-transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
-box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+.provider-contact { /* Can be a div or an anchor acting as a button */
+  display: inline-block;
+  background-color: var(--accent);
+  color: white; /* Default text color for the button/container itself */
+  padding: 0.6em 1.2em;
+  border-radius: 20px; /* Pill shape */
+  text-decoration: none;
+  font-weight: 500;
+  margin: 0.3rem 0.5rem; /* Spacing around buttons */
+  transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
+/* If a link is INSIDE a .provider-contact div, style it with accent color */
+.provider-contact a, 
+.provider-contact a:visited {
+  color: var(--accent); /* Or a different link color if preferred, e.g., var(--theme-blue-static) */
+  text-decoration: underline; /* Or none, depending on desired style */
+}
+.provider-contact a:hover,
+.provider-contact a:focus {
+  color: var(--primary); /* Darker color on hover/focus */
+  text-decoration: underline;
+}
+
+/* If the .provider-contact IS an anchor itself, ensure its text is white */
+a.provider-contact,
+a.provider-contact:visited {
+  color: white !important; /* Keep this important for anchor buttons */
+  text-decoration: none;
+}
+a.provider-contact:hover,
+a.provider-contact:focus {
+  color: white !important; 
+  text-decoration: none;
+}
+
+
 h3 {
 font-family: 'Dancing Script', cursive;
 font-weight: 600;
