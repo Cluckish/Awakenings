@@ -528,8 +528,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* click anywhere in the section – or change to deck.addEventListener('click', e => … ) to only
      respond to clicks on the first card if you prefer */
   deck.addEventListener('click', () => {
-    const topCard = deck.querySelector('.testimonial-card');
-    return;
+    const topCard = deck.querySelector('.testimonial-card:first-of-type');
 
     /* 1️⃣ animate it leftwards */
     topCard.classList.add('slide-out');
