@@ -517,7 +517,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const deck = document.getElementById('testimonials');
   const TRANSITION_MS = 450; /* keep in sync with CSS above */
-
+  let isAnimating = false; // prevent double clicks
+  
   /* put the visual “top” card at the highest z-index */
   function restack () {
     const cards = [...deck.querySelectorAll('.testimonial-card')];
@@ -525,23 +526,25 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   restack();
 
-  /* click anywhere in the section – or change to deck.addEventListener('click', e => … ) to only
-     respond to clicks on the first card if you prefer */
-  deck.addEventListener('click', () => {
-    const topCard = deck.querySelector('.testimonial-card');
+deck.addEventListener('click', () => {
+    if (isAnimating) return; // Ignore clicks during animation
+    const cards = deck.querySelectorAll('.testimonial-card');
+    const topCard = cards[0];
     if (!topCard) return;
 
-    /* 1️⃣ animate it leftwards */
+    isAnimating = true;
     topCard.classList.add('slide-out');
 
-    /* 2️⃣ when the animation ends, drop it to the back of the stack */
-    topCard.addEventListener('transitionend', function handler (ev) {
-      if (ev.propertyName !== 'transform') return;       // ignore opacity end
-      topCard.classList.remove('slide-out');             // reset transforms
-      deck.appendChild(topCard);                         // now it’s last in DOM
-      restack();                                         // refresh z-orders
-      topCard.removeEventListener('transitionend', handler);
-    });
+    const onTransitionEnd = (ev) => {
+      if (ev.propertyName !== 'transform') return;
+      topCard.classList.remove('slide-out');
+      deck.appendChild(topCard);
+      restack();
+      topCard.removeEventListener('transitionend', onTransitionEnd);
+      isAnimating = false;
+    };
+
+    topCard.addEventListener('transitionend', onTransitionEnd);
   });
 });
   </script>
