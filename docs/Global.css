@@ -722,6 +722,50 @@ h1 { font-size: clamp(2.2rem, 4vw + 1rem, 3.2rem); }
 html.dark .card:not(.no-dark-override){ /* This selector is already defined for dark mode background, this adds shadow var */
     box-shadow: var(--shadow-elevated);
 }
+/* ---------- “Stacked-card” effect for testimonials ---------- */
+#testimonials {          /* keep cards centered */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;    /* gives us a containing block for z-index */
+}
+
+/* every card must be positioned so it can overlap the next one */
+#testimonials .testimonial-card{
+  position: relative;    /* new stacking context */
+  margin: 0;             /* override old bottom margin */
+  transition: transform .25s cubic-bezier(.4,0,.2,1),
+              box-shadow .25s;
+}
+
+/* pull each following card upward so the edges peek out */
+#testimonials .testimonial-card + .testimonial-card{
+  margin-top: -3.25rem;  /* overlap amount – adjust to taste */
+}
+
+/* layer order: first card sits on top of the pile */
+#testimonials .testimonial-card:nth-child(1){ z-index:3; }
+#testimonials .testimonial-card:nth-child(2){ z-index:2; }
+#testimonials .testimonial-card:nth-child(3){ z-index:1; }
+
+/* optional playful tilt so the cards look “loose” */
+#testimonials .testimonial-card:nth-child(odd){  transform: rotate(-0.7deg); }
+#testimonials .testimonial-card:nth-child(even){ transform: rotate( 0.7deg); }
+
+/* on hover, pop the card forward a bit */
+#testimonials .testimonial-card:hover{
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 24px rgba(0,0,0,.12);
+  z-index: 4;           /* rise above its neighbours */
+}
+
+/* turn the stacking off on small screens so everything remains readable */
+@media (max-width:600px){
+  #testimonials .testimonial-card{
+    margin-top: 0 !important;
+    transform: none !important;
+  }
+}
 
 /* Subtle card hover */
 .card:hover {
