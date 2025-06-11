@@ -740,7 +740,7 @@ html.dark .card:not(.no-dark-override){ /* This selector is already defined for 
 
 /* pull each following card upward so the edges peek out */
 #testimonials .testimonial-card + .testimonial-card{
-  margin-top: -20rem;  /* overlap amount – adjust to taste */
+  margin-top: -16rem;  /* overlap amount – adjust to taste */
 }
 
 /* layer order: first card sits on top of the pile */
@@ -794,30 +794,6 @@ html.dark .card:not(.no-dark-override){ /* This selector is already defined for 
   transition: transform .45s cubic-bezier(.4,0,.2,1), opacity .45s;
   transform: translateX(-120%) rotate(-4deg);
   opacity: 0;
-}
-/* ─── Dim all cards except the one on top ───────────────────── */
-#testimonials .testimonial-card{
-  position: relative;              /* already set, but restate for the overlay */
-}
-
-/* ::before paints a translucent veil on every card that is NOT the first */
-#testimonials .testimonial-card:not(:first-of-type)::before{
-  content: '';
-  position: absolute;
-  inset: 0;                        /* cover the whole card */
-  background: rgba(0,0,0,.14);     /* tweak opacity to taste (0.10-0.20 works well) */
-  pointer-events: none;            /* overlay never blocks clicks */
-  transition: opacity .3s;         /* smooth fade when stack changes */
-}
-
-/* when a card is sliding out to the left it shouldn’t dim mid-motion */
-#testimonials .testimonial-card.slide-out::before{
-  opacity: 0;
-}
-
-/* keep everything crystal-clear on small screens where the overlap is disabled */
-@media (max-width:600px){
-  #testimonials .testimonial-card::before{ content:none; }
 }
 
 header#site-header { /* Applying animation to existing header */
