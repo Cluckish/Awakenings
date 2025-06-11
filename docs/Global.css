@@ -740,7 +740,7 @@ html.dark .card:not(.no-dark-override){ /* This selector is already defined for 
 
 /* pull each following card upward so the edges peek out */
 #testimonials .testimonial-card + .testimonial-card{
-  margin-top: -3.25rem;  /* overlap amount – adjust to taste */
+  margin-top: -70%;  /* overlap amount – adjust to taste */
 }
 
 /* layer order: first card sits on top of the pile */
