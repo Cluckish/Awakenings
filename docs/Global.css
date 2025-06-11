@@ -794,6 +794,7 @@ html.dark .card:not(.no-dark-override){ /* This selector is already defined for 
   transition: transform .45s cubic-bezier(.4,0,.2,1), opacity .45s;
   transform: translateX(-120%) rotate(-4deg);
   opacity: 0;
+  pointer-events: none; /* prevents double-clicks */
 }
 
 header#site-header { /* Applying animation to existing header */
