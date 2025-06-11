@@ -1119,27 +1119,6 @@ text-decoration: none; /* Keep no underline on hover/focus/active */
 	* {
 		box-sizing: border-box;
 	}
-	:root {
-		color-scheme: light dark;
-		--bg-dark: rgb(24, 24, 27);
-		--bg-light: rgb(229, 229, 229);
-
-		--txt-light: rgb(10, 10, 10);
-		--txt-dark: rgb(245, 245, 245);
-	}
-	body {
-		background-color: light-dark(var(--bg-light), var(--bg-dark));
-		color: light-dark(var(--txt-light), var(--txt-dark));
-		min-height: 100svh;
-		margin: 0;
-		padding: 2rem;
-		font-size: 1rem;
-		font-family: system-ui;
-		line-height: 1.5;
-		display: grid;
-		place-items: center;
-		gap: 2rem;
-	}
 }
 
 @layer utilities{
