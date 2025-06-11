@@ -759,13 +759,6 @@ html.dark .card:not(.no-dark-override){ /* This selector is already defined for 
   z-index: 4;           /* rise above its neighbours */
 }
 
-/* turn the stacking off on small screens so everything remains readable */
-@media (max-width:600px){
-  #testimonials .testimonial-card{
-    margin-top: 0 !important;
-    transform: none !important;
-  }
-}
 
 /* Subtle card hover */
 .card:hover {
