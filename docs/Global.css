@@ -749,13 +749,13 @@ html.dark .card:not(.no-dark-override){ /* This selector is already defined for 
 #testimonials .testimonial-card:nth-child(3){ z-index:1; } */
 
 /* optional playful tilt so the cards look “loose” */
-#testimonials .testimonial-card:nth-child(odd){  transform: rotate(-0.2deg); }
-#testimonials .testimonial-card:nth-child(even){ transform: rotate( 0.2deg); }
+#testimonials .testimonial-card:nth-child(odd){  transform: rotate(-0.5deg); }
+#testimonials .testimonial-card:nth-child(even){ transform: rotate( 0.5deg); }
 
 /* on hover, pop the card forward a bit */
 #testimonials .testimonial-card:hover{
   transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 12px 24px rgba(0,0,0,.12);
+  box-shadow: 0 12px 24px rgba(0,0,0,.3);
   z-index: 4;           /* rise above its neighbours */
 }
 
