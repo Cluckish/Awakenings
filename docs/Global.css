@@ -744,9 +744,9 @@ html.dark .card:not(.no-dark-override){ /* This selector is already defined for 
 }
 
 /* layer order: first card sits on top of the pile */
-#testimonials .testimonial-card:nth-child(1){ z-index:3; }
+/* #testimonials .testimonial-card:nth-child(1){ z-index:3; }
 #testimonials .testimonial-card:nth-child(2){ z-index:2; }
-#testimonials .testimonial-card:nth-child(3){ z-index:1; }
+#testimonials .testimonial-card:nth-child(3){ z-index:1; } */
 
 /* optional playful tilt so the cards look “loose” */
 #testimonials .testimonial-card:nth-child(odd){  transform: rotate(-0.7deg); }
@@ -778,6 +778,25 @@ html.dark .card:not(.no-dark-override){ /* This selector is already defined for 
   0%   { --logo-scale: 1;   --nav-alpha: 0; }
   100% { --logo-scale: .55; --nav-alpha: 1; }
 }
+/* ─── Interactive deck behaviour ────────────────────────────── */
+
+/* make the whole stack feel tappable / clickable */
+#testimonials { cursor: pointer; }
+
+/* a gentle nudge on hover so users see there’s “more underneath” */
+#testimonials .testimonial-card:first-of-type:hover{
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 24px rgba(0,0,0,.12);
+}
+
+/* this class is toggled by JS while the card slides out */
+#testimonials .testimonial-card.slide-out{
+  transition: transform .45s cubic-bezier(.4,0,.2,1), opacity .45s;
+  transform: translateX(-120%) rotate(-4deg);
+  opacity: 0;
+}
+
+
 header#site-header { /* Applying animation to existing header */
   animation: shrink auto linear both;
   animation-timeline: scroll(root block);
