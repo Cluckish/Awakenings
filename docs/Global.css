@@ -783,19 +783,24 @@ html.dark .card:not(.no-dark-override){ /* This selector is already defined for 
 /* make the whole stack feel tappable / clickable */
 #testimonials { cursor: pointer; }
 
-/* a gentle nudge on hover so users see there’s “more underneath” */
-#testimonials .testimonial-card:first-of-type:hover{
+/* pop-forward on hover – but **only** if the card is NOT leaving */
+#testimonials .testimonial-card:not(.slide-out):hover{
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 24px rgba(0,0,0,.12);
+}
+
+#testimonials .testimonial-card:first-of-type:not(.slide-out):hover{
   transform: translateY(-8px) scale(1.02);
   box-shadow: 0 12px 24px rgba(0,0,0,.12);
 }
 
-/* this class is toggled by JS while the card slides out */
 #testimonials .testimonial-card.slide-out{
   transition: transform .45s cubic-bezier(.4,0,.2,1), opacity .45s;
   transform: translateX(-120%) rotate(-4deg);
   opacity: 0;
-  pointer-events: none; /* prevents double-clicks */
+  pointer-events: none;           /* already in your file */
 }
+
 
 header#site-header { /* Applying animation to existing header */
   animation: shrink auto linear both;
