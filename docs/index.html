@@ -509,37 +509,41 @@ Blue Cross, Select Health, Pacific Source, Saint Luke's Health Plan, Cash Pay, A
       updateHeaderStylesOnScroll(window.scrollY); 
     });
     
-<!-- ── Testimonial “click-through” deck (fixed) ────────────── -->
-<script>
+<!-- ─── Testimonial “click-through” deck ─────────────────── -->
+
 document.addEventListener('DOMContentLoaded', () => {
-  if (window.matchMedia('(max-width:600px)').matches) return;   // skip on small screens
+  /* Abort entirely on small screens so nothing overlaps */
+  if (window.matchMedia('(max-width:600px)').matches) return;
 
   const deck = document.getElementById('testimonials');
-  const TRANSITION_MS = 450;
+  const TRANSITION_MS = 450; /* keep in sync with CSS above */
 
+  /* put the visual “top” card at the highest z-index */
   function restack () {
     const cards = [...deck.querySelectorAll('.testimonial-card')];
     cards.forEach((card, i) => { card.style.zIndex = cards.length - i; });
   }
   restack();
 
-  // Click anywhere on the *top* card only
-  deck.addEventListener('click', (e) => {
-    const currentTop = deck.querySelector('.testimonial-card');
-    if (!currentTop || !currentTop.contains(e.target)) return;   // ignore clicks on lower cards
+  /* click anywhere in the section – or change to deck.addEventListener('click', e => … ) to only
+     respond to clicks on the first card if you prefer */
+  deck.addEventListener('click', () => {
+    const topCard = deck.querySelector('.testimonial-card:first-of-type');
+    if (!topCard) return;
 
-    currentTop.classList.add('slide-out');
+    /* 1️⃣ animate it leftwards */
+    topCard.classList.add('slide-out');
 
-    currentTop.addEventListener('transitionend', function handler (ev) {
-      if (ev.propertyName !== 'transform') return;               // wait for the slide, not opacity
-      currentTop.classList.remove('slide-out');                  // reset transforms
-      deck.appendChild(currentTop);                              // send it to the back
-      restack();                                                 // z-order for new stack
-      currentTop.removeEventListener('transitionend', handler);
+    /* 2️⃣ when the animation ends, drop it to the back of the stack */
+    topCard.addEventListener('transitionend', function handler (ev) {
+      if (ev.propertyName !== 'transform') return;       // ignore opacity end
+      topCard.classList.remove('slide-out');             // reset transforms
+      deck.appendChild(topCard);                         // now it’s last in DOM
+      restack();                                         // refresh z-orders
+      topCard.removeEventListener('transitionend', handler);
     });
   });
 });
-</script>
-</script>
+  </script>
 </body>
 </html>
