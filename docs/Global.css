@@ -297,7 +297,25 @@ text-align: center; /* Consistent with h2 */
   max-width: 1000px; margin: 0 auto; 
   padding: 2rem 1rem 100px; 
 }
-.grid-3 { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 1.5rem; align-items: start; margin-bottom: 3rem; }
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Fixed to 3 columns */
+  gap: 1.5rem; /* Increased spacing for clarity */
+  align-items: start;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 900px) {
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr); /* Adapt to 2 columns on tablets */
+  }
+}
+
+@media (max-width: 600px) {
+  .grid-3 {
+    grid-template-columns: 1fr; /* Stack to 1 column on phones */
+  }
+}
 /* Card component */
 .card {
     background: white;
