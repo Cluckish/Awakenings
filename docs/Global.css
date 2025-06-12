@@ -298,11 +298,7 @@ text-align: center; /* Consistent with h2 */
   padding: 2rem 1rem 100px; 
 }
 .grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Fixed to 3 columns */
-  gap: 1.5rem; /* Increased spacing for clarity */
-  align-items: start;
-  margin-bottom: 3rem;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem;  align-items: start; margin-bottom: 3rem;
 }
 
 @media (max-width: 900px) {
@@ -565,7 +561,7 @@ html.dark footer#contact .footer-text-content a:active {
 /* Content Capsule Style */
 .content-capsule {
   background-color: var(--bg-light);
-  padding: 1.5rem;
+  padding-top: 1.5rem; padding-bottom: 1.5rem; padding-left: 1.2rem; padding-right: 1.2rem;
   border-radius: 8px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   margin-bottom: 2.5rem; /* Space below the capsule */
