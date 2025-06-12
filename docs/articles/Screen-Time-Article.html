@@ -85,6 +85,17 @@
     document.getElementById('to-top').addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+    function toggleMobileMenu() {
+      const linksContainer = document.getElementById("mobile-nav-links");
+      const iconElement = document.querySelector(".mobile-menu-icon .fa");
+      if (linksContainer.style.display === "block") {
+        linksContainer.style.display = "none";
+        if(iconElement) iconElement.className = "fa fa-bars";
+      } else {
+        linksContainer.style.display = "block";
+        if(iconElement) iconElement.className = "fa fa-times";
+      }
+    }
   </script>
 </body>
 </html>
