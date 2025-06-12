@@ -1,0 +1,21 @@
+# robots.txt for https://www.awakeningsmentalhealth.com
+# Last updated: 2025-06-12
+
+
+User-agent: *
+
+
+Disallow: /cgi-bin/
+Disallow: /search                 # future on-site search pages
+Disallow: /admin/                 # catch-all for admin dashboards
+Disallow: /login                  # generic login paths
+Disallow: /wp-admin/              # WP core paths (blocks opportunistic probes)
+Disallow: /wp-login.php
+
+
+
+
+Crawl-delay: 5
+
+
+Sitemap: https://www.awakeningsmentalhealth.com/sitemap.xml
