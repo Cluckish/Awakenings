@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Screen Time and Mental Health - Awakenings Mental Health</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="Global.css">
+</head>
+<body>
+  <header id="site-header" class="banner">
+    <h1 data-aos="fade-down">
+      <a href="index.html" class="header-title-link">
+      <img src="Square Logo.png" alt="Awakenings Logo" class="header-favicon">
+      <span class="title-main-word">Home</span>
+      </a>
+    </h1>
+    <a href="javascript:void(0);" class="icon mobile-menu-icon" onclick="toggleMobileMenu()"><i class="fa fa-bars"></i></a>
+    <nav id="main-nav">
+      <div id="mobile-nav-links">
+        <a href="our-providers.html" class="nav-link" target="_top">Our Providers</a>
+        <a href="articles.html" class="nav-link" target="_top">Articles</a>
+      </div>
+    </nav>
+  </header>
+  <main class="container">
+    <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none" data-aos="fade-up">
+      <path d="M0,0 C300,100 900,0 1200,100 L1200,0 L0,0 Z" fill="var(--bg-light)"/>
+    </svg>
+    <section class="content-capsule" data-aos="fade-up">
+      <h2 data-aos="fade-up">Screen Time & Mental Health</h2>
+      <p style="text-align: center; font-style: italic;" data-aos="fade-up" data-aos-delay="100">
+        Creating a healthier relationship with screens starts with awareness.
+      </p>
+
+      <div data-aos="fade-up" data-aos-delay="200">
+        <h3>The Paradox of Digital Connection</h3>
+        <p>Screen time has become inseparable from work, school, and social life—but it often leaves people feeling overstimulated and alone. Excessive scrolling, especially on social media, is linked to fatigue, low self-esteem, and isolation despite the promise of connection.</p>
+
+        <h3>Sleep Disruption & Mental Fatigue</h3>
+        <p>Screen use before bed can suppress melatonin and delay natural sleep cycles. Even with blue light filters, the brain remains active due to stimulation. Awakenings recommends avoiding screens at least one hour before bedtime, replacing them with relaxing activities like journaling, meditation, or calming crafts.</p>
+
+        <h3>Intentionality Over Elimination</h3>
+        <p>For those with unavoidable screen time—such as students or remote workers—Awakenings encourages mindful use. Techniques like the 20-20-20 rule, device dimming, and scheduled digital breaks can mitigate negative effects and reduce eye strain and mental burnout.</p>
+
+        <h3>When Screen Time Becomes a Struggle</h3>
+        <p>Feeling dependent on screens or overwhelmed by usage is common. Building a reduction plan—whether gradual or immediate—can help. Replacing passive scrolling with fulfilling offline activities and modeling healthy behavior within families makes a lasting impact.</p>
+
+        <h3>Special Considerations: ADHD, Anxiety, and Youth</h3>
+        <p>Screen time disproportionately affects individuals with ADHD or anxiety, often amplifying impulsivity and sleep issues. Youth in particular struggle with self-regulation, making family-led boundaries and behavioral modeling essential for long-term change.</p>
+
+        <h3>Technology as a Support Tool</h3>
+        <p>Screens aren't inherently harmful. Mental health apps, fitness trackers, and guided meditations can support treatment when used with intention. At Awakenings, the focus is on balanced use—integrating digital tools into a lifestyle that prioritizes real-world engagement and emotional well-being.</p>
+
+        <p style="font-style: italic; margin-top: 1rem; margin-bottom: 1rem;">The goal isn’t zero screen time—it’s thoughtful screen time.</p>
+        <p>Every adjustment, no matter how small, is a step toward better mental health.</p>
+      </div>
+
+      <div style="text-align: center; margin-top: 2rem;" data-aos="fade-up">
+        <p>If screen time is impacting your mental health or sleep, support is available. Awakenings Mental Health is here to help you build a sustainable plan for balance. Click below to begin your journey.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeeYABYxDoscWL3jH-SNU51X0hgomcb0bEqshRIUnCRg7aSgA/viewform" class="btn secondary" target="_blank" rel="noopener noreferrer"> Appointment Interest Form </a>
+      </div>
+    </section>
+    <svg class="separator" viewBox="0 0 1200 100" preserveAspectRatio="none">
+      <path d="M0,100 C300,0 900,100 1200,0 L1200,100 L0,100 Z" fill="var(--bg-light)"/>
+    </svg>
+  </main>
+  <button id="to-top">▲</button>
+  <footer id="contact" data-aos="fade-up">
+    <div class="footer-logo-container">
+      <img src="Rectangle Logo.jpg" alt="Awakenings Mental Health Logo">
+    </div>
+    <div class="footer-text-content">
+      <p>© <span id="current-year"></span> Awakenings Mental Health</p>
+      <p>Questions? <a href="mailto:admin@awakeningsmentalhealth.com">admin@awakeningsmentalhealth.com</a> <a href="tel:2082950297">(208) 295-0297</a></p>
+    </div>
+  </footer>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+    AOS.init({ duration: 600, once: true });
+    document.getElementById('to-top').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
