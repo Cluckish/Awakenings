@@ -438,7 +438,7 @@ html.dark .btn-social:active {
 .accordion .acc-body p { padding: 1rem 0; }
 .skeleton { background: #ddd; position: relative; }
 #testimonials { padding: 2rem 0; }
-.testimonial-card { background: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.75); font-style: italic; text-align: center; margin-bottom: 1.5rem; max-width: 90%; margin-left: auto; margin-right: auto; }
+.testimonial-card { background: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 8px 32px rgba(0,0,0,2); font-style: italic; text-align: center; margin-bottom: 1.5rem; max-width: 90%; margin-left: auto; margin-right: auto; }
 .testimonial-card:last-child { margin-bottom: 0; }
 #to-top { 
   position: fixed; bottom: 2rem; right: 2rem; 
@@ -740,7 +740,7 @@ html.dark .card:not(.no-dark-override){ /* This selector is already defined for 
 
 /* pull each following card upward so the edges peek out */
 #testimonials .testimonial-card + .testimonial-card{
-  margin-top: -16rem;  /* overlap amount – adjust to taste */
+  margin-top: -8rem;  /* overlap amount – adjust to taste */
 }
 
 /* layer order: first card sits on top of the pile */
@@ -749,13 +749,13 @@ html.dark .card:not(.no-dark-override){ /* This selector is already defined for 
 #testimonials .testimonial-card:nth-child(3){ z-index:1; } */
 
 /* optional playful tilt so the cards look “loose” */
-#testimonials .testimonial-card:nth-child(odd){  transform: rotate(-0.7deg); }
-#testimonials .testimonial-card:nth-child(even){ transform: rotate( 0.7deg); }
+#testimonials .testimonial-card:nth-child(odd){  transform: rotate(-0.5deg); }
+#testimonials .testimonial-card:nth-child(even){ transform: rotate( 0.5deg); }
 
 /* on hover, pop the card forward a bit */
 #testimonials .testimonial-card:hover{
   transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 12px 24px rgba(0,0,0,.12);
+  box-shadow: 0 12px 24px rgba(0,0,0,.3);
   z-index: 4;           /* rise above its neighbours */
 }
 
@@ -792,6 +792,19 @@ html.dark .card:not(.no-dark-override){ /* This selector is already defined for 
   transform: translateX(-120%) rotate(-4deg);
   opacity: 0;
   pointer-events: none;           /* already in your file */
+}
+
+#testimonials .testimonial-card:nth-child(1) {
+  filter: brightness(1);
+}
+#testimonials .testimonial-card:nth-child(2) {
+  filter: brightness(0.92);
+}
+#testimonials .testimonial-card:nth-child(3) {
+  filter: brightness(0.84);
+}
+#testimonials .testimonial-card:nth-child(n+4) {
+  filter: brightness(0.76);
 }
 
 
