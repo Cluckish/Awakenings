@@ -297,7 +297,7 @@ text-align: center; /* Consistent with h2 */
   max-width: 1000px; margin: 0 auto; 
   padding: 2rem 1rem 100px; 
 }
-.grid-2 { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 2rem; align-items: start; margin-bottom: 3rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 1.5rem; align-items: start; margin-bottom: 3rem; }
 /* Card component */
 .card {
     background: white;
